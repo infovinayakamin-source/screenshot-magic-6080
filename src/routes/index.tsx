@@ -46,11 +46,13 @@ export const Route = createFileRoute("/")({
 });
 
 const trust = [
-  { icon: Gem, label: "Natural Stone Jewelry" },
-  { icon: Sparkles, label: "Carefully Selected Crystals" },
-  { icon: Hand, label: "Premium Craftsmanship" },
-  { icon: ShieldCheck, label: "Secure & Easy Checkout" },
+  { icon: Gem, label: "Natural Stone Jewelry", sub: "Carefully selected materials" },
+  { icon: Hand, label: "Premium Craftsmanship", sub: "Designed with attention to detail" },
+  { icon: ShieldCheck, label: "Secure Checkout", sub: "Safe & simple payments" },
+  { icon: Sparkles, label: "Easy Shipping", sub: "Reliable delivery across India" },
 ];
+
+const tabs = ["Bestsellers", "New Arrivals", "Under ₹1,999", "Gifting"] as const;
 
 const crystals = [
   { name: "Pyrite", image: pyriteImage },
@@ -85,7 +87,17 @@ const reviews = [
 
 function Home() {
   const [quick, setQuick] = useState<Product | null>(null);
-  const bestsellers = products.filter((p) => p.bestseller || p.featured).slice(0, 6);
+  const [tab, setTab] = useState<(typeof tabs)[number]>("Bestsellers");
+  const bestsellers = (
+    tab === "Bestsellers"
+      ? products.filter((p) => p.bestseller)
+      : tab === "New Arrivals"
+        ? [...products].reverse()
+        : tab === "Under ₹1,999"
+          ? products.filter((p) => p.price <= 1999)
+          : products.filter((p) => p.category === "Gift Sets" || p.category === "Pendants")
+  ).slice(0, 6);
+  const treeOfLife = products.find((p) => p.slug === "tree-of-life-chakra-pendant");
 
   return (
     <>
@@ -131,10 +143,11 @@ function Home() {
       <section className="border-y border-border">
         <div className="shell grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:py-10">
           {trust.map((t) => (
-            <div key={t.label} className="flex min-w-0 items-center gap-3">
-              <t.icon className="size-5 shrink-0 text-primary" strokeWidth={1.4} />
-              <span className="min-w-0 text-xs leading-snug tracking-[0.08em] text-ink uppercase">
-                {t.label}
+            <div key={t.label} className="flex min-w-0 items-start gap-3">
+              <t.icon className="mt-0.5 size-5 shrink-0 text-primary" strokeWidth={1.4} />
+              <span className="min-w-0">
+                <span className="block text-xs leading-snug tracking-[0.1em] text-ink uppercase">{t.label}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">{t.sub}</span>
               </span>
             </div>
           ))}
