@@ -1,7 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Newsletter } from "@/components/Newsletter";
+import { Button } from "@/components/ui/button";
 import { products } from "@/lib/products";
+import { useStore } from "@/lib/store";
+
 
 type ShopSearch = { category: string; sort: string; wishlist: boolean };
 
