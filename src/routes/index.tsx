@@ -46,11 +46,13 @@ export const Route = createFileRoute("/")({
 });
 
 const trust = [
-  { icon: Gem, label: "Natural Stone Jewelry" },
-  { icon: Sparkles, label: "Carefully Selected Crystals" },
-  { icon: Hand, label: "Premium Craftsmanship" },
-  { icon: ShieldCheck, label: "Secure & Easy Checkout" },
+  { icon: Gem, label: "Natural Stone Jewelry", sub: "Carefully selected materials" },
+  { icon: Hand, label: "Premium Craftsmanship", sub: "Designed with attention to detail" },
+  { icon: ShieldCheck, label: "Secure Checkout", sub: "Safe & simple payments" },
+  { icon: Sparkles, label: "Easy Shipping", sub: "Reliable delivery across India" },
 ];
+
+const tabs = ["Bestsellers", "New Arrivals", "Under ₹1,999", "Gifting"] as const;
 
 const crystals = [
   { name: "Pyrite", image: pyriteImage },
@@ -85,7 +87,17 @@ const reviews = [
 
 function Home() {
   const [quick, setQuick] = useState<Product | null>(null);
-  const bestsellers = products.filter((p) => p.bestseller || p.featured).slice(0, 6);
+  const [tab, setTab] = useState<(typeof tabs)[number]>("Bestsellers");
+  const bestsellers = (
+    tab === "Bestsellers"
+      ? products.filter((p) => p.bestseller)
+      : tab === "New Arrivals"
+        ? [...products].reverse()
+        : tab === "Under ₹1,999"
+          ? products.filter((p) => p.price <= 1999)
+          : products.filter((p) => p.category === "Gift Sets" || p.category === "Pendants")
+  ).slice(0, 6);
+  const treeOfLife = products.find((p) => p.slug === "tree-of-life-chakra-pendant");
 
   return (
     <>
@@ -131,10 +143,11 @@ function Home() {
       <section className="border-y border-border">
         <div className="shell grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:py-10">
           {trust.map((t) => (
-            <div key={t.label} className="flex min-w-0 items-center gap-3">
-              <t.icon className="size-5 shrink-0 text-primary" strokeWidth={1.4} />
-              <span className="min-w-0 text-xs leading-snug tracking-[0.08em] text-ink uppercase">
-                {t.label}
+            <div key={t.label} className="flex min-w-0 items-start gap-3">
+              <t.icon className="mt-0.5 size-5 shrink-0 text-primary" strokeWidth={1.4} />
+              <span className="min-w-0">
+                <span className="block text-xs leading-snug tracking-[0.1em] text-ink uppercase">{t.label}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">{t.sub}</span>
               </span>
             </div>
           ))}
@@ -214,15 +227,28 @@ function Home() {
           <Reveal className="text-center">
             <p className="eyebrow">Loved most</p>
             <h2 className="mt-3 text-3xl text-ink md:text-5xl">Bestsellers</h2>
-            <p className="mx-auto mt-3 max-w-lg text-sm text-muted-foreground">
-              Meaningful pieces designed to complement your everyday style.
-            </p>
+            <p className="mx-auto mt-3 max-w-lg text-sm text-muted-foreground">Our most-loved pieces.</p>
           </Reveal>
-          <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-5 lg:grid-cols-3">
-            {bestsellers.map((p, i) => (
-              <Reveal key={p.id} delay={i * 50}>
-                <ProductCard product={p} onQuickView={setQuick} />
-              </Reveal>
+          <div role="tablist" className="mt-8 flex justify-center gap-2 overflow-x-auto pb-1">
+            {tabs.map((t) => (
+              <button
+                key={t}
+                role="tab"
+                aria-selected={tab === t}
+                onClick={() => setTab(t)}
+                className={`shrink-0 rounded-full border px-4 py-2 text-[11px] tracking-[0.14em] uppercase transition-colors duration-300 ${
+                  tab === t
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card text-ink hover:border-primary/40"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+          <div key={tab} className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 animate-in fade-in duration-500 sm:gap-x-5 lg:grid-cols-3">
+            {bestsellers.map((p) => (
+              <ProductCard key={p.id} product={p} onQuickView={setQuick} />
             ))}
           </div>
           <div className="mt-12 text-center">
@@ -232,6 +258,40 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* TREE OF LIFE STORY */}
+      {treeOfLife && (
+        <section className="shell py-20 md:py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <Reveal>
+              <img
+                src={treeOfLife.images[0]}
+                alt={treeOfLife.name}
+                loading="lazy"
+                className="aspect-[4/5] w-full rounded-2xl object-cover shadow-[var(--shadow-soft)]"
+              />
+            </Reveal>
+            <Reveal delay={80}>
+              <p className="eyebrow">Tree of Life</p>
+              <h2 className="mt-3 text-3xl text-ink md:text-5xl">A symbol of connection</h2>
+              <span className="mt-5 block h-px w-12 bg-champagne" />
+              <p className="mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground">
+                The Tree of Life has long been used as a symbol of growth, connection and new beginnings. Our
+                interpretation brings that timeless symbolism together with colorful natural stones in a piece
+                designed to be worn and remembered.
+              </p>
+              <Link
+                to="/product/$slug"
+                params={{ slug: treeOfLife.slug }}
+                className="mt-8 inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-primary uppercase hover:opacity-70"
+              >
+                Discover the pendant <ArrowRight className="size-3.5" />
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
 
       {/* MORE THAN JEWELRY */}
       <section className="shell py-20 md:py-24">

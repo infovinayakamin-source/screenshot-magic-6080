@@ -12,8 +12,15 @@ import { cn } from "@/lib/utils";
 const nav = [
   { label: "Shop", to: "/shop" as const },
   { label: "Collections", to: "/collections" as const },
+  { label: "New Arrivals", to: "/shop" as const, search: { sort: "newest" } },
   { label: "About", to: "/about" as const },
-  { label: "Contact", to: "/contact" as const },
+];
+
+const announcements = [
+  "Free shipping on orders above ₹999",
+  "New collection is here",
+  "Premium natural stone jewelry",
+  "Secure & easy checkout",
 ];
 
 export function Header() {
@@ -22,13 +29,18 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [msg, setMsg] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const t = window.setInterval(() => setMsg((m) => (m + 1) % announcements.length), 4000);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearInterval(t);
+    };
   }, []);
 
   const results = query.trim()
@@ -37,16 +49,16 @@ export function Header() {
 
   return (
     <>
-      <div className="bg-ink py-2 text-center text-[11px] tracking-[0.18em] text-background uppercase">
-        Complimentary shipping on orders above ₹2,500
+      <div className="bg-primary py-1.5 text-center text-[10px] tracking-[0.2em] text-primary-foreground uppercase">
+        <span key={msg} className="inline-block animate-in fade-in duration-700">
+          {announcements[msg]}
+        </span>
       </div>
 
       <header
         className={cn(
-          "sticky top-0 z-50 border-b transition-all duration-300",
-          scrolled
-            ? "border-border bg-background/85 backdrop-blur-xl"
-            : "border-transparent bg-background",
+          "sticky top-0 z-50 border-b border-border transition-all duration-300",
+          scrolled ? "bg-background/95 backdrop-blur-xl" : "bg-background/70 backdrop-blur",
         )}
       >
         <div className="shell grid h-16 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 md:h-20">
@@ -68,8 +80,9 @@ export function Header() {
                 <nav className="flex flex-col px-5 py-4">
                   {nav.map((item) => (
                     <Link
-                      key={item.to}
+                      key={item.label}
                       to={item.to}
+                      search={item.search ?? {}}
                       onClick={() => setMenuOpen(false)}
                       className="border-b border-border/70 py-4 font-display text-2xl text-ink"
                     >
@@ -90,8 +103,9 @@ export function Header() {
             <nav className="hidden items-center gap-7 lg:flex">
               {nav.map((item) => (
                 <Link
-                  key={item.to}
+                  key={item.label}
                   to={item.to}
+                      search={item.search ?? {}}
                   className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-ink"
                   activeProps={{ className: "text-ink" }}
                 >
