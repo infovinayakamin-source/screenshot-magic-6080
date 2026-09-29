@@ -6,14 +6,19 @@ import { products } from "@/lib/products";
 import { useStore } from "@/lib/store";
 
 
-type ShopSearch = { category: string; sort: string; wishlist: boolean };
+type ShopSearch = {
+  category?: string | undefined;
+  sort?: string | undefined;
+  wishlist?: boolean | undefined;
+};
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => ({
-    category: typeof search["category"] === "string" ? search["category"] : "",
-    sort: typeof search["sort"] === "string" ? search["sort"] : "",
-    wishlist: search["wishlist"] === true || search["wishlist"] === "true",
+    category: typeof search["category"] === "string" ? search["category"] : undefined,
+    sort: typeof search["sort"] === "string" ? search["sort"] : undefined,
+    wishlist: search["wishlist"] === true || search["wishlist"] === "true" ? true : undefined,
   }),
+
 
   head: () => ({
     meta: [
