@@ -3,14 +3,15 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { Newsletter } from "@/components/Newsletter";
 import { products } from "@/lib/products";
 
-type ShopSearch = { category?: string; sort?: string; wishlist?: boolean };
+type ShopSearch = { category: string; sort: string; wishlist: boolean };
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => ({
-    category: typeof search.category === "string" ? search.category : undefined,
-    sort: typeof search.sort === "string" ? search.sort : undefined,
-    wishlist: search.wishlist === true || search.wishlist === "true" ? true : undefined,
+    category: typeof search["category"] === "string" ? search["category"] : "",
+    sort: typeof search["sort"] === "string" ? search["sort"] : "",
+    wishlist: search["wishlist"] === true || search["wishlist"] === "true",
   }),
+
   head: () => ({
     meta: [
       { title: "All Jewelry — Crystal Bracelets & Pendants | Aarohi" },
