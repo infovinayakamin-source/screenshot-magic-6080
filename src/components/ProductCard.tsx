@@ -65,10 +65,10 @@ export function ProductCard({
         </div>
 
         {onQuickView && (
-          <div className="absolute inset-x-2.5 bottom-2.5 hidden opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block">
+          <div className="absolute inset-x-2.5 bottom-2.5 hidden translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:block">
             <Button
-              variant="sand"
-              className="w-full backdrop-blur"
+              variant="ink"
+              className="w-full shadow-[var(--shadow-lift)]"
               onClick={() => onQuickView(product)}
             >
               <Eye /> Quick View
