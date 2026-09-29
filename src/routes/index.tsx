@@ -96,13 +96,13 @@ function Home() {
         : tab === "Under ₹1,999"
           ? products.filter((p) => p.price <= 1999)
           : products.filter((p) => p.category === "Gift Sets" || p.category === "Pendants")
-  ).slice(0, 6);
+  ).slice(0, 4);
   const treeOfLife = products.find((p) => p.slug === "tree-of-life-chakra-pendant");
 
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-sand">
+      <section className="relative overflow-hidden bg-gradient-to-br from-background via-sand to-sand">
         <div className="shell grid items-center gap-10 py-14 md:grid-cols-2 md:gap-12 md:py-24">
           <div className="reveal max-w-xl">
             <p className="eyebrow">Natural stone jewellery</p>
@@ -143,8 +143,8 @@ function Home() {
       <section className="border-y border-border">
         <div className="shell grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:py-10">
           {trust.map((t) => (
-            <div key={t.label} className="flex min-w-0 items-start gap-3">
-              <t.icon className="mt-0.5 size-5 shrink-0 text-primary" strokeWidth={1.4} />
+            <div key={t.label} className="flex min-w-0 flex-col items-center gap-2 text-center">
+              <t.icon className="size-6 shrink-0 text-primary" strokeWidth={1.4} />
               <span className="min-w-0">
                 <span className="block text-xs leading-snug tracking-[0.1em] text-ink uppercase">{t.label}</span>
                 <span className="mt-1 block text-xs text-muted-foreground">{t.sub}</span>
@@ -198,7 +198,7 @@ function Home() {
           </Link>
         </Reveal>
 
-        <div className="mt-10 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
           {collections.map((c, i) => (
             <Reveal key={c.slug} delay={i * 60}>
               <Link to="/collections/$slug" params={{ slug: c.slug }} className="group block">
@@ -207,11 +207,11 @@ function Home() {
                     src={c.image}
                     alt={c.name}
                     loading="lazy"
-                    className="aspect-[4/5] w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    className="aspect-square w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                   />
                 </div>
-                <h3 className="mt-4 font-display text-xl text-ink">{c.name}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.description}</p>
+                <h3 className="mt-3 font-display text-lg text-ink">{c.name}</h3>
+                <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{c.description}</p>
                 <span className="mt-3 inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-ink uppercase">
                   Explore collection <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
@@ -246,7 +246,7 @@ function Home() {
               </button>
             ))}
           </div>
-          <div key={tab} className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 animate-in fade-in duration-500 sm:gap-x-5 lg:grid-cols-3">
+          <div key={tab} className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 animate-in fade-in duration-500 sm:gap-x-5 lg:grid-cols-4">
             {bestsellers.map((p) => (
               <ProductCard key={p.id} product={p} onQuickView={setQuick} />
             ))}

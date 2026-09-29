@@ -53,7 +53,7 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.26 0 0);
   /* Logo navy */
-  --primary: oklch(0.27 0.085 262);
+  --primary: oklch(0.37 0.06 185);
   --primary-foreground: oklch(0.978 0.009 88);
   --secondary: oklch(0.94 0.015 85);
   --secondary-foreground: oklch(0.26 0 0);
