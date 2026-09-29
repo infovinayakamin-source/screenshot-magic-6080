@@ -35,7 +35,7 @@ export function ProductGrid({
   initialCategory,
 }: {
   source: Product[];
-  initialCategory?: string;
+  initialCategory?: string | undefined;
 }) {
   const [sort, setSort] = useState<Sort>("featured");
   const [categories, setCategories] = useState<string[]>(initialCategory ? [initialCategory] : []);
