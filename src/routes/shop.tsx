@@ -34,23 +34,41 @@ export const Route = createFileRoute("/shop")({
 });
 
 function Shop() {
-  const { category } = Route.useSearch();
+  const { category, wishlist: wishlistView } = Route.useSearch();
+  const { wishlist } = useStore();
+  const saved = products.filter((p) => wishlist.includes(p.id));
 
   return (
     <>
       <section className="border-b border-border bg-sand/50">
         <div className="shell py-14 text-center md:py-20">
-          <p className="eyebrow">The collection</p>
-          <h1 className="mt-3 text-4xl text-ink md:text-6xl">All jewelry</h1>
+          <p className="eyebrow">{wishlistView ? "Saved pieces" : "The collection"}</p>
+          <h1 className="mt-3 text-4xl text-ink md:text-6xl">
+            {wishlistView ? "Your wishlist" : "All jewelry"}
+          </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Discover natural stone jewellery designed to add meaning and beauty to everyday moments.
+            {wishlistView
+              ? "The pieces you've saved for later."
+              : "Discover natural stone jewellery designed to add meaning and beauty to everyday moments."}
           </p>
         </div>
       </section>
 
       <section className="shell py-12 md:py-16">
-        <ProductGrid source={products} initialCategory={category} />
+        {wishlistView && saved.length === 0 ? (
+          <div className="rounded-2xl bg-sand p-12 text-center">
+            <p className="text-sm text-muted-foreground">You haven&apos;t saved any pieces yet.</p>
+            <Button variant="ink" size="xl" className="mt-6" asChild>
+              <Link to="/shop" search={{ category: "", sort: "", wishlist: false }}>
+                Browse all jewellery
+              </Link>
+            </Button>
+          </div>
+        ) : (
+          <ProductGrid source={wishlistView ? saved : products} initialCategory={category} />
+        )}
       </section>
+
 
       <Newsletter />
     </>
