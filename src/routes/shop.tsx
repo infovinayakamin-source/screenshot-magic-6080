@@ -64,7 +64,7 @@ function Shop() {
           <div className="rounded-2xl bg-sand p-12 text-center">
             <p className="text-sm text-muted-foreground">You haven&apos;t saved any pieces yet.</p>
             <Button variant="ink" size="xl" className="mt-6" asChild>
-              <Link to="/shop" search={{ category: "", sort: "", wishlist: false }}>
+              <Link to="/shop" search={{}}>
                 Browse all jewellery
               </Link>
             </Button>
