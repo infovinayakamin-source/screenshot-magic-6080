@@ -7,6 +7,14 @@ import { ProductCard } from "@/components/ProductCard";
 import { QuickView } from "@/components/QuickView";
 import { Newsletter } from "@/components/Newsletter";
 import { Stars } from "@/components/Stars";
+import pyriteImage from "@/assets/crystal-pyrite.jpg";
+import garnetImage from "@/assets/crystal-garnet.jpg";
+import citrineImage from "@/assets/crystal-citrine.jpg";
+import tigerEyeImage from "@/assets/crystal-tiger-eye.jpg";
+import roseQuartzImage from "@/assets/crystal-rose-quartz.jpg";
+import lapisLazuliImage from "@/assets/crystal-lapis-lazuli.jpg";
+import amethystImage from "@/assets/crystal-amethyst.jpg";
+import seleniteImage from "@/assets/crystal-selenite.jpg";
 import {
   BRAND,
   collections,
@@ -42,6 +50,17 @@ const trust = [
   { icon: Sparkles, label: "Carefully Selected Crystals" },
   { icon: Hand, label: "Premium Craftsmanship" },
   { icon: ShieldCheck, label: "Secure & Easy Checkout" },
+];
+
+const crystals = [
+  { name: "Pyrite", image: pyriteImage },
+  { name: "Garnet", image: garnetImage },
+  { name: "Citrine", image: citrineImage },
+  { name: "Tiger Eye", image: tigerEyeImage },
+  { name: "Rose Quartz", image: roseQuartzImage },
+  { name: "Lapis Lazuli", image: lapisLazuliImage },
+  { name: "Amethyst", image: amethystImage },
+  { name: "Selenite", image: seleniteImage },
 ];
 
 const meaning = [
@@ -119,6 +138,38 @@ function Home() {
               </span>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* SHOP BY CRYSTALS */}
+      <section className="py-16 md:py-20" aria-labelledby="crystals-heading">
+        <div className="shell">
+          <Reveal className="text-center">
+            <h2 id="crystals-heading" className="text-4xl text-ink md:text-5xl">Shop by Crystals</h2>
+          </Reveal>
+          <div className="mt-9 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-3 md:gap-4 lg:grid lg:grid-cols-8 lg:overflow-visible lg:pb-0">
+            {crystals.map((crystal) => (
+              <Link
+                key={crystal.name}
+                to="/shop"
+                search={{}}
+                aria-label={`Browse jewelry inspired by ${crystal.name}`}
+                className="group relative aspect-square w-[38vw] max-w-[170px] shrink-0 snap-start overflow-hidden rounded-lg bg-card ring-1 ring-border/50 transition-shadow duration-300 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-[25vw] lg:w-full"
+              >
+                <img
+                  src={crystal.image}
+                  alt={`${crystal.name} natural crystal specimen`}
+                  loading="lazy"
+                  width={400}
+                  height={400}
+                  className="absolute inset-0 h-[79%] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <span className="absolute inset-x-0 bottom-0 flex h-[23%] items-center justify-center bg-card px-1 text-center text-[11px] font-semibold text-ink sm:text-xs">
+                  {crystal.name}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
