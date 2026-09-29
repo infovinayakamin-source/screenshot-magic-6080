@@ -149,12 +149,9 @@ function Home() {
           </Reveal>
           <div className="mt-9 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-3 md:gap-4 lg:grid lg:grid-cols-8 lg:overflow-visible lg:pb-0">
             {crystals.map((crystal) => (
-              <Link
+              <figure
                 key={crystal.name}
-                to="/shop"
-                search={{}}
-                aria-label={`Browse jewelry inspired by ${crystal.name}`}
-                className="group relative aspect-square w-[38vw] max-w-[170px] shrink-0 snap-start overflow-hidden rounded-lg bg-card ring-1 ring-border/50 transition-shadow duration-300 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-[25vw] lg:w-full"
+                className="group relative aspect-square w-[38vw] max-w-[170px] shrink-0 snap-start overflow-hidden rounded-lg bg-card ring-1 ring-border/50 transition-shadow duration-300 hover:shadow-[var(--shadow-soft)] sm:w-[25vw] lg:w-full"
               >
                 <img
                   src={crystal.image}
@@ -164,10 +161,10 @@ function Home() {
                   height={400}
                   className="absolute inset-0 h-[79%] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <span className="absolute inset-x-0 bottom-0 flex h-[23%] items-center justify-center bg-card px-1 text-center text-[11px] font-semibold text-ink sm:text-xs">
+                <figcaption className="absolute inset-x-0 bottom-0 flex h-[23%] items-center justify-center bg-card px-1 text-center text-[11px] font-semibold text-ink sm:text-xs">
                   {crystal.name}
-                </span>
-              </Link>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
