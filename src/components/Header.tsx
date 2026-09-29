@@ -80,8 +80,9 @@ export function Header() {
                 <nav className="flex flex-col px-5 py-4">
                   {nav.map((item) => (
                     <Link
-                      key={item.to}
+                      key={item.label}
                       to={item.to}
+                      search={item.search ?? {}}
                       onClick={() => setMenuOpen(false)}
                       className="border-b border-border/70 py-4 font-display text-2xl text-ink"
                     >
@@ -102,8 +103,9 @@ export function Header() {
             <nav className="hidden items-center gap-7 lg:flex">
               {nav.map((item) => (
                 <Link
-                  key={item.to}
+                  key={item.label}
                   to={item.to}
+                      search={item.search ?? {}}
                   className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-ink"
                   activeProps={{ className: "text-ink" }}
                 >
