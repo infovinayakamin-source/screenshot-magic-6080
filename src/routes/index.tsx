@@ -96,7 +96,7 @@ function Home() {
         : tab === "Under ₹1,999"
           ? products.filter((p) => p.price <= 1999)
           : products.filter((p) => p.category === "Gift Sets" || p.category === "Pendants")
-  ).slice(0, 6);
+  ).slice(0, 4);
   const treeOfLife = products.find((p) => p.slug === "tree-of-life-chakra-pendant");
 
   return (
@@ -211,7 +211,7 @@ function Home() {
                   />
                 </div>
                 <h3 className="mt-3 font-display text-lg text-ink">{c.name}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.description}</p>
+                <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{c.description}</p>
                 <span className="mt-3 inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-ink uppercase">
                   Explore collection <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
