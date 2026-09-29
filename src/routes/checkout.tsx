@@ -11,10 +11,10 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
-      { title: "Checkout | Aarohi" },
-      { name: "description", content: "Secure checkout for your Aarohi natural stone jewellery order." },
-      { property: "og:title", content: "Checkout | Aarohi" },
-      { property: "og:description", content: "Complete your Aarohi order." },
+      { title: "Checkout | ShivAmrit Healers" },
+      { name: "description", content: "Secure checkout for your ShivAmrit Healers natural stone jewellery order." },
+      { property: "og:title", content: "Checkout | ShivAmrit Healers" },
+      { property: "og:description", content: "Complete your ShivAmrit Healers order." },
       { name: "robots", content: "noindex" },
     ],
   }),

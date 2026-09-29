@@ -28,13 +28,13 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Premium Crystal Jewelry & Natural Stone Bracelets | Aarohi" },
+      { title: "Premium Crystal Jewelry & Natural Stone Bracelets | ShivAmrit Healers" },
       {
         name: "description",
         content:
           "Discover premium crystal jewellery, natural stone bracelets and meaningful Tree of Life designs. Shop elegant pieces created for everyday style and gifting.",
       },
-      { property: "og:title", content: "Premium Crystal Jewelry & Natural Stone Bracelets | Aarohi" },
+      { property: "og:title", content: "Premium Crystal Jewelry & Natural Stone Bracelets | ShivAmrit Healers" },
       {
         property: "og:description",
         content:

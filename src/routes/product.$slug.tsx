@@ -25,10 +25,10 @@ export const Route = createFileRoute("/product/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Product not found | Aarohi" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Product not found | ShivAmrit Healers" }, { name: "robots", content: "noindex" }] };
     }
     const { product } = loaderData;
-    const title = `${product.name} | Aarohi`;
+    const title = `${product.name} | ShivAmrit Healers`;
     return {
       meta: [
         { title },

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, MessageCircle } from "lucide-react";
+import logo from "@/assets/logo.jpg";
 import { BRAND } from "@/lib/products";
 
 export function Footer() {
@@ -7,7 +8,7 @@ export function Footer() {
     <footer className="mt-24 border-t border-border bg-sand/60">
       <div className="shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:py-16">
         <div className="max-w-xs">
-          <p className="font-display text-2xl tracking-[0.14em] text-ink">{BRAND}</p>
+          <img src={logo} alt={`${BRAND} logo`} width={320} height={320} loading="lazy" className="size-24 rounded-full" />
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Natural stone jewellery made for everyday style, personal intention and meaningful gifting.
           </p>

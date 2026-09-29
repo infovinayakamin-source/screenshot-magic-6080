@@ -10,14 +10,14 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us — Styling & Order Support | Aarohi" },
+      { title: "Contact Us — Styling & Order Support | ShivAmrit Healers" },
       {
         name: "description",
         content:
-          "Questions about sizing, stones, an order or gifting? Message the Aarohi team by email or WhatsApp and we reply within one business day.",
+          "Questions about sizing, stones, an order or gifting? Message the ShivAmrit Healers team by email or WhatsApp and we reply within one business day.",
       },
-      { property: "og:title", content: "Contact Us | Aarohi" },
-      { property: "og:description", content: "Styling, sizing and order support from the Aarohi team." },
+      { property: "og:title", content: "Contact Us | ShivAmrit Healers" },
+      { property: "og:description", content: "Styling, sizing and order support from the ShivAmrit Healers team." },
     ],
   }),
   component: Contact,

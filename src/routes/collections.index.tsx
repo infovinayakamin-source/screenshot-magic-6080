@@ -7,13 +7,13 @@ import { collections, productsInCollection } from "@/lib/products";
 export const Route = createFileRoute("/collections/")({
   head: () => ({
     meta: [
-      { title: "Collections — Chakra, Tree of Life & Crystal Edits | Aarohi" },
+      { title: "Collections — Chakra, Tree of Life & Crystal Edits | ShivAmrit Healers" },
       {
         name: "description",
         content:
-          "Browse Aarohi collections: crystal bracelets, chakra jewellery, Tree of Life pendants and ready-to-give gift sets.",
+          "Browse ShivAmrit Healers collections: crystal bracelets, chakra jewellery, Tree of Life pendants and ready-to-give gift sets.",
       },
-      { property: "og:title", content: "Collections | Aarohi" },
+      { property: "og:title", content: "Collections | ShivAmrit Healers" },
       {
         property: "og:description",
         content: "Curated edits of natural stone jewellery, grouped by stone, symbol and occasion.",
