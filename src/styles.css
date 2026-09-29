@@ -44,33 +44,33 @@
 
 :root {
   --radius: 0.5rem;
-  /* Icy white canvas with a turquoise tint */
-  --background: oklch(0.981 0.007 209);
-  --foreground: oklch(0.325 0.041 205);
-  --ink: oklch(0.325 0.041 205);
+  /* Logo-led Premium: warm ivory canvas, charcoal text, logo navy + restrained gold */
+  --background: oklch(0.978 0.009 88);
+  --foreground: oklch(0.26 0 0);
+  --ink: oklch(0.25 0.006 180);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.325 0.041 205);
+  --card-foreground: oklch(0.26 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.325 0.041 205);
-  /* Logo navy (buttons stay tied to the logo) */
+  --popover-foreground: oklch(0.26 0 0);
+  /* Logo navy */
   --primary: oklch(0.27 0.085 262);
-  --primary-foreground: oklch(0.98 0.006 210);
-  /* Turquoise mist */
-  --secondary: oklch(0.946 0.014 208);
-  --secondary-foreground: oklch(0.325 0.041 205);
-  --muted: oklch(0.955 0.012 208);
-  --muted-foreground: oklch(0.47 0.032 208);
-  --accent: oklch(0.922 0.02 209);
-  --accent-foreground: oklch(0.325 0.041 205);
+  --primary-foreground: oklch(0.978 0.009 88);
+  --secondary: oklch(0.94 0.015 85);
+  --secondary-foreground: oklch(0.26 0 0);
+  --muted: oklch(0.95 0.012 85);
+  --muted-foreground: oklch(0.53 0.008 110);
+  --accent: oklch(0.93 0.016 85);
+  --accent-foreground: oklch(0.26 0 0);
   --destructive: oklch(0.55 0.17 27);
-  --destructive-foreground: oklch(0.985 0.006 210);
-  --border: oklch(0.91 0.012 208);
-  --input: oklch(0.9 0.014 208);
-  --ring: oklch(0.795 0.04 208);
-  /* Soft turquoise mist (was sand) */
-  --sand: oklch(0.946 0.014 208);
-  --champagne: oklch(0.78 0.13 85);
-  --sage: oklch(0.93 0.018 200);
+  --destructive-foreground: oklch(0.985 0.006 88);
+  --border: oklch(0.92 0.014 85);
+  --input: oklch(0.9 0.016 85);
+  --ring: oklch(0.74 0.09 80);
+  /* Soft sand */
+  --sand: oklch(0.94 0.015 85);
+  /* Muted champagne gold (logo) */
+  --champagne: oklch(0.74 0.09 80);
+  --sage: oklch(0.93 0.018 140);
 }
 
 @layer base {
