@@ -124,7 +124,7 @@ export function Header() {
             </Link>
             <Link
               to="/shop"
-              search={{ wishlist: true }}
+              search={{ category: "", sort: "", wishlist: true }}
               aria-label="Wishlist"
               className="relative hidden size-9 place-items-center text-ink sm:grid"
             >
@@ -204,7 +204,7 @@ function MobileNav() {
       </Link>
       <Link
         to="/shop"
-        search={{ wishlist: true }}
+        search={{ category: "", sort: "", wishlist: true }}
         className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase"
       >
         <Heart className="size-[18px]" /> Saved

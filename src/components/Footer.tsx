@@ -17,10 +17,10 @@ export function Footer() {
           <p className="eyebrow">Shop</p>
           <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
             <li><Link to="/shop" className="hover:text-ink">All Products</Link></li>
-            <li><Link to="/shop" search={{ category: "Bracelets" }} className="hover:text-ink">Bracelets</Link></li>
-            <li><Link to="/shop" search={{ category: "Pendants" }} className="hover:text-ink">Pendants</Link></li>
+            <li><Link to="/shop" search={{ category: "Bracelets", sort: "", wishlist: false }} className="hover:text-ink">Bracelets</Link></li>
+            <li><Link to="/shop" search={{ category: "Pendants", sort: "", wishlist: false }} className="hover:text-ink">Pendants</Link></li>
             <li><Link to="/collections" className="hover:text-ink">Collections</Link></li>
-            <li><Link to="/shop" search={{ sort: "best" }} className="hover:text-ink">Bestsellers</Link></li>
+            <li><Link to="/shop" search={{ category: "", sort: "best", wishlist: false }} className="hover:text-ink">Bestsellers</Link></li>
           </ul>
         </div>
 
