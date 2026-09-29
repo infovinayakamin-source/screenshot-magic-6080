@@ -10,13 +10,13 @@ import { Newsletter } from "@/components/Newsletter";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — Stones, Sizing, Shipping & Returns | Aarohi" },
+      { title: "FAQ — Stones, Sizing, Shipping & Returns | ShivAmrit Healers" },
       {
         name: "description",
         content:
-          "Answers on natural stones, jewellery care, sizing, shipping timelines, returns and gift packaging at Aarohi.",
+          "Answers on natural stones, jewellery care, sizing, shipping timelines, returns and gift packaging at ShivAmrit Healers.",
       },
-      { property: "og:title", content: "FAQ | Aarohi" },
+      { property: "og:title", content: "FAQ | ShivAmrit Healers" },
       {
         property: "og:description",
         content: "Stones, care, sizing, shipping, returns and gifting — answered.",

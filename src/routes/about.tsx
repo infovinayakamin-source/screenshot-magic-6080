@@ -7,13 +7,13 @@ import { BRAND, editorialImage, heroImage } from "@/lib/products";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Jewelry With Meaning — Our Story | Aarohi" },
+      { title: "Jewelry With Meaning — Our Story | ShivAmrit Healers" },
       {
         name: "description",
         content:
-          "Aarohi is built around natural stones, careful craftsmanship and modern design — jewellery made for intention, everyday wear and meaningful gifting.",
+          "ShivAmrit Healers is built around natural stones, careful craftsmanship and modern design — jewellery made for intention, everyday wear and meaningful gifting.",
       },
-      { property: "og:title", content: "Jewelry With Meaning — Our Story | Aarohi" },
+      { property: "og:title", content: "Jewelry With Meaning — Our Story | ShivAmrit Healers" },
       {
         property: "og:description",
         content: "Natural stones, careful craftsmanship and quiet, modern design.",

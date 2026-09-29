@@ -4,6 +4,7 @@ import { Menu, Search, User, Heart, ShoppingBag, X, Home, LayoutGrid } from "luc
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import logo from "@/assets/logo.jpg";
 import { BRAND, formatINR, products } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -59,7 +60,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="left" className="w-[85vw] max-w-sm p-0">
                 <div className="flex items-center justify-between border-b border-border px-5 py-4">
-                  <span className="font-display text-xl tracking-[0.16em] text-ink">{BRAND}</span>
+                  <span className="flex items-center gap-3 font-display text-xl text-ink"><img src={logo} alt="" width={320} height={320} className="size-10 rounded-full" />{BRAND}</span>
                   <button aria-label="Close menu" onClick={() => setMenuOpen(false)}>
                     <X className="size-5" />
                   </button>
@@ -102,9 +103,10 @@ export function Header() {
 
           <Link
             to="/"
-            className="justify-self-center font-display text-2xl tracking-[0.22em] text-ink md:text-3xl"
+            className="justify-self-center"
+            aria-label={`${BRAND} home`}
           >
-            {BRAND}
+            <img src={logo} alt={`${BRAND} logo`} width={320} height={320} className="size-12 rounded-full md:size-14" />
           </Link>
 
           <div className="flex items-center gap-0.5 justify-self-end">

@@ -22,13 +22,13 @@ export const Route = createFileRoute("/shop")({
 
   head: () => ({
     meta: [
-      { title: "All Jewelry — Crystal Bracelets & Pendants | Aarohi" },
+      { title: "All Jewelry — Crystal Bracelets & Pendants | ShivAmrit Healers" },
       {
         name: "description",
         content:
-          "Shop all Aarohi jewellery: natural stone bracelets, chakra designs and Tree of Life pendants, filtered by stone, colour and price.",
+          "Shop all ShivAmrit Healers jewellery: natural stone bracelets, chakra designs and Tree of Life pendants, filtered by stone, colour and price.",
       },
-      { property: "og:title", content: "All Jewelry — Crystal Bracelets & Pendants | Aarohi" },
+      { property: "og:title", content: "All Jewelry — Crystal Bracelets & Pendants | ShivAmrit Healers" },
       {
         property: "og:description",
         content: "Natural stone jewellery designed to add meaning and beauty to everyday moments.",

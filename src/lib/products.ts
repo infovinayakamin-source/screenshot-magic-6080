@@ -7,7 +7,7 @@ import giftSet from "@/assets/gift-set.jpg";
 import editorial from "@/assets/editorial.jpg";
 import hero from "@/assets/hero.jpg";
 
-export const BRAND = "Aarohi";
+export const BRAND = "ShivAmrit Healers";
 
 export type Product = {
   id: string;

@@ -7,9 +7,9 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
-      { title: "Your Cart | Aarohi" },
-      { name: "description", content: "Review the natural stone jewellery in your Aarohi cart before checkout." },
-      { property: "og:title", content: "Your Cart | Aarohi" },
+      { title: "Your Cart | ShivAmrit Healers" },
+      { name: "description", content: "Review the natural stone jewellery in your ShivAmrit Healers cart before checkout." },
+      { property: "og:title", content: "Your Cart | ShivAmrit Healers" },
       { property: "og:description", content: "Review your selected pieces before checkout." },
       { name: "robots", content: "noindex" },
     ],

@@ -81,14 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Aarohi — Premium Crystal Jewelry & Natural Stone Bracelets" },
+      { title: "ShivAmrit Healers — Premium Crystal Jewelry & Natural Stone Bracelets" },
       {
         name: "description",
         content:
-          "Aarohi crafts premium crystal jewellery, natural stone bracelets and Tree of Life pendants for everyday style and meaningful gifting.",
+          "ShivAmrit Healers crafts premium crystal jewellery, natural stone bracelets and Tree of Life pendants for everyday style and meaningful gifting.",
       },
-      { name: "author", content: "Aarohi" },
-      { property: "og:site_name", content: "Aarohi" },
+      { name: "author", content: "ShivAmrit Healers" },
+      { property: "og:site_name", content: "ShivAmrit Healers" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -100,7 +100,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
   }),
   shellComponent: RootShell,

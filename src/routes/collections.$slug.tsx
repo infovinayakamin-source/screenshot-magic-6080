@@ -11,10 +11,10 @@ export const Route = createFileRoute("/collections/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Collection not found | Aarohi" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Collection not found | ShivAmrit Healers" }, { name: "robots", content: "noindex" }] };
     }
     const { collection } = loaderData;
-    const title = `${collection.name} | Aarohi`;
+    const title = `${collection.name} | ShivAmrit Healers`;
     return {
       meta: [
         { title },
