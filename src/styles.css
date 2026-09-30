@@ -36,6 +36,10 @@
   --color-champagne: var(--champagne);
   --color-sage: var(--sage);
   --color-ink: var(--ink);
+  --color-navy: var(--navy);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --shadow-soft: 0 1px 2px oklch(0.3 0.04 205 / 4%), 0 12px 32px -18px oklch(0.3 0.04 205 / 22%);
@@ -71,6 +75,11 @@
   /* Muted champagne gold (logo) */
   --champagne: oklch(0.74 0.09 80);
   --sage: oklch(0.93 0.018 140);
+  /* Deep navy + soft gold (hero / premium accents) */
+  --navy: oklch(0.21 0.045 258);
+  --navy-foreground: oklch(0.97 0.01 90);
+  --gold: oklch(0.83 0.09 88);
+  --gold-foreground: oklch(0.21 0.045 258);
 }
 
 @layer base {

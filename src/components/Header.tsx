@@ -50,7 +50,7 @@ export function Header() {
 
   return (
     <>
-      <div className="bg-primary py-1.5 text-center text-[10px] tracking-[0.2em] text-primary-foreground uppercase">
+      <div className="bg-navy py-1.5 text-center text-[10px] tracking-[0.2em] text-gold uppercase">
         <span key={msg} className="inline-block animate-in fade-in duration-700">
           {announcements[msg]}
         </span>
@@ -107,8 +107,8 @@ export function Header() {
                   key={item.label}
                   to={item.to}
                       search={item.search ?? {}}
-                  className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-ink"
-                  activeProps={{ className: "text-ink" }}
+                  className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-champagne"
+                  activeProps={{ className: "text-champagne" }}
                 >
                   {item.label}
                 </Link>
@@ -147,7 +147,7 @@ export function Header() {
             >
               <Heart className="size-[18px]" />
               {wishlist.length > 0 && (
-                <span className="absolute top-1 right-0.5 size-1.5 rounded-full bg-primary" />
+                <span className="absolute top-1 right-0.5 size-1.5 rounded-full bg-champagne" />
               )}
             </Link>
             <button
@@ -157,7 +157,7 @@ export function Header() {
             >
               <ShoppingBag className="size-[18px]" />
               {count > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] leading-4 text-primary-foreground">
+                <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-navy px-1 text-[10px] leading-4 text-gold">
                   {count}
                 </span>
               )}
@@ -232,7 +232,7 @@ function MobileNav() {
       >
         <ShoppingBag className="size-[18px]" /> Cart
         {count > 0 && (
-          <span className="absolute top-1.5 right-[22%] grid min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] leading-4 text-primary-foreground">
+          <span className="absolute top-1.5 right-[22%] grid min-w-4 place-items-center rounded-full bg-navy px-1 text-[10px] leading-4 text-gold">
             {count}
           </span>
         )}
