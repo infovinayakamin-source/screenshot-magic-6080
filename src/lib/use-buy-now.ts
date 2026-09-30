@@ -5,8 +5,8 @@ import { useStore } from "@/lib/store";
 export function useBuyNow() {
   const { add, lines, setCartOpen } = useStore();
   const navigate = useNavigate();
-  return (id: string) => {
-    if (!lines.some((l) => l.id === id)) add(id);
+  return (id: string, qty = 1) => {
+    if (!lines.some((l) => l.id === id)) add(id, qty);
     setCartOpen(false);
     void navigate({ to: "/checkout" });
   };

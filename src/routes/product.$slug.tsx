@@ -15,6 +15,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Newsletter } from "@/components/Newsletter";
 import { discountPercent, formatINR, getProduct, products } from "@/lib/products";
 import { useStore } from "@/lib/store";
+import { useBuyNow } from "@/lib/use-buy-now";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/product/$slug")({
@@ -64,7 +65,8 @@ const reviews = [
 
 function ProductPage() {
   const { product } = Route.useLoaderData();
-  const { add, wishlist, toggleWishlist, markViewed, recentlyViewed, setCartOpen } = useStore();
+  const { add, wishlist, toggleWishlist, markViewed, recentlyViewed } = useStore();
+  const buyNow = useBuyNow();
   const [active, setActive] = useState(0);
   const [qty, setQty] = useState(1);
   const [zoom, setZoom] = useState(false);
@@ -220,13 +222,9 @@ function ProductPage() {
               size="xl"
               className="flex-1"
               disabled={soldOut}
-              asChild={!soldOut}
-              onClick={() => {
-                if (!soldOut) add(product.id, qty);
-                setCartOpen(false);
-              }}
+              onClick={() => buyNow(product.id, qty)}
             >
-              {soldOut ? <span>Buy it now</span> : <Link to="/checkout">Buy it now</Link>}
+              Buy it now
             </Button>
           </div>
 
