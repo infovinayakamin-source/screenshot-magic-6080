@@ -119,14 +119,14 @@ function Home() {
         </div>
       </section>
 
-      {/* BESTSELLERS — Zodiac Crystal Collection */}
-      <section className="border-y border-border bg-sand/50 py-20 md:py-24" aria-labelledby="bestsellers-heading">
+      {/* ZODIAC CRYSTAL COLLECTION */}
+      <section className="border-y border-border bg-sand/50 py-20 md:py-24" aria-labelledby="zodiac-collection-heading">
         <div className="shell">
           <Reveal className="text-center">
-            <p className="eyebrow">Loved most</p>
-            <h2 id="bestsellers-heading" className="mt-3 text-3xl text-ink md:text-5xl">Bestsellers</h2>
+            <p className="eyebrow">New collection</p>
+            <h2 id="zodiac-collection-heading" className="mt-3 text-3xl text-ink md:text-5xl">Zodiac Crystal Collection</h2>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-              Crystal bracelets inspired by the 12 zodiac signs. Find your sign.
+              Explore crystal bracelets inspired by the 12 zodiac signs. Find your sign and choose a style that feels personal.
             </p>
           </Reveal>
           <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4">
