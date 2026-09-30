@@ -66,40 +66,49 @@ function Home() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-background">
-        <div className="shell grid items-center gap-10 py-14 md:grid-cols-2 md:gap-12 md:py-24">
-          <div className="reveal max-w-xl">
-            <p className="eyebrow">Natural stone jewellery</p>
-            <h1 className="mt-5 text-[2.75rem] leading-[1.02] text-ink sm:text-6xl lg:text-7xl">
-              Wear your energy.
-            </h1>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground">
-              Thoughtfully crafted crystal jewellery designed to bring beauty, intention and meaning into
-              your everyday style.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button variant="ink" size="xl" asChild>
-                <Link to="/shop">Shop collection</Link>
-              </Button>
-              <Button variant="quiet" size="xl" asChild>
-                <Link to="/collections">Explore crystals</Link>
-              </Button>
-            </div>
+      {/* HERO — dark navy cinematic banner with gold serif headline */}
+      <section className="relative overflow-hidden bg-[#0a1428]">
+        <img
+          src={heroImage}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1428]/70 via-[#0a1428]/55 to-[#0a1428]/90" />
+        <div className="shell relative flex min-h-[70vh] flex-col items-center justify-center py-20 text-center md:min-h-[80vh]">
+          <p className="reveal text-xs tracking-[0.4em] text-white/80 uppercase">
+            Natural stone jewellery
+          </p>
+          <h1 className="reveal mt-6 font-display text-5xl leading-[1.02] text-[#e8cf9a] sm:text-7xl lg:text-8xl">
+            Wear your energy.
+          </h1>
+          <div className="reveal mt-6 flex items-center gap-4 text-[#e8cf9a]" aria-hidden>
+            <span className="h-px w-16 bg-gradient-to-r from-transparent to-[#e8cf9a]/70 sm:w-24" />
+            <Gem className="size-5" strokeWidth={1.2} />
+            <span className="h-px w-16 bg-gradient-to-l from-transparent to-[#e8cf9a]/70 sm:w-24" />
           </div>
-
-          <div className="relative">
-            <img
-              src={heroImage}
-              alt="Turquoise stone bracelet and Tree of Life crystal pendant on warm ivory stone"
-              width={1600}
-              height={1200}
-              className="aspect-[4/3] w-full rounded-2xl object-cover shadow-[var(--shadow-lift)]"
-            />
-            <div className="absolute -bottom-5 left-4 hidden rounded-xl bg-background/95 px-5 py-4 shadow-[var(--shadow-soft)] backdrop-blur sm:block">
-              <Stars rating={5} />
-              <p className="mt-1.5 text-xs text-muted-foreground">Rated 4.8 by 600+ customers</p>
-            </div>
+          <p className="reveal mt-6 max-w-xl font-display text-lg italic text-white/90 sm:text-2xl">
+            Thoughtfully crafted crystal jewellery for beauty, intention and everyday meaning.
+          </p>
+          <div className="reveal mt-10 flex flex-col gap-3 sm:flex-row">
+            <Button
+              size="xl"
+              asChild
+              className="rounded-full border border-[#e8cf9a] bg-transparent px-10 text-[#e8cf9a] hover:bg-[#e8cf9a] hover:text-[#0a1428]"
+            >
+              <Link to="/shop">Shop collection</Link>
+            </Button>
+            <Button
+              size="xl"
+              asChild
+              className="rounded-full border border-white/30 bg-transparent px-10 text-white hover:bg-white hover:text-[#0a1428]"
+            >
+              <Link to="/collections">Explore crystals</Link>
+            </Button>
+          </div>
+          <div className="reveal mt-10 flex items-center gap-2 text-white/70">
+            <Stars rating={5} />
+            <span className="text-xs">Rated 4.8 by 600+ customers</span>
           </div>
         </div>
       </section>
