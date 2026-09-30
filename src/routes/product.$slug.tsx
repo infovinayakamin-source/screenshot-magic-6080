@@ -65,7 +65,7 @@ const reviews = [
 
 function ProductPage() {
   const { product } = Route.useLoaderData();
-  const { add, wishlist, toggleWishlist, markViewed, recentlyViewed, setCartOpen } = useStore();
+  const { add, wishlist, toggleWishlist, markViewed, recentlyViewed } = useStore();
   const buyNow = useBuyNow();
   const [active, setActive] = useState(0);
   const [qty, setQty] = useState(1);
