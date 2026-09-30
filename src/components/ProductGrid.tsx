@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { SlidersHorizontal } from "lucide-react";
+import { useId, useMemo, useState } from "react";
+import { SlidersHorizontal, X } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { QuickView } from "@/components/QuickView";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
-import { type Product } from "@/lib/products";
+import { formatINR, type Product } from "@/lib/products";
 
 export type Sort = "featured" | "new" | "price-asc" | "price-desc" | "best";
 
@@ -42,12 +42,26 @@ export function ProductGrid({
   const [stones, setStones] = useState<string[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [inStockOnly, setInStockOnly] = useState(false);
-  const [maxPrice, setMaxPrice] = useState(4000);
+  const priceCeiling = Math.ceil(Math.max(100, ...source.map((p) => p.price)) / 100) * 100;
+  const [priceLimit, setPriceLimit] = useState<number | null>(null);
+  const maxPrice = priceLimit == null ? priceCeiling : Math.min(priceLimit, priceCeiling);
   const [quick, setQuick] = useState<Product | null>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const idPrefix = useId();
 
   const allCategories = uniq(source.map((p) => p.category));
   const allStones = uniq(source.map((p) => p.stoneType));
   const allColors = uniq(source.map((p) => p.color));
+  const hasFilters = categories.length > 0 || stones.length > 0 || colors.length > 0 || inStockOnly || maxPrice < priceCeiling;
+  const activeCount = categories.length + stones.length + colors.length + Number(inStockOnly) + Number(maxPrice < priceCeiling);
+
+  const clearFilters = () => {
+    setCategories([]);
+    setStones([]);
+    setColors([]);
+    setInStockOnly(false);
+    setPriceLimit(null);
+  };
 
   const filtered = useMemo(() => {
     const list = source.filter(
@@ -70,92 +84,97 @@ export function ProductGrid({
   const toggle = (value: string, list: string[], set: (v: string[]) => void) =>
     set(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
 
-  const filters = (
+  const filters = (prefix: string) => (
     <div className="flex flex-col gap-8">
-      <FilterGroup title="Category">
+      {allCategories.length > 1 && <FilterGroup title="Category">
         {allCategories.map((c) => (
           <CheckRow
             key={c}
-            id={`cat-${c}`}
+            id={`${prefix}-cat-${c}`}
             label={c}
             checked={categories.includes(c)}
             onChange={() => toggle(c, categories, setCategories)}
           />
         ))}
-      </FilterGroup>
+      </FilterGroup>}
 
-      <FilterGroup title={`Price · up to ₹${maxPrice.toLocaleString("en-IN")}`}>
+      <FilterGroup title={`Price · up to ${formatINR(maxPrice)}`}>
         <Slider
           value={[maxPrice]}
-          min={1000}
-          max={4000}
-          step={100}
-          onValueChange={(v) => setMaxPrice(v[0] ?? 4000)}
+          min={0}
+          max={priceCeiling}
+          step={Math.max(1, Math.ceil(priceCeiling / 40 / 100) * 100)}
+          onValueChange={(v) => setPriceLimit(v[0] ?? priceCeiling)}
+          aria-label="Maximum price"
           className="mt-2"
         />
       </FilterGroup>
 
-      <FilterGroup title="Stone">
+      {allStones.length > 1 && <FilterGroup title="Stone">
         {allStones.map((s) => (
           <CheckRow
             key={s}
-            id={`stone-${s}`}
+            id={`${prefix}-stone-${s}`}
             label={s}
             checked={stones.includes(s)}
             onChange={() => toggle(s, stones, setStones)}
           />
         ))}
-      </FilterGroup>
+      </FilterGroup>}
 
-      <FilterGroup title="Colour">
+      {allColors.length > 1 && <FilterGroup title="Colour">
         {allColors.map((c) => (
           <CheckRow
             key={c}
-            id={`color-${c}`}
+            id={`${prefix}-color-${c}`}
             label={c}
             checked={colors.includes(c)}
             onChange={() => toggle(c, colors, setColors)}
           />
         ))}
-      </FilterGroup>
+      </FilterGroup>}
 
       <FilterGroup title="Availability">
         <CheckRow
-          id="in-stock"
+          id={`${prefix}-in-stock`}
           label="In stock only"
           checked={inStockOnly}
           onChange={() => setInStockOnly(!inStockOnly)}
         />
       </FilterGroup>
+      {hasFilters && <Button variant="quiet" size="sm" onClick={clearFilters}>Clear filters</Button>}
     </div>
   );
 
   return (
     <div className="grid gap-10 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-12">
-      <aside className="hidden lg:block">{filters}</aside>
+      <aside className="hidden lg:block">{filters(`${idPrefix}-desktop`)}</aside>
 
       <div>
         <div className="mb-6 flex items-center justify-between gap-3">
-          <p className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
-            {filtered.length} pieces
+          <p aria-live="polite" className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
+            {filtered.length} of {source.length} pieces
           </p>
           <div className="flex items-center gap-2">
-            <Sheet>
-              <SheetTrigger asChild className="lg:hidden">
+            <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+              <SheetTrigger asChild>
                 <Button variant="quiet" size="sm" className="h-9">
-                  <SlidersHorizontal /> Filter
+                  <SlidersHorizontal /> Filter{activeCount > 0 ? ` (${activeCount})` : ""}
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[85vw] max-w-sm overflow-y-auto">
                 <SheetHeader className="text-left">
                   <SheetTitle className="font-display text-xl">Filter</SheetTitle>
                 </SheetHeader>
-                <div className="mt-6">{filters}</div>
+                <div className="mt-6 pb-20">{filters(`${idPrefix}-mobile`)}</div>
+                <div className="sticky bottom-0 -mx-6 border-t border-border bg-background p-4">
+                  <Button className="w-full" onClick={() => setFiltersOpen(false)}>Show {filtered.length} pieces</Button>
+                </div>
               </SheetContent>
             </Sheet>
 
             <Select value={sort} onValueChange={(v) => setSort(v as Sort)}>
-              <SelectTrigger className="h-9 w-[165px] text-xs">
+              <SelectTrigger className="h-9 w-[165px] text-xs" aria-label="Sort products">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -169,10 +188,22 @@ export function ProductGrid({
           </div>
         </div>
 
+        {hasFilters && (
+          <div className="mb-5 flex flex-wrap items-center gap-2" aria-label="Active filters">
+            {[...categories.map((value) => ({ value, remove: () => toggle(value, categories, setCategories) })), ...stones.map((value) => ({ value, remove: () => toggle(value, stones, setStones) })), ...colors.map((value) => ({ value, remove: () => toggle(value, colors, setColors) })), ...(inStockOnly ? [{ value: "In stock", remove: () => setInStockOnly(false) }] : []), ...(maxPrice < priceCeiling ? [{ value: `Under ${formatINR(maxPrice)}`, remove: () => setPriceLimit(null) }] : [])].map(({ value, remove }) => (
+              <Button key={value} variant="outline" size="sm" onClick={remove} aria-label={`Remove ${value} filter`} className="h-8 max-w-full gap-1 overflow-hidden text-xs">
+                <span className="truncate">{value}</span><X className="shrink-0" />
+              </Button>
+            ))}
+            <Button variant="link" size="sm" onClick={clearFilters}>Clear all</Button>
+          </div>
+        )}
+
         {filtered.length === 0 ? (
-          <p className="py-20 text-center text-sm text-muted-foreground">
-            No pieces match these filters yet.
-          </p>
+          <div className="py-20 text-center">
+            <p className="text-sm text-muted-foreground">No pieces match these filters yet.</p>
+            <Button variant="quiet" size="sm" className="mt-5" onClick={clearFilters}>Clear filters</Button>
+          </div>
         ) : (
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-5 xl:grid-cols-3">
             {filtered.map((p) => (
