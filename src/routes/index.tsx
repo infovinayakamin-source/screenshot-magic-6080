@@ -212,44 +212,6 @@ function Home() {
         </div>
       </section>
 
-      {/* COLLECTIONS */}
-      <section className="shell py-20 md:py-24">
-        <Reveal className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="eyebrow">Curated edits</p>
-            <h2 className="mt-3 text-3xl text-ink md:text-5xl">Shop by collection</h2>
-          </div>
-          <Link
-            to="/collections"
-            className="inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-ink uppercase hover:opacity-70"
-          >
-            View all <ArrowRight className="size-3.5" />
-          </Link>
-        </Reveal>
-
-        <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
-          {collections.map((c, i) => (
-            <Reveal key={c.slug} delay={i * 60}>
-              <Link to="/collections/$slug" params={{ slug: c.slug }} className="group block">
-                <div className="overflow-hidden rounded-xl bg-sand">
-                  <img
-                    src={c.image}
-                    alt={c.name}
-                    loading="lazy"
-                    className="aspect-square w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                  />
-                </div>
-                <h3 className="mt-3 font-display text-lg text-ink">{c.name}</h3>
-                <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{c.description}</p>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-ink uppercase">
-                  Explore collection <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       {/* BESTSELLERS */}
       <section className="bg-sand/50 py-20 md:py-24">
         <div className="shell">
