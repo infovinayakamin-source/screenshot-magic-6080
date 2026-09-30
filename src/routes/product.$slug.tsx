@@ -65,6 +65,7 @@ const reviews = [
 function ProductPage() {
   const { product } = Route.useLoaderData();
   const { add, wishlist, toggleWishlist, markViewed, recentlyViewed, setCartOpen } = useStore();
+  const buyNow = useBuyNow();
   const [active, setActive] = useState(0);
   const [qty, setQty] = useState(1);
   const [zoom, setZoom] = useState(false);
@@ -220,13 +221,9 @@ function ProductPage() {
               size="xl"
               className="flex-1"
               disabled={soldOut}
-              asChild={!soldOut}
-              onClick={() => {
-                if (!soldOut) add(product.id, qty);
-                setCartOpen(false);
-              }}
+              onClick={() => buyNow(product.id, qty)}
             >
-              {soldOut ? <span>Buy it now</span> : <Link to="/checkout">Buy it now</Link>}
+              Buy it now
             </Button>
           </div>
 
