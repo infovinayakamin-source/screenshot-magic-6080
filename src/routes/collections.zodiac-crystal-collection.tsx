@@ -135,12 +135,10 @@ function ZodiacPage() {
           </div>
         ) : (
           <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
-            {list.map((z) => (
-              (() => {
-                const product = getProduct(z.slug);
-                return product ? <ProductCard key={z.sign} product={product} imageFit="contain" onQuickView={setQuick} /> : null;
-              })()
-            ))}
+            {list.map((z) => {
+              const product = getProduct(z.slug);
+              return product ? <ProductCard key={z.sign} product={product} imageFit="contain" onQuickView={setQuick} /> : null;
+            })}
           </div>
         )}
       </section>
