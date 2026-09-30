@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Stars } from "@/components/Stars";
 import { discountPercent, formatINR, type Product } from "@/lib/products";
 import { useStore } from "@/lib/store";
+import { useBuyNow } from "@/lib/use-buy-now";
 
 export function QuickView({
   product,
@@ -14,6 +15,7 @@ export function QuickView({
   onOpenChange: (open: boolean) => void;
 }) {
   const { add } = useStore();
+  const buyNow = useBuyNow();
 
   return (
     <Dialog open={!!product} onOpenChange={onOpenChange}>
@@ -64,6 +66,18 @@ export function QuickView({
                 >
                   {product.inventory === 0 ? "Sold out" : "Add to cart"}
                 </Button>
+                {product.inventory > 0 && (
+                  <Button
+                    variant="default"
+                    size="xl"
+                    onClick={() => {
+                      onOpenChange(false);
+                      buyNow(product.id);
+                    }}
+                  >
+                    Buy it now
+                  </Button>
+                )}
                 <Button variant="quiet" size="xl" asChild onClick={() => onOpenChange(false)}>
                   <Link to="/product/$slug" params={{ slug: product.slug }}>
                     View full details
