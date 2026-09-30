@@ -161,7 +161,7 @@ function ProductPage() {
                 <span className="text-base text-muted-foreground line-through">
                   {formatINR(product.compareAtPrice)}
                 </span>
-                <span className="rounded-full bg-sand px-2.5 py-1 text-[11px] tracking-[0.12em] text-ink uppercase">
+                <span className="rounded-full bg-navy px-2.5 py-1 text-[11px] tracking-[0.12em] text-gold uppercase">
                   {off}% off
                 </span>
               </>
@@ -220,7 +220,7 @@ function ProductPage() {
             <Button
               variant="quiet"
               size="xl"
-              className="flex-1"
+              className="flex-1 border-gold/60 text-ink hover:bg-gold/15"
               disabled={soldOut}
               onClick={() => buyNow(product.id, qty)}
             >
@@ -228,9 +228,9 @@ function ProductPage() {
             </Button>
           </div>
 
-          <div className="mt-9 rounded-2xl bg-sand p-6">
-            <p className="eyebrow">Why you&apos;ll love it</p>
-            <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
+          <div className="mt-9 rounded-2xl bg-navy p-6">
+            <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">Why you&apos;ll love it</p>
+            <ul className="mt-4 flex flex-col gap-2.5 text-sm text-navy-foreground/80">
               {[
                 "Natural stone design",
                 "Hand-finished appearance",
@@ -238,7 +238,7 @@ function ProductPage() {
                 "Meaningful gifting option",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2.5">
-                  <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+                  <Check className="mt-0.5 size-4 shrink-0 text-gold" />
                   {item}
                 </li>
               ))}
@@ -372,13 +372,13 @@ function ProductPage() {
       <Newsletter />
 
       {/* Sticky mobile add to cart */}
-      <div className="fixed inset-x-0 bottom-14 z-40 border-t border-border bg-background/95 px-4 py-3 backdrop-blur-xl md:hidden">
+      <div className="fixed inset-x-0 bottom-14 z-40 border-t border-gold/25 bg-navy px-4 py-3 md:hidden">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <div className="min-w-0">
-            <p className="truncate text-sm text-ink">{product.name}</p>
-            <p className="text-xs text-muted-foreground">{formatINR(product.price)}</p>
+            <p className="truncate text-sm text-navy-foreground">{product.name}</p>
+            <p className="text-xs text-gold">{formatINR(product.price)}</p>
           </div>
-          <Button variant="ink" className="h-11 px-6" disabled={soldOut} onClick={addToCart}>
+          <Button className="h-11 bg-gold px-6 text-gold-foreground hover:bg-gold/90" disabled={soldOut} onClick={addToCart}>
             {soldOut ? "Sold out" : "Add to cart"}
           </Button>
         </div>
