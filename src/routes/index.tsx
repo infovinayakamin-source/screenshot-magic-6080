@@ -15,6 +15,7 @@ import roseQuartzImage from "@/assets/crystal-rose-quartz.jpg";
 import lapisLazuliImage from "@/assets/crystal-lapis-lazuli.jpg";
 import amethystImage from "@/assets/crystal-amethyst.jpg";
 import seleniteImage from "@/assets/crystal-selenite.jpg";
+import { zodiacItems } from "@/lib/zodiac";
 import {
   BRAND,
   collections,
@@ -179,6 +180,34 @@ function Home() {
                 </figcaption>
               </figure>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ZODIAC */}
+      <section className="border-y border-border bg-sand/50 py-16 md:py-20" aria-labelledby="zodiac-heading">
+        <div className="shell">
+          <Reveal className="text-center">
+            <p className="eyebrow">New collection</p>
+            <h2 id="zodiac-heading" className="mt-3 text-4xl text-ink md:text-5xl">Zodiac Crystal Collection</h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+              Crystal bracelets inspired by the 12 zodiac signs. Find your sign.
+            </p>
+          </Reveal>
+          <div className="mt-8 grid grid-cols-3 gap-3 md:grid-cols-6">
+            {zodiacItems.map((z) => (
+              <figure key={z.sign} className="overflow-hidden rounded-xl border border-border bg-card">
+                <img src={z.image} alt={`${z.sign} crystal bracelet`} loading="lazy" decoding="async" className="aspect-square w-full object-contain" />
+                <figcaption className="py-2 text-center text-xs text-ink">{z.sign} • {z.hindi}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Button asChild variant="ink" size="lg">
+              <Link to="/collections/zodiac-crystal-collection">
+                Explore Collection <ArrowRight />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

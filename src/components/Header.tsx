@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 const nav = [
   { label: "Shop", to: "/shop" as const },
   { label: "Collections", to: "/collections" as const },
+  { label: "Zodiac", to: "/collections/zodiac-crystal-collection" as const },
   { label: "New Arrivals", to: "/shop" as const, search: { sort: "newest" } },
   { label: "About", to: "/about" as const },
 ];
