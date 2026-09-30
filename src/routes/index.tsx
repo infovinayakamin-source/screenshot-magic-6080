@@ -67,7 +67,7 @@ function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-background via-sand to-sand">
+      <section className="relative overflow-hidden bg-background">
         <div className="shell grid items-center gap-10 py-14 md:grid-cols-2 md:gap-12 md:py-24">
           <div className="reveal max-w-xl">
             <p className="eyebrow">Natural stone jewellery</p>
