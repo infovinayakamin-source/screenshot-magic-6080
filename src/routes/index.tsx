@@ -18,7 +18,6 @@ import seleniteImage from "@/assets/crystal-selenite.jpg";
 import { zodiacItems } from "@/lib/zodiac";
 import {
   BRAND,
-  collections,
   editorialImage,
   heroImage,
   lifestyleImages,
