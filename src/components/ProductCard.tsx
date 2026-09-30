@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Stars } from "@/components/Stars";
 import { discountPercent, formatINR, type Product } from "@/lib/products";
 import { useStore } from "@/lib/store";
+import { useBuyNow } from "@/lib/use-buy-now";
 import { cn } from "@/lib/utils";
 
 export function ProductCard({
@@ -15,6 +16,7 @@ export function ProductCard({
   onQuickView?: (p: Product) => void;
 }) {
   const { add, wishlist, toggleWishlist } = useStore();
+  const buyNow = useBuyNow();
   const wished = wishlist.includes(product.id);
   const off = discountPercent(product);
   const soldOut = product.inventory === 0;
@@ -107,6 +109,11 @@ export function ProductCard({
         >
           {soldOut ? "Sold out" : "Add to cart"}
         </Button>
+        {!soldOut && (
+          <Button variant="ink" className="mt-2 w-full" onClick={() => buyNow(product.id)}>
+            Buy it now
+          </Button>
+        )}
       </div>
     </article>
   );

@@ -6,6 +6,7 @@ import pendantStone from "@/assets/pendant-stone.jpg";
 import giftSet from "@/assets/gift-set.jpg";
 import editorial from "@/assets/editorial.jpg";
 import hero from "@/assets/hero.jpg";
+import { zodiacItems, zodiacTitle } from "@/lib/zodiac";
 
 export const BRAND = "ShivAmrit Healers";
 
@@ -163,6 +164,28 @@ export const products: Product[] = [
     featured: true,
     bestseller: true,
   },
+  ...zodiacItems.map(
+    (z): Product => ({
+      id: `z-${z.sign.toLowerCase()}`,
+      name: zodiacTitle(z),
+      slug: z.slug,
+      description: z.description,
+      shortDescription: z.shortDescription,
+      price: z.price ?? 0,
+      images: [z.image],
+      category: "Bracelets",
+      collection: ["zodiac-crystal-collection"],
+      stoneType: "Natural stone",
+      color: z.colours,
+      size: "8 mm beads, elastic stretch",
+      weight: "",
+      rating: 0,
+      reviewCount: 0,
+      inventory: z.inventory ?? 0,
+      featured: false,
+      bestseller: false,
+    }),
+  ),
 ];
 
 export type Collection = {

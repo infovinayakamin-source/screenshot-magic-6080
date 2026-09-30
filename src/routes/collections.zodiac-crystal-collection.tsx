@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MessageCircle } from "lucide-react";
+import { toast } from "sonner";
+import { useStore } from "@/lib/store";
+import { useBuyNow } from "@/lib/use-buy-now";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -118,12 +120,19 @@ function ZodiacPage() {
 
 function ZodiacCard({ item }: { item: ZodiacItem }) {
   const title = zodiacTitle(item);
+  const { add } = useStore();
+  const buyNow = useBuyNow();
+  const id = `z-${item.sign.toLowerCase()}`;
+  const available = item.price != null && (item.inventory ?? 0) > 0;
   const stock =
     item.inventory == null ? "Availability on request" : item.inventory > 0 ? "In stock" : "Sold out";
-  const msg = encodeURIComponent(`Hi, I'm interested in the ${item.sign} Crystal Bracelet.`);
   return (
     <article className="group flex flex-col">
-      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-shadow duration-300 group-hover:shadow-lift">
+      <Link
+        to="/product/$slug"
+        params={{ slug: item.slug }}
+        className="overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-shadow duration-300 group-hover:shadow-lift"
+      >
         <img
           src={item.image}
           alt={`${item.sign} crystal bracelet on a gold stand engraved ${item.hindi} ${item.sign}`}
@@ -131,17 +140,33 @@ function ZodiacCard({ item }: { item: ZodiacItem }) {
           decoding="async"
           className="aspect-square w-full object-contain"
         />
-      </div>
-      <h3 className="mt-3 font-display text-lg leading-snug text-ink">{title}</h3>
+      </Link>
+      <h3 className="mt-3 font-display text-lg leading-snug text-ink">
+        <Link to="/product/$slug" params={{ slug: item.slug }} className="hover:opacity-70">
+          {title}
+        </Link>
+      </h3>
       <p className="mt-1 text-sm text-ink">
         {item.price != null ? formatINR(item.price) : "Price coming soon"}
       </p>
       <p className="mt-0.5 text-xs text-muted-foreground">{stock}</p>
-      <Button asChild variant="quiet" size="sm" className="mt-3 w-full">
-        <a href={`https://wa.me/910000000000?text=${msg}`} target="_blank" rel="noopener noreferrer">
-          <MessageCircle /> Enquire
-        </a>
+      <Button
+        variant="quiet"
+        size="sm"
+        className="mt-3 w-full"
+        disabled={!available}
+        onClick={() => {
+          add(id);
+          toast.success(`${title} added to cart`);
+        }}
+      >
+        {available ? "Add to cart" : "Sold out"}
       </Button>
+      {available && (
+        <Button variant="ink" size="sm" className="mt-2 w-full" onClick={() => buyNow(id)}>
+          Buy it now
+        </Button>
+      )}
     </article>
   );
 }
