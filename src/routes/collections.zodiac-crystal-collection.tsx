@@ -100,7 +100,7 @@ function ZodiacPage() {
                 className={cn(
                   "h-8 rounded-sm px-3.5 text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                   sign === s.en
-                    ? "border-primary bg-primary text-primary-foreground"
+                    ? "border-navy bg-navy text-gold"
                     : "border-border bg-card text-ink hover:bg-sand",
                 )}
               >
