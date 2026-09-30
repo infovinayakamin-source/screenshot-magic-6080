@@ -15,6 +15,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Newsletter } from "@/components/Newsletter";
 import { discountPercent, formatINR, getProduct, products } from "@/lib/products";
 import { useStore } from "@/lib/store";
+import { useBuyNow } from "@/lib/use-buy-now";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/product/$slug")({
