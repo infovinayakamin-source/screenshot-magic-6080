@@ -67,25 +67,25 @@ function Home() {
   return (
     <>
       {/* HERO — dark navy cinematic banner with gold serif headline */}
-      <section className="relative overflow-hidden bg-[var(--navy)]">
+      <section className="relative overflow-hidden bg-navy">
         <img
           src={heroImage}
           alt=""
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--navy)]/70 via-[var(--navy)]/55 to-[var(--navy)]/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/55 to-navy/90" />
         <div className="shell relative flex min-h-[70vh] flex-col items-center justify-center py-20 text-center md:min-h-[80vh]">
           <p className="reveal text-xs tracking-[0.4em] text-white/80 uppercase">
             Natural stone jewellery
           </p>
-          <h1 className="reveal mt-6 font-display text-5xl leading-[1.02] text-[var(--gold)] sm:text-7xl lg:text-8xl">
+          <h1 className="reveal mt-6 font-display text-5xl leading-[1.02] text-gold sm:text-7xl lg:text-8xl">
             Wear your energy.
           </h1>
-          <div className="reveal mt-6 flex items-center gap-4 text-[var(--gold)]" aria-hidden>
-            <span className="h-px w-16 bg-gradient-to-r from-transparent to-[var(--gold)]/70 sm:w-24" />
+          <div className="reveal mt-6 flex items-center gap-4 text-gold" aria-hidden>
+            <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold/70 sm:w-24" />
             <Gem className="size-5" strokeWidth={1.2} />
-            <span className="h-px w-16 bg-gradient-to-l from-transparent to-[var(--gold)]/70 sm:w-24" />
+            <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold/70 sm:w-24" />
           </div>
           <p className="reveal mt-6 max-w-xl font-display text-lg italic text-white/90 sm:text-2xl">
             Thoughtfully crafted crystal jewellery for beauty, intention and everyday meaning.
@@ -94,14 +94,14 @@ function Home() {
             <Button
               size="xl"
               asChild
-              className="rounded-full border border-[var(--gold)] bg-transparent px-10 text-[var(--gold)] hover:bg-[var(--gold)] hover:text-[var(--navy)]"
+              className="rounded-full border border-gold bg-transparent px-10 text-gold hover:bg-gold hover:text-navy"
             >
               <Link to="/shop">Shop collection</Link>
             </Button>
             <Button
               size="xl"
               asChild
-              className="rounded-full border border-white/30 bg-transparent px-10 text-white hover:bg-white hover:text-[var(--navy)]"
+              className="rounded-full border border-white/30 bg-transparent px-10 text-white hover:bg-white hover:text-navy"
             >
               <Link to="/collections">Explore crystals</Link>
             </Button>
