@@ -18,6 +18,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
+import { Route as CollectionsZodiacCrystalCollectionRouteImport } from './routes/collections.zodiac-crystal-collection'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,12 @@ const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
   path: '/collections/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionsZodiacCrystalCollectionRoute =
+  CollectionsZodiacCrystalCollectionRouteImport.update({
+    id: '/collections/zodiac-crystal-collection',
+    path: '/collections/zodiac-crystal-collection',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
   id: '/product/$slug',
   path: '/product/$slug',
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/shop': typeof ShopRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
 }
@@ -92,6 +100,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/shop': typeof ShopRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections': typeof CollectionsIndexRoute
 }
@@ -105,6 +114,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/shop': typeof ShopRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
 }
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/shop'
     | '/collections/$slug'
+    | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections/'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/shop'
     | '/collections/$slug'
+    | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections'
   id:
@@ -143,6 +155,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/shop'
     | '/collections/$slug'
+    | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections/'
   fileRoutesById: FileRoutesById
@@ -156,6 +169,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   ShopRoute: typeof ShopRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
+  CollectionsZodiacCrystalCollectionRoute: typeof CollectionsZodiacCrystalCollectionRoute
   ProductSlugRoute: typeof ProductSlugRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
 }
@@ -225,6 +239,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collections/zodiac-crystal-collection': {
+      id: '/collections/zodiac-crystal-collection'
+      path: '/collections/zodiac-crystal-collection'
+      fullPath: '/collections/zodiac-crystal-collection'
+      preLoaderRoute: typeof CollectionsZodiacCrystalCollectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product/$slug': {
       id: '/product/$slug'
       path: '/product/$slug'
@@ -244,6 +265,8 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   ShopRoute: ShopRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
+  CollectionsZodiacCrystalCollectionRoute:
+    CollectionsZodiacCrystalCollectionRoute,
   ProductSlugRoute: ProductSlugRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
 }
