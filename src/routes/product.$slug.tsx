@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, Minus, Plus, Check, Maximize2 } from "lucide-react";
+import { Heart, Minus, Plus, Check } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { ProductGallery } from "@/components/ProductGallery";
 import {
   Accordion,
   AccordionContent,
@@ -36,6 +36,8 @@ export const Route = createFileRoute("/product/$slug")({
         { name: "description", content: product.shortDescription },
         { property: "og:title", content: title },
         { property: "og:description", content: product.shortDescription },
+        { property: "og:type", content: "product" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },
@@ -67,15 +69,12 @@ function ProductPage() {
   const { product } = Route.useLoaderData();
   const { add, wishlist, toggleWishlist, markViewed, recentlyViewed } = useStore();
   const buyNow = useBuyNow();
-  const [active, setActive] = useState(0);
   const [qty, setQty] = useState(1);
-  const [zoom, setZoom] = useState(false);
   const wished = wishlist.includes(product.id);
   const off = discountPercent(product);
   const soldOut = product.inventory === 0;
 
   useEffect(() => {
-    setActive(0);
     setQty(1);
     markViewed(product.id);
   }, [product.id, markViewed]);
@@ -109,41 +108,7 @@ function ProductPage() {
       </div>
 
       <section className="shell grid gap-10 py-8 lg:grid-cols-2 lg:gap-16 lg:py-12">
-        <div>
-          <div className="group relative overflow-hidden rounded-2xl bg-sand">
-            <img
-              src={product.images[active]}
-              alt={product.name}
-              width={1200}
-              height={1200}
-              className="aspect-square w-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.06]"
-            />
-            <button
-              type="button"
-              onClick={() => setZoom(true)}
-              aria-label="View full screen"
-              className="absolute right-3 bottom-3 grid size-9 place-items-center rounded-full bg-background/90 text-ink backdrop-blur"
-            >
-              <Maximize2 className="size-4" />
-            </button>
-          </div>
-          <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
-            {product.images.map((img, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setActive(i)}
-                aria-label={`View image ${i + 1}`}
-                className={cn(
-                  "size-20 shrink-0 overflow-hidden rounded-lg border-2 transition-colors",
-                  i === active ? "border-ink" : "border-transparent",
-                )}
-              >
-                <img src={img} alt="" loading="lazy" className="size-full object-cover" />
-              </button>
-            ))}
-          </div>
-        </div>
+        <ProductGallery productId={product.id} images={product.images} name={product.name} />
 
         <div>
           <h1 className="text-3xl leading-tight text-ink md:text-5xl">{product.name}</h1>
@@ -384,12 +349,6 @@ function ProductPage() {
         </div>
       </div>
 
-      <Dialog open={zoom} onOpenChange={setZoom}>
-        <DialogContent className="max-w-4xl p-0">
-          <DialogTitle className="sr-only">{product.name}</DialogTitle>
-          <img src={product.images[active]} alt={product.name} className="w-full rounded-lg object-contain" />
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
