@@ -6,6 +6,7 @@ import { Stars } from "@/components/Stars";
 import { discountPercent, formatINR, type Product } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { useBuyNow } from "@/lib/use-buy-now";
+import { cn } from "@/lib/utils";
 
 export function QuickView({
   product,
@@ -25,14 +26,16 @@ export function QuickView({
             <img
               src={product.images[0]}
               alt={product.name}
-              className="aspect-square w-full object-cover"
+              className={cn("aspect-square w-full", product.collection.includes("zodiac-crystal-collection") ? "object-contain" : "object-cover")}
             />
             <div className="p-6">
               <DialogTitle className="font-display text-2xl text-ink">{product.name}</DialogTitle>
-              <div className="mt-2 flex items-center gap-2">
-                <Stars rating={product.rating} />
-                <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
-              </div>
+              {product.reviewCount > 0 && (
+                <div className="mt-2 flex items-center gap-2">
+                  <Stars rating={product.rating} />
+                  <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
+                </div>
+              )}
               <div className="mt-3 flex flex-wrap items-baseline gap-2">
                 <span className="text-lg text-ink">{formatINR(product.price)}</span>
                 {product.compareAtPrice && (

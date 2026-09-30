@@ -207,7 +207,7 @@ export function ProductGrid({
         ) : (
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-5 xl:grid-cols-3">
             {filtered.map((p) => (
-              <ProductCard key={p.id} product={p} onQuickView={setQuick} />
+              <ProductCard key={p.id} product={p} imageFit={p.collection.includes("zodiac-crystal-collection") ? "contain" : "cover"} onQuickView={setQuick} />
             ))}
           </div>
         )}
