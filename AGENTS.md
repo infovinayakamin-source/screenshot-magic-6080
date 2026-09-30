@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep product image navigation and touch/desktop zoom in the shared `ProductGallery` component; one gallery serves bracelet and pendant detail pages consistently.
