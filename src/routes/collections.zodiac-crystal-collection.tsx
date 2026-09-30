@@ -4,6 +4,9 @@ import { toast } from "sonner";
 import { useStore } from "@/lib/store";
 import { useBuyNow } from "@/lib/use-buy-now";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -37,9 +40,16 @@ type Sort = "default" | "price-asc" | "price-desc";
 function ZodiacPage() {
   const [sign, setSign] = useState("all");
   const [sort, setSort] = useState<Sort>("default");
+  const [query, setQuery] = useState("");
+  const [inStockOnly, setInStockOnly] = useState(false);
 
   const list = useMemo(() => {
-    const l = zodiacItems.filter((z) => sign === "all" || z.sign === sign);
+    const normalized = query.trim().toLocaleLowerCase();
+    const l = zodiacItems.filter((z) =>
+      (sign === "all" || z.sign === sign) &&
+      (!inStockOnly || (z.inventory ?? 0) > 0) &&
+      (!normalized || `${z.sign} ${z.hindi} ${zodiacTitle(z)}`.toLocaleLowerCase().includes(normalized))
+    );
     if (sort !== "default") {
       l.sort((a, b) => {
         if (a.price == null) return 1;
@@ -48,7 +58,9 @@ function ZodiacPage() {
       });
     }
     return l;
-  }, [sign, sort]);
+  }, [sign, sort, query, inStockOnly]);
+
+  const clearFilters = () => { setSign("all"); setQuery(""); setInStockOnly(false); };
 
   return (
     <>
@@ -67,27 +79,37 @@ function ZodiacPage() {
       <section className="shell py-12 md:py-16" aria-labelledby="zodiac-shop">
         <h2 id="zodiac-shop" className="text-3xl text-ink md:text-4xl">Shop by Zodiac Sign</h2>
 
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find your sign" aria-label="Search zodiac signs" className="max-w-sm" />
+          <div className="flex items-center gap-2">
+            <Checkbox id="zodiac-in-stock" checked={inStockOnly} onCheckedChange={(checked) => setInStockOnly(checked === true)} />
+            <Label htmlFor="zodiac-in-stock" className="text-sm text-ink">In stock only</Label>
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by zodiac sign">
             {[{ en: "all", hi: "" }, ...ZODIAC_SIGNS].map((s) => (
-              <button
+              <Button
                 key={s.en}
                 type="button"
+                variant="outline"
+                size="sm"
                 onClick={() => setSign(s.en)}
                 aria-pressed={sign === s.en}
                 className={cn(
-                  "rounded-full border px-3.5 py-1.5 text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                  "h-8 rounded-sm px-3.5 text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                   sign === s.en
-                    ? "border-primary bg-primary text-primary-foreground"
+                    ? "border-navy bg-navy text-gold"
                     : "border-border bg-card text-ink hover:bg-sand",
                 )}
               >
                 {s.en === "all" ? "All Signs" : `${s.en} • ${s.hi}`}
-              </button>
+              </Button>
             ))}
           </div>
           <Select value={sort} onValueChange={(v) => setSort(v as Sort)}>
-            <SelectTrigger className="h-9 w-[170px] text-xs" aria-label="Sort">
+            <SelectTrigger className="h-9 w-[170px] text-xs" aria-label="Sort zodiac bracelets">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -98,11 +120,16 @@ function ZodiacPage() {
           </Select>
         </div>
 
+        <div className="mt-5 flex items-center justify-between gap-3 text-xs text-muted-foreground">
+          <p aria-live="polite">Showing {list.length} of {zodiacItems.length} bracelets</p>
+          {(sign !== "all" || query || inStockOnly) && <Button variant="link" size="sm" onClick={clearFilters}>Clear filters</Button>}
+        </div>
+
         {list.length === 0 ? (
           <div className="mt-10 rounded-xl border border-dashed border-border py-16 text-center">
-            <p className="font-display text-2xl text-ink">This sign is coming soon</p>
-            <p className="mt-2 text-sm text-muted-foreground">We're still preparing this bracelet.</p>
-            <Button variant="quiet" size="sm" className="mt-5" onClick={() => setSign("all")}>
+            <p className="font-display text-2xl text-ink">No bracelets found</p>
+            <p className="mt-2 text-sm text-muted-foreground">Try another sign or clear your filters.</p>
+            <Button variant="quiet" size="sm" className="mt-5" onClick={clearFilters}>
               Show all signs
             </Button>
           </div>
