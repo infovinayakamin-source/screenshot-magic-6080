@@ -174,7 +174,7 @@ export const products: Product[] = [
       price: z.price ?? 0,
       images: [z.image],
       category: "Bracelets",
-      collection: ["zodiac-crystal-collection"],
+      collection: ["zodiac-crystal-collection", "crystal-bracelets", "healing-inspired"],
       stoneType: "Natural stone",
       color: z.colours,
       size: "8 mm beads, elastic stretch",
