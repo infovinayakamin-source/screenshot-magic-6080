@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { toast } from "sonner";
-import { useStore } from "@/lib/store";
-import { useBuyNow } from "@/lib/use-buy-now";
+import { ProductCard } from "@/components/ProductCard";
+import { QuickView } from "@/components/QuickView";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,8 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { formatINR } from "@/lib/products";
-import { ZODIAC_SIGNS, zodiacItems, zodiacTitle, type ZodiacItem } from "@/lib/zodiac";
+import { getProduct, type Product } from "@/lib/products";
+import { ZODIAC_SIGNS, zodiacItems, zodiacTitle } from "@/lib/zodiac";
 import { cn } from "@/lib/utils";
 
 const DESC =
@@ -42,6 +41,7 @@ function ZodiacPage() {
   const [sort, setSort] = useState<Sort>("default");
   const [query, setQuery] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [quick, setQuick] = useState<Product | null>(null);
 
   const list = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase();
@@ -136,64 +136,15 @@ function ZodiacPage() {
         ) : (
           <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
             {list.map((z) => (
-              <ZodiacCard key={z.sign} item={z} />
+              (() => {
+                const product = getProduct(z.slug);
+                return product ? <ProductCard key={z.sign} product={product} imageFit="contain" onQuickView={setQuick} /> : null;
+              })()
             ))}
           </div>
         )}
       </section>
+      <QuickView product={quick} onOpenChange={(open) => !open && setQuick(null)} />
     </>
-  );
-}
-
-function ZodiacCard({ item }: { item: ZodiacItem }) {
-  const title = zodiacTitle(item);
-  const { add } = useStore();
-  const buyNow = useBuyNow();
-  const id = `z-${item.sign.toLowerCase()}`;
-  const available = item.price != null && (item.inventory ?? 0) > 0;
-  const stock =
-    item.inventory == null ? "Availability on request" : item.inventory > 0 ? "In stock" : "Sold out";
-  return (
-    <article className="group flex flex-col">
-      <Link
-        to="/product/$slug"
-        params={{ slug: item.slug }}
-        className="overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-shadow duration-300 group-hover:shadow-lift"
-      >
-        <img
-          src={item.image}
-          alt={`${item.sign} crystal bracelet on a gold stand engraved ${item.hindi} ${item.sign}`}
-          loading="lazy"
-          decoding="async"
-          className="aspect-square w-full object-contain"
-        />
-      </Link>
-      <h3 className="mt-3 font-display text-lg leading-snug text-ink">
-        <Link to="/product/$slug" params={{ slug: item.slug }} className="hover:opacity-70">
-          {title}
-        </Link>
-      </h3>
-      <p className="mt-1 text-sm text-ink">
-        {item.price != null ? formatINR(item.price) : "Price coming soon"}
-      </p>
-      <p className="mt-0.5 text-xs text-muted-foreground">{stock}</p>
-      <Button
-        variant="quiet"
-        size="sm"
-        className="mt-3 w-full"
-        disabled={!available}
-        onClick={() => {
-          add(id);
-          toast.success(`${title} added to cart`);
-        }}
-      >
-        {available ? "Add to cart" : "Sold out"}
-      </Button>
-      {available && (
-        <Button variant="ink" size="sm" className="mt-2 w-full" onClick={() => buyNow(id)}>
-          Buy it now
-        </Button>
-      )}
-    </article>
   );
 }

@@ -11,9 +11,11 @@ import { cn } from "@/lib/utils";
 export function ProductCard({
   product,
   onQuickView,
+  imageFit = "cover",
 }: {
   product: Product;
   onQuickView?: (p: Product) => void;
+  imageFit?: "cover" | "contain";
 }) {
   const { add, wishlist, toggleWishlist } = useStore();
   const buyNow = useBuyNow();
@@ -36,7 +38,7 @@ export function ProductCard({
             loading="lazy"
             width={1200}
             height={1200}
-            className="aspect-square w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+            className={cn("aspect-square w-full transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105", imageFit === "contain" ? "object-contain" : "object-cover")}
           />
         </Link>
 
@@ -53,17 +55,19 @@ export function ProductCard({
               </span>
             )}
           </div>
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={() => {
               toggleWishlist(product.id);
               toast(wished ? "Removed from wishlist" : "Saved to wishlist");
             }}
             aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
-            className="pointer-events-auto grid size-8 shrink-0 place-items-center rounded-full bg-background/90 text-ink backdrop-blur transition-colors hover:bg-background"
+            className="pointer-events-auto size-8 shrink-0 rounded-full bg-background/90 text-ink backdrop-blur transition-colors hover:bg-background"
           >
             <Heart className={cn("size-4", wished && "fill-destructive text-destructive")} />
-          </button>
+          </Button>
         </div>
 
         {onQuickView && (
@@ -86,10 +90,12 @@ export function ProductCard({
           </Link>
         </h3>
         <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{product.shortDescription}</p>
-        <div className="mt-2 flex items-center gap-2">
-          <Stars rating={product.rating} />
-          <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
-        </div>
+        {product.reviewCount > 0 && (
+          <div className="mt-2 flex items-center gap-2">
+            <Stars rating={product.rating} />
+            <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
+          </div>
+        )}
         <div className="mt-2 flex flex-wrap items-baseline gap-2">
           <span className="text-base font-medium text-ink">{formatINR(product.price)}</span>
           {product.compareAtPrice && (
