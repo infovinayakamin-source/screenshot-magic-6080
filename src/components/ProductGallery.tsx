@@ -93,7 +93,7 @@ export function ProductGallery({ images, name, productId }: ProductGalleryProps)
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="flex h-[min(90dvh,900px)] w-[calc(100vw-1rem)] max-w-5xl flex-col gap-0 overflow-hidden rounded-md border-border bg-background p-0 sm:w-[calc(100vw-3rem)]">
+        <DialogContent className="flex h-[min(76dvh,800px)] w-[calc(100vw-1rem)] max-w-5xl flex-col gap-0 overflow-hidden rounded-md border-border bg-background p-0 sm:h-[min(88dvh,900px)] sm:w-[calc(100vw-3rem)]">
           <DialogTitle className="shrink-0 border-b border-border px-4 py-4 pr-12 font-display text-lg text-navy sm:text-xl">{name} <span className="ml-2 font-sans text-xs text-muted-foreground">{active + 1} / {count}</span></DialogTitle>
           <div className="relative min-h-0 flex-1 bg-card">
             <TransformWrapper key={current} minScale={1} maxScale={5} centerOnInit wheel={{ step: 0.1 }} doubleClick={{ step: 1.4 }}>
