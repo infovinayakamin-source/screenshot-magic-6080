@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Leaf, Gift } from "lucide-react";
+import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Newsletter } from "@/components/Newsletter";
 import { heroImage, FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
@@ -104,7 +104,6 @@ function Home() {
         <Button asChild size="xl" className="border border-gold bg-gold text-gold-foreground hover:bg-gold/90"><Link to="/faq" hash="choose">Read the guide <ArrowRight /></Link></Button>
       </div>
     </section>
-    <section className="shell py-12 text-center"><Leaf className="mx-auto size-5 text-gold" /><p className="mt-3 text-sm text-muted-foreground">Customer photos and reviews will appear here when available.</p></section>
     <Newsletter />
   </>;
 }

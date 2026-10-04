@@ -163,7 +163,7 @@ function ProductPage() {
                 onClick={() => setQty(Math.max(1, qty - 1))}
               >
                 <Minus className="size-4" />
-              </Button>
+            </Button>
               <span className="w-8 text-center text-sm">{qty}</span>
               <Button variant="ghost"
                 type="button"
@@ -172,7 +172,7 @@ function ProductPage() {
                 onClick={() => setQty(qty + 1)}
               >
                 <Plus className="size-4" />
-              </Button>
+            </Button>
             </div>
             <Button variant="ghost"
               type="button"
@@ -184,7 +184,7 @@ function ProductPage() {
               className="grid size-11 place-items-center rounded-md border border-border text-ink"
             >
               <Heart className={cn("size-4", wished && "fill-destructive text-destructive")} />
-              </Button>
+            </Button>
           </div>
 
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
