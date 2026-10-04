@@ -45,7 +45,7 @@ function Shop() {
 
   return (
     <>
-      <section className="border-b border-border bg-sand/50">
+      <section className="border-b border-gold/40 bg-background">
         <div className="shell py-14 text-center md:py-20">
           <p className="eyebrow">{wishlistView ? "Saved pieces" : "The collection"}</p>
           <h1 className="mt-3 text-4xl text-ink md:text-6xl">

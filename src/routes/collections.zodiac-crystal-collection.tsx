@@ -64,7 +64,7 @@ function ZodiacPage() {
 
   return (
     <>
-      <section className="border-b border-border bg-sand/50">
+      <section className="border-b border-gold/40 bg-background">
         <div className="shell py-14 text-center md:py-20">
           <nav aria-label="Breadcrumb" className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
             <Link to="/" className="hover:text-ink">Home</Link>
