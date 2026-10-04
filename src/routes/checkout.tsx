@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Lock, Check } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
 import { useStore } from "@/lib/store";
+import { createRazorpayOrder, placeCodOrder, verifyRazorpayPayment } from "@/lib/payments.functions";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -171,12 +174,12 @@ function Checkout() {
                 ))}
               </RadioGroup>
               <p className="mt-3 inline-flex items-center gap-2 text-xs text-muted-foreground">
-                <Lock className="size-3.5" /> No payment is taken in this demo store.
+                <Lock className="size-3.5" /> Secure payments by Razorpay — UPI, cards, netbanking & wallets.
               </p>
             </fieldset>
 
-            <Button type="submit" variant="ink" size="xl" className="self-start">
-              Place order
+            <Button type="submit" variant="ink" size="xl" className="self-start" disabled={busy}>
+              {busy ? "Please wait…" : method === "cod" ? "Place order" : `Pay ${formatINR(subtotal + shipping)}`}
             </Button>
           </form>
 
