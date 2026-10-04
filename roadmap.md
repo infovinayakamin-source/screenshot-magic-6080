@@ -1,0 +1,4 @@
+- [ ] Make Zodiac Bracelets the only collection and simplify navigation.
+- [ ] Reorganize home around Zodiac browsing, truthful trust information, intention guide, brand story, reviews/FAQ.
+- [ ] Improve product detail benefits, sizing information, purchase cues, and optional WhatsApp inquiry.
+- [ ] Verify phone and desktop browsing; note missing Aquarius image, customer reviews/photos, verified ritual details, and WhatsApp number.
