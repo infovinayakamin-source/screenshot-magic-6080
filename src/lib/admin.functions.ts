@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { adminClient } from "./admin.server";
 
 export const ORDER_STATUSES = ["created", "paid", "cod", "shipped", "cancelled", "refunded"] as const;
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
@@ -47,23 +48,7 @@ export type OrderSummary = {
 const orderSelect =
   "id, status, amount, currency, items, customer, notes, created_at, paid_at, razorpay_order_id, razorpay_payment_id";
 
-/**
- * Loads the privileged backend client only after the signed-in caller has been
- * checked against the roles table. Kept inside handlers so the service key never
- * reaches browser code.
- */
-async function adminClient(userId: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data, error } = await supabaseAdmin.rpc("has_role", { _user_id: userId, _role: "admin" });
-  if (error) {
-    console.error("Role check failed", error);
-    throw new Error("Could not verify access");
-  }
-  if (!data) throw new Error("Admin access required");
-  return supabaseAdmin;
-}
-
-function toOrder(row: {
+type OrderRow = {
   id: string;
   status: string;
   amount: number;
@@ -75,15 +60,16 @@ function toOrder(row: {
   paid_at: string | null;
   razorpay_order_id: string | null;
   razorpay_payment_id: string | null;
-}): AdminOrder {
+};
+
+function toOrder(row: OrderRow): AdminOrder {
   return {
     id: row.id,
     status: row.status,
     amount: row.amount,
     currency: row.currency,
     items: Array.isArray(row.items) ? (row.items as OrderItem[]) : [],
-    customer:
-      row.customer && typeof row.customer === "object" ? (row.customer as OrderCustomer) : {},
+    customer: row.customer && typeof row.customer === "object" ? (row.customer as OrderCustomer) : {},
     notes: row.notes,
     created_at: row.created_at,
     paid_at: row.paid_at,
@@ -92,7 +78,7 @@ function toOrder(row: {
   };
 }
 
-/** Who am I: is this account an admin, and does any admin exist yet? */
+/** Is this account an admin, and does an owner account exist yet? */
 export const getAdminAccess = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
@@ -105,15 +91,12 @@ export const getAdminAccess = createServerFn({ method: "POST" })
       console.error(role.error);
       throw new Error("Could not verify access");
     }
-    return {
-      isAdmin: Boolean(role.data),
-      adminExists: (owners.data?.length ?? 0) > 0,
-    };
+    return { isAdmin: Boolean(role.data), adminExists: (owners.data?.length ?? 0) > 0 };
   });
 
 /**
- * One-time bootstrap: the very first confirmed account can make itself the
- * owner. Refuses as soon as any admin exists, so it can never be used twice.
+ * One-time bootstrap: the very first confirmed account can make itself owner.
+ * Refuses as soon as any admin exists, so it can never be used twice.
  */
 export const claimAdminAccess = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -133,7 +116,7 @@ export const listOrders = createServerFn({ method: "POST" })
     z
       .object({
         status: z.enum(["all", ...ORDER_STATUSES]).default("all"),
-        limit: z.number().int().min(1).max(500).default(200),
+        limit: z.number().int().min(1).max(500).default(300),
       })
       .parse(d),
   )
@@ -207,9 +190,7 @@ export const updateOrder = createServerFn({ method: "POST" })
         status: z.enum(ORDER_STATUSES).optional(),
         notes: z.string().max(2000).nullable().optional(),
       })
-      .refine((x) => x.status !== undefined || x.notes !== undefined, {
-        message: "Nothing to update",
-      })
+      .refine((x) => x.status !== undefined || x.notes !== undefined, { message: "Nothing to update" })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
