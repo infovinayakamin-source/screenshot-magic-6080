@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, Minus, Plus, Check, MessageCircle, Ruler, Gem, Gift } from "lucide-react";
+import { Heart, Minus, Plus, Check, MessageCircle, Ruler, Gem, Gift, ShoppingBag, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ProductGallery } from "@/components/ProductGallery";
@@ -92,25 +92,17 @@ function ProductPage() {
 
   return (
     <>
-      <div className="shell pt-6">
-        <nav className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
-          <Link to="/" className="hover:text-ink">Home</Link>
-          <span className="px-2">/</span>
-          <Link to="/shop" className="hover:text-ink">Shop</Link>
-          <span className="px-2">/</span>
-          <span className="text-ink">{product.name}</span>
-        </nav>
-      </div>
+      <div className="shell pt-8"><Link to="/shop" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-navy"><ArrowLeft className="size-4" /> Back to shop</Link></div>
 
-      <section className="shell grid gap-10 py-8 lg:grid-cols-2 lg:gap-16 lg:py-12">
+      <section className="shell grid gap-8 py-7 lg:grid-cols-2 lg:gap-12 lg:py-8">
         <ProductGallery productId={product.id} images={product.images} name={product.name} />
 
         <div>
-          <h1 className="text-3xl leading-tight text-ink md:text-5xl">{product.name}</h1>
-          {isZodiac && <p className="mt-2 text-xs tracking-[0.14em] text-primary uppercase">Zodiac Crystal Collection</p>}
+          {isZodiac && <p className="mb-4 text-xs font-bold text-navy uppercase">Zodiac bracelets</p>}
+          <h1 className="text-4xl leading-tight text-ink md:text-5xl">{product.name}</h1>
 
-          <div className="mt-5 flex flex-wrap items-baseline gap-3">
-            <span className="text-2xl text-ink">{formatINR(product.price)}</span>
+          <div className="mt-2 flex flex-wrap items-baseline gap-3 text-sm text-muted-foreground">
+            <span>{product.size} · {formatINR(product.price)}</span>
             {product.compareAtPrice && (
               <>
                 <span className="text-base text-muted-foreground line-through">
@@ -122,11 +114,24 @@ function ProductPage() {
               </>
             )}
           </div>
+          <div className="mt-8">
+            <p className="mb-2 text-xs font-semibold text-navy uppercase">Quantity</p>
+            <div className="inline-flex h-11 items-center rounded-full border border-border">
+              <Button variant="ghost" type="button" aria-label="Decrease quantity" className="grid size-10 place-items-center rounded-full text-ink" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="size-4" /></Button>
+              <span className="w-8 text-center text-sm">{qty}</span>
+              <Button variant="ghost" type="button" aria-label="Increase quantity" className="grid size-10 place-items-center rounded-full text-ink" onClick={() => setQty(qty + 1)}><Plus className="size-4" /></Button>
+            </div>
+            <p className="mt-2 text-sm text-muted-foreground">Total quantity: {qty} {qty === 1 ? "bracelet" : "bracelets"}</p>
+          </div>
+          <p className="mt-6 text-4xl font-bold text-navy">{formatINR(product.price * qty)}</p>
           <p className="mt-1 text-xs text-muted-foreground">Inclusive of all taxes</p>
-
-          <p className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground">
-            {product.description}
-          </p>
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <Button variant="ink" size="xl" className="w-full shrink-0 rounded-full sm:w-auto sm:flex-1" disabled={soldOut} onClick={addToCart}>
+              <ShoppingBag className="size-4" /> {soldOut ? "Sold out" : "Add to cart"}
+            </Button>
+            <Button variant="quiet" size="xl" className="w-full shrink-0 rounded-full sm:w-auto sm:flex-1" disabled={soldOut} onClick={() => buyNow(product.id, qty)}>Buy it now</Button>
+          </div>
+          <p className="mt-7 max-w-lg text-sm leading-relaxed text-muted-foreground">{product.description}</p>
 
           <div className="mt-6 space-y-3 border-y border-gold/40 py-5 text-sm text-ink">
             <p className="flex items-start gap-3"><Gem className="size-4 shrink-0 text-gold" /> Natural stone colours, each piece with its own variation</p>
@@ -153,26 +158,7 @@ function ProductPage() {
             <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />Cash on delivery available</span>
           </div>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <div className="inline-flex items-center rounded-md border border-border">
-              <Button variant="ghost"
-                type="button"
-                aria-label="Decrease quantity"
-                className="grid size-11 place-items-center text-ink"
-                onClick={() => setQty(Math.max(1, qty - 1))}
-              >
-                <Minus className="size-4" />
-            </Button>
-              <span className="w-8 text-center text-sm">{qty}</span>
-              <Button variant="ghost"
-                type="button"
-                aria-label="Increase quantity"
-                className="grid size-11 place-items-center text-ink"
-                onClick={() => setQty(qty + 1)}
-              >
-                <Plus className="size-4" />
-            </Button>
-            </div>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
             <Button variant="ghost"
               type="button"
               onClick={() => {
@@ -183,21 +169,6 @@ function ProductPage() {
               className="grid size-11 place-items-center rounded-md border border-border text-ink"
             >
               <Heart className={cn("size-4", wished && "fill-destructive text-destructive")} />
-            </Button>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <Button variant="quiet" size="xl" className="w-full shrink-0 sm:w-auto sm:flex-1" disabled={soldOut} onClick={addToCart}>
-              {soldOut ? "Sold out" : "Add to cart"}
-            </Button>
-            <Button
-              variant="ink"
-              size="xl"
-              className="w-full shrink-0 sm:w-auto sm:flex-1"
-              disabled={soldOut}
-              onClick={() => buyNow(product.id, qty)}
-            >
-              Buy it now
             </Button>
           </div>
 
