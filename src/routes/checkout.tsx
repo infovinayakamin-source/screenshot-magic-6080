@@ -159,7 +159,7 @@ function Checkout() {
 
             <fieldset>
               <legend className="eyebrow mb-4">Payment</legend>
-              <RadioGroup defaultValue="card" className="flex flex-col gap-3">
+              <RadioGroup value={method} onValueChange={setMethod} className="flex flex-col gap-3">
                 {[
                   { value: "card", label: "Card / UPI / Netbanking" },
                   { value: "cod", label: "Cash on delivery" },
@@ -232,7 +232,7 @@ function Field({
   return (
     <div className="flex flex-col gap-2">
       <Label htmlFor={id}>{label}</Label>
-      <Input id={id} type={type} required placeholder={placeholder} className="h-11" />
+      <Input id={id} name={id} type={type} required placeholder={placeholder} className="h-11" />
     </div>
   );
 }
