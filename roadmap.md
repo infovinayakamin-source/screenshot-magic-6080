@@ -5,4 +5,4 @@
 - [x] Admin dashboard visible to admin role only (customers/other devs blocked) — signed-out visitors bounce to /auth, non-admins see "no access", admin sees orders
 - [x] Apply Pure Minimalist styling to home, navigation, zodiac shop cards, product details, buttons, and page spacing; verify phone and desktop.
 - [ ] Close public sign-up once the owner account has claimed access
-- [ ] Match the Holism Organics reference layout and merchandising sections using only ShivAmrit zodiac products while retaining navy/gold theme — waiting for accessible reference/screenshots.
+- [x] Match the supplied reference's hero, featured product cards, process section, and product purchase layout using only ShivAmrit zodiac bracelets while retaining navy/gold theme; omit farm-specific claims and delivery promises.
