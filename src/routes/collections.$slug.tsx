@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Newsletter } from "@/components/Newsletter";
-import { collections, getCollection, productsInCollection } from "@/lib/products";
+import { getCollection, productsInCollection } from "@/lib/products";
 
 export const Route = createFileRoute("/collections/$slug")({
   loader: ({ params }) => {
@@ -32,7 +32,6 @@ export const Route = createFileRoute("/collections/$slug")({
 function CollectionPage() {
   const { collection } = Route.useLoaderData();
   const items = productsInCollection(collection.slug);
-  const related = collections.filter((c) => c.slug !== collection.slug).slice(0, 3);
 
   return (
     <>
@@ -58,28 +57,6 @@ function CollectionPage() {
 
       <section className="shell py-12 md:py-16">
         <ProductGrid source={items} />
-      </section>
-
-      <section className="shell pb-8">
-        <p className="eyebrow">Related collections</p>
-        <div className="mt-5 grid gap-5 sm:grid-cols-3">
-          {related.map((c) => (
-            <Link
-              key={c.slug}
-              to="/collections/$slug"
-              params={{ slug: c.slug }}
-              className="group flex items-center gap-4 rounded-xl border border-border p-3 transition-colors hover:bg-sand"
-            >
-              <img src={c.image} alt="" loading="lazy" className="size-16 rounded-lg object-cover" />
-              <span className="min-w-0">
-                <span className="block truncate font-display text-lg text-ink">{c.name}</span>
-                <span className="block text-xs text-muted-foreground">
-                  {productsInCollection(c.slug).length} pieces
-                </span>
-              </span>
-            </Link>
-          ))}
-        </div>
       </section>
 
       <Newsletter />

@@ -40,12 +40,12 @@ const faqs = [
   {
     id: "choose",
     q: "How do I choose a bracelet?",
-    a: "Start with the colour you are naturally drawn to, then consider bead size: 8mm reads more delicate, 10mm reads bolder. Every product page lists the stone and bead size.",
+    a: "Start with your zodiac sign or a colour you are drawn to. Check each product page for its listed bead size, materials and available fit before ordering.",
   },
   {
     id: "size",
     q: "What size should I choose?",
-    a: "Our stretch bracelets are made to an 18cm fit, which suits most wrists. Measure your wrist with a strip of paper and contact us if you are between sizes.",
+    a: "Sizes vary by piece. Check the size listed on the product page; if only a bead size is listed, the wrist circumference has not been confirmed. Measure your wrist before ordering and ask us about fit if you are unsure.",
   },
   {
     id: "daily",
@@ -70,7 +70,7 @@ const faqs = [
   {
     id: "support",
     q: "How can I contact support?",
-    a: "Write to us from the contact page or message us on WhatsApp. We reply within one business day.",
+    a: "Visit our contact page for the currently available support options.",
   },
   {
     id: "privacy",

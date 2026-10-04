@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Heart, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Stars } from "@/components/Stars";
 import { discountPercent, formatINR, type Product } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { useBuyNow } from "@/lib/use-buy-now";
@@ -90,12 +89,6 @@ export function ProductCard({
           </Link>
         </h3>
         <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{product.shortDescription}</p>
-        {product.reviewCount > 0 && (
-          <div className="mt-2 flex items-center gap-2">
-            <Stars rating={product.rating} />
-            <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
-          </div>
-        )}
         <div className="mt-2 flex flex-wrap items-baseline gap-2">
           <span className="text-base font-medium text-ink">{formatINR(product.price)}</span>
           {product.compareAtPrice && (

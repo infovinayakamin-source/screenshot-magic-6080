@@ -51,13 +51,13 @@
   /* Logo-led Premium: warm ivory canvas, charcoal text, logo navy + restrained gold */
   --background: oklch(1 0 0);
   --foreground: oklch(0.26 0 0);
-  --ink: oklch(0.25 0.006 180);
+  --ink: oklch(0.21 0.045 258);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.26 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.26 0 0);
   /* Logo navy */
-  --primary: oklch(0.37 0.06 185);
+  --primary: oklch(0.21 0.045 258);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.94 0.015 85);
   --secondary-foreground: oklch(0.26 0 0);

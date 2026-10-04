@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Menu, Search, User, Heart, ShoppingBag, X, Home, LayoutGrid } from "lucide-react";
+import { Menu, Search, Heart, ShoppingBag, X, Home, LayoutGrid } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpg";
-import { BRAND, formatINR, products } from "@/lib/products";
+import { BRAND, FREE_SHIPPING_THRESHOLD, formatINR, products } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 const nav = [
-  { label: "Shop", to: "/shop" as const },
-  { label: "Collections", to: "/collections" as const },
-  { label: "Zodiac", to: "/collections/zodiac-crystal-collection" as const },
-  { label: "New Arrivals", to: "/shop" as const, search: { sort: "newest" } },
+  { label: "Zodiac Bracelets", to: "/collections/zodiac-crystal-collection" as const },
+  { label: "All Jewelry", to: "/shop" as const },
   { label: "About", to: "/about" as const },
+  { label: "FAQ", to: "/faq" as const },
 ];
 
 const announcements = [
-  "Free shipping on orders above ₹999",
-  "New collection is here",
-  "Premium natural stone jewelry",
-  "Secure & easy checkout",
+  `Free shipping on orders above ${formatINR(FREE_SHIPPING_THRESHOLD)}`,
+  "Discover your zodiac bracelet",
+  "Natural stone jewelry",
+  "Secure checkout",
 ];
 
 export function Header() {
@@ -67,36 +67,28 @@ export function Header() {
             <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
               <SheetTrigger
                 aria-label="Open menu"
-                className="grid size-9 shrink-0 place-items-center text-ink lg:hidden"
+                className="grid size-9 shrink-0 place-items-center text-navy lg:hidden"
               >
                 <Menu className="size-5" />
               </SheetTrigger>
               <SheetContent side="left" className="w-[85vw] max-w-sm p-0">
                 <div className="flex items-center justify-between border-b border-border px-5 py-4">
-                  <span className="flex items-center gap-3 font-display text-xl text-ink"><img src={logo} alt="" width={320} height={320} className="size-10 rounded-full" />{BRAND}</span>
-                  <button aria-label="Close menu" onClick={() => setMenuOpen(false)}>
+                   <span className="flex items-center gap-3 font-display text-xl text-ink"><img src={logo} alt="" width={320} height={320} className="size-10 rounded-full object-contain" />{BRAND}</span>
+                  <Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
                     <X className="size-5" />
-                  </button>
+                  </Button>
                 </div>
                 <nav className="flex flex-col px-5 py-4">
                   {nav.map((item) => (
                     <Link
                       key={item.label}
                       to={item.to}
-                      search={item.search ?? {}}
                       onClick={() => setMenuOpen(false)}
                       className="border-b border-border/70 py-4 font-display text-2xl text-ink"
                     >
                       {item.label}
                     </Link>
                   ))}
-                  <Link
-                    to="/faq"
-                    onClick={() => setMenuOpen(false)}
-                    className="py-4 font-display text-2xl text-ink"
-                  >
-                    FAQ
-                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -106,7 +98,6 @@ export function Header() {
                 <Link
                   key={item.label}
                   to={item.to}
-                      search={item.search ?? {}}
                   className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-champagne"
                   activeProps={{ className: "text-champagne" }}
                 >
@@ -121,24 +112,17 @@ export function Header() {
             className="justify-self-center"
             aria-label={`${BRAND} home`}
           >
-            <img src={logo} alt={`${BRAND} logo`} width={320} height={320} className="size-12 rounded-full md:size-14" />
+             <img src={logo} alt={`${BRAND} logo`} width={320} height={320} className="size-12 rounded-full object-contain md:size-14" />
           </Link>
 
           <div className="flex items-center gap-0.5 justify-self-end">
-            <button
+            <Button variant="ghost" size="icon"
               aria-label="Search"
               onClick={() => setSearchOpen(true)}
               className="grid size-9 place-items-center text-ink"
             >
               <Search className="size-[18px]" />
-            </button>
-            <Link
-              to="/contact"
-              aria-label="Account"
-              className="hidden size-9 place-items-center text-ink sm:grid"
-            >
-              <User className="size-[18px]" />
-            </Link>
+            </Button>
             <Link
               to="/shop"
               search={{ wishlist: true }}
@@ -150,7 +134,7 @@ export function Header() {
                 <span className="absolute top-1 right-0.5 size-1.5 rounded-full bg-champagne" />
               )}
             </Link>
-            <button
+            <Button variant="ghost" size="icon"
               aria-label="Open cart"
               onClick={() => setCartOpen(true)}
               className="relative grid size-9 place-items-center text-ink"
@@ -161,7 +145,7 @@ export function Header() {
                   {count}
                 </span>
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </header>
@@ -184,7 +168,7 @@ export function Header() {
             )}
             {results.map((p) => (
               <li key={p.id}>
-                <button
+                <Button variant="ghost"
                   className="flex w-full items-center gap-3 rounded-lg p-2 text-left hover:bg-sand"
                   onClick={() => {
                     setSearchOpen(false);
@@ -197,7 +181,7 @@ export function Header() {
                     <span className="block truncate text-sm text-ink">{p.name}</span>
                     <span className="block text-xs text-muted-foreground">{formatINR(p.price)}</span>
                   </span>
-                </button>
+                </Button>
               </li>
             ))}
           </ul>
@@ -216,8 +200,8 @@ function MobileNav() {
       <Link to="/" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
         <Home className="size-[18px]" /> Home
       </Link>
-      <Link to="/shop" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
-        <LayoutGrid className="size-[18px]" /> Shop
+      <Link to="/collections/zodiac-crystal-collection" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
+        <LayoutGrid className="size-[18px]" /> Zodiac
       </Link>
       <Link
         to="/shop"
@@ -226,7 +210,7 @@ function MobileNav() {
       >
         <Heart className="size-[18px]" /> Saved
       </Link>
-      <button
+      <Button variant="ghost"
         onClick={() => setCartOpen(true)}
         className="relative flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase"
       >
@@ -236,7 +220,7 @@ function MobileNav() {
             {count}
           </span>
         )}
-      </button>
+      </Button>
     </nav>
   );
 }

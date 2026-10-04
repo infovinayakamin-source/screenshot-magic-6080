@@ -1,305 +1,109 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Gem, Sparkles, Hand, ShieldCheck, Leaf, Clock, BadgeCheck, Gift, ArrowRight } from "lucide-react";
+import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/Reveal";
 import { Newsletter } from "@/components/Newsletter";
-import { Stars } from "@/components/Stars";
-import { zodiacItems } from "@/lib/zodiac";
-import {
-  BRAND,
-  editorialImage,
-  heroImage,
-  lifestyleImages,
-  products,
-} from "@/lib/products";
+import { heroImage, FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
+import { ZODIAC_SIGNS, zodiacItems } from "@/lib/zodiac";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Premium Crystal Jewelry & Natural Stone Bracelets | ShivAmrit Healers" },
-      {
-        name: "description",
-        content:
-          "Discover premium crystal jewellery, natural stone bracelets and meaningful Tree of Life designs. Shop elegant pieces created for everyday style and gifting.",
-      },
-      { property: "og:title", content: "Premium Crystal Jewelry & Natural Stone Bracelets | ShivAmrit Healers" },
-      {
-        property: "og:description",
-        content:
-          "Natural stone bracelets and Tree of Life pendants, crafted for everyday style, intention and meaningful gifting.",
-      },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "Zodiac Crystal Bracelets | ShivAmrit Healers" },
+    { name: "description", content: "Explore ShivAmrit Healers zodiac crystal bracelets. Find your sign and discover natural stone jewellery for everyday style and personal intention." },
+    { property: "og:title", content: "Zodiac Crystal Bracelets | ShivAmrit Healers" },
+    { property: "og:description", content: "Find your zodiac sign and explore natural stone bracelets for everyday style and personal intention." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ] }),
   component: Home,
 });
 
 const trust = [
-  { icon: Gem, label: "Natural Stone Jewelry", sub: "Carefully selected materials" },
-  { icon: Hand, label: "Premium Craftsmanship", sub: "Designed with attention to detail" },
-  { icon: ShieldCheck, label: "Secure Checkout", sub: "Safe & simple payments" },
-  { icon: Sparkles, label: "Easy Shipping", sub: "Reliable delivery across India" },
+  { icon: Gem, title: "Natural stone jewellery", detail: "Each piece has its own character" },
+  { icon: Sparkles, title: "Made with intention", detail: "A personal symbol to carry" },
+  { icon: ShieldCheck, title: "7-day returns", detail: "On unworn pieces" },
+  { icon: Truck, title: "Free shipping", detail: `On orders above ${formatINR(FREE_SHIPPING_THRESHOLD)}` },
 ];
 
-
-const meaning = [
-  { title: "Intention", copy: "Choose pieces that represent what matters to you." },
-  { title: "Mindfulness", copy: "Create small moments of calm in your everyday routine." },
-  { title: "Style", copy: "Beautiful natural stones designed to complement modern outfits." },
-  { title: "Meaning", copy: "Jewelry that can hold personal memories, intentions and stories." },
-];
-
-const why = [
-  { icon: Leaf, title: "Natural Materials", copy: "Carefully selected stones and materials." },
-  { icon: Clock, title: "Timeless Design", copy: "Minimal designs made for everyday styling." },
-  { icon: BadgeCheck, title: "Quality Focus", copy: "Attention to finish, comfort and presentation." },
-  { icon: Gift, title: "Meaningful Gifting", copy: "Thoughtful pieces for yourself or someone special." },
-];
-
-const reviews = [
-  { text: "Beautiful bracelet and the colour is even better in person.", name: "Verified Customer", rating: 5 },
-  { text: "Packaging was beautiful and the pendant looks premium.", name: "Verified Customer", rating: 5 },
-  { text: "Really elegant piece for everyday wear.", name: "Verified Customer", rating: 4 },
+const intentions = [
+  { icon: Sparkles, title: "Wealth & abundance", stones: "Pyrite · Citrine", description: "Traditionally associated with optimism and new possibilities." },
+  { icon: ShieldCheck, title: "Protection & grounding", stones: "Tiger Eye · Black Tourmaline", description: "Symbols of steadiness and personal boundaries." },
+  { icon: Heart, title: "Love & reflection", stones: "Rose Quartz", description: "A gentle reminder to make space for connection." },
 ];
 
 function Home() {
-  const treeOfLife = products.find((p) => p.slug === "tree-of-life-chakra-pendant");
+  return <>
+    <section className="relative isolate overflow-hidden bg-navy">
+      <img src={heroImage} alt="Natural stone jewellery" className="absolute inset-0 -z-20 size-full object-cover opacity-40" fetchPriority="high" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy/60 via-navy/55 to-navy/90" />
+      <div className="shell flex min-h-[min(70vh,620px)] flex-col items-center justify-center py-16 text-center md:min-h-[min(75vh,700px)]">
+        <p className="text-xs tracking-[0.22em] text-navy-foreground uppercase">ShivAmrit Healers · Zodiac crystal bracelets</p>
+        <h1 className="mt-5 text-5xl leading-none text-gold sm:text-7xl lg:text-8xl">Wear your energy.</h1>
+        <p className="mt-5 max-w-xl font-display text-xl italic text-navy-foreground md:text-2xl">A bracelet for your sign. A little meaning for every day.</p>
+        <Button asChild size="xl" className="mt-8 border border-gold bg-gold text-gold-foreground hover:bg-gold/90">
+          <Link to="/collections/zodiac-crystal-collection">Find your zodiac sign <ArrowRight /></Link>
+        </Button>
+      </div>
+    </section>
 
-  return (
-    <>
-      {/* HERO — dark navy cinematic banner with gold serif headline */}
-      <section className="relative overflow-hidden bg-navy">
-        <img
-          src={heroImage}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/55 to-navy/90" />
-        <div className="shell relative flex min-h-[70vh] flex-col items-center justify-center py-20 text-center md:min-h-[80vh]">
-          <p className="reveal text-xs tracking-[0.4em] text-white/80 uppercase">
-            Natural stone jewellery
-          </p>
-          <h1 className="reveal mt-6 font-display text-5xl leading-[1.02] text-gold sm:text-7xl lg:text-8xl">
-            Wear your energy.
-          </h1>
-          <div className="reveal mt-6 flex items-center gap-4 text-gold" aria-hidden>
-            <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold/70 sm:w-24" />
-            <Gem className="size-5" strokeWidth={1.2} />
-            <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold/70 sm:w-24" />
-          </div>
-          <p className="reveal mt-6 max-w-xl font-display text-lg italic text-white/90 sm:text-2xl">
-            Thoughtfully crafted crystal jewellery for beauty, intention and everyday meaning.
-          </p>
-          <div className="reveal mt-10 flex flex-col gap-3 sm:flex-row">
-            <Button
-              size="xl"
-              asChild
-              className="rounded-full border border-gold bg-transparent px-10 text-gold hover:bg-gold hover:text-navy"
-            >
-              <Link to="/shop">Shop collection</Link>
-            </Button>
-            <Button
-              size="xl"
-              asChild
-              className="rounded-full border border-white/30 bg-transparent px-10 text-white hover:bg-white hover:text-navy"
-            >
-              <Link to="/collections">Explore crystals</Link>
-            </Button>
-          </div>
-          <div className="reveal mt-10 flex items-center gap-2 text-white/70">
-            <Stars rating={5} />
-            <span className="text-xs">Rated 4.8 by 600+ customers</span>
-          </div>
+    <section className="border-b border-border bg-background" aria-label="Shopping information">
+      <div className="shell grid grid-cols-2 gap-6 py-7 md:grid-cols-4 md:py-9">
+        {trust.map(({ icon: Icon, title, detail }) => <div key={title} className="text-center">
+          <Icon className="mx-auto size-6 text-navy" strokeWidth={1.5} />
+          <p className="mt-2 text-xs font-medium text-ink">{title}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{detail}</p>
+        </div>)}
+      </div>
+    </section>
+
+    <section className="py-16 md:py-24" aria-labelledby="sign-heading">
+      <div className="shell">
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div><p className="eyebrow">The zodiac collection</p><h2 id="sign-heading" className="mt-2 text-4xl text-navy md:text-5xl">Shop by zodiac sign</h2><p className="mt-3 text-sm text-muted-foreground">Choose your sign to see its bracelet.</p></div>
+          <Link to="/collections/zodiac-crystal-collection" className="inline-flex items-center gap-2 text-sm text-navy underline underline-offset-4">View all bracelets <ArrowRight className="size-4" /></Link>
         </div>
-      </section>
-
-      {/* TRUST STRIP */}
-      <section className="border-y border-border">
-        <div className="shell grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:py-10">
-          {trust.map((t) => (
-            <div key={t.label} className="flex min-w-0 flex-col items-center gap-2 text-center">
-              <t.icon className="size-6 shrink-0 text-primary" strokeWidth={1.4} />
-              <span className="min-w-0">
-                <span className="block text-xs leading-snug tracking-[0.1em] text-ink uppercase">{t.label}</span>
-                <span className="mt-1 block text-xs text-muted-foreground">{t.sub}</span>
-              </span>
-            </div>
-          ))}
+        <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {ZODIAC_SIGNS.map((sign) => {
+            const item = zodiacItems.find((z) => z.sign === sign.en);
+            return item ? <Link key={sign.en} to="/product/$slug" params={{ slug: item.slug }} className="group min-w-0 border border-border bg-background p-2 transition-colors hover:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
+              <img src={item.image} alt={`${item.sign} crystal bracelet`} className="aspect-square w-full object-contain" loading="lazy" decoding="async" />
+              <span className="block pt-3 pb-2 text-center text-sm text-navy">{item.sign} <span className="text-muted-foreground">· {item.hindi}</span></span>
+            </Link> : <div key={sign.en} className="flex aspect-square flex-col items-center justify-center border border-dashed border-border bg-sand/40 p-3 text-center">
+              <span className="font-display text-xl text-navy">{sign.en}</span><span className="text-xs text-muted-foreground">{sign.hi}</span><span className="mt-2 text-xs text-muted-foreground">Coming soon</span>
+            </div>;
+          })}
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* ZODIAC CRYSTAL COLLECTION */}
-      <section className="border-y border-border bg-sand/50 py-20 md:py-24" aria-labelledby="zodiac-collection-heading">
-        <div className="shell">
-          <Reveal className="text-center">
-            <p className="eyebrow">New collection</p>
-            <h2 id="zodiac-collection-heading" className="mt-3 text-3xl text-ink md:text-5xl">Zodiac Crystal Collection</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-              Explore crystal bracelets inspired by the 12 zodiac signs. Find your sign and choose a style that feels personal.
-            </p>
-          </Reveal>
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4">
-            {zodiacItems.map((z) => (
-              <figure key={z.sign} className="overflow-hidden rounded-xl border border-border bg-card transition-shadow duration-300 hover:shadow-[var(--shadow-soft)]">
-                <img src={z.image} alt={`${z.sign} crystal bracelet`} loading="lazy" decoding="async" className="aspect-square w-full object-contain" />
-                <figcaption className="py-2.5 text-center text-xs text-ink sm:text-sm">{z.sign} • {z.hindi}</figcaption>
-              </figure>
-            ))}
-          </div>
-          <div className="mt-12 text-center">
-            <Button variant="ink" size="xl" asChild>
-              <Link to="/collections/zodiac-crystal-collection">
-                Explore Collection <ArrowRight />
-              </Link>
-            </Button>
-          </div>
+    <section className="border-y border-border bg-sand/40 py-16 md:py-24" aria-labelledby="intentions-heading">
+      <div className="shell">
+        <p className="eyebrow">Explore the symbolism</p><h2 id="intentions-heading" className="mt-2 text-4xl text-navy md:text-5xl">Choose an intention</h2>
+        <p className="mt-3 max-w-2xl text-sm text-muted-foreground">Ideas from crystal traditions, not a claim about the stones in a specific bracelet. Check each piece for its actual materials.</p>
+        <div className="mt-9 grid gap-8 md:grid-cols-3">
+          {intentions.map(({ icon: Icon, title, stones, description }) => <div key={title} className="border-t border-gold pt-5">
+            <Icon className="size-6 text-navy" strokeWidth={1.4} /><h3 className="mt-4 text-2xl text-navy">{title}</h3><p className="mt-1 text-xs tracking-[0.12em] text-primary uppercase">{stones}</p><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{description}</p>
+          </div>)}
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* TREE OF LIFE STORY */}
-      {treeOfLife && (
-        <section className="shell py-20 md:py-24">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <Reveal>
-              <img
-                src={treeOfLife.images[0]}
-                alt={treeOfLife.name}
-                loading="lazy"
-                className="aspect-[4/5] w-full rounded-2xl object-cover shadow-[var(--shadow-soft)]"
-              />
-            </Reveal>
-            <Reveal delay={80}>
-              <p className="eyebrow">Tree of Life</p>
-              <h2 className="mt-3 text-3xl text-ink md:text-5xl">A symbol of connection</h2>
-              <span className="mt-5 block h-px w-12 bg-champagne" />
-              <p className="mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground">
-                The Tree of Life has long been used as a symbol of growth, connection and new beginnings. Our
-                interpretation brings that timeless symbolism together with colorful natural stones in a piece
-                designed to be worn and remembered.
-              </p>
-              <Link
-                to="/product/$slug"
-                params={{ slug: treeOfLife.slug }}
-                className="mt-8 inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-primary uppercase hover:opacity-70"
-              >
-                Discover the pendant <ArrowRight className="size-3.5" />
-              </Link>
-            </Reveal>
-          </div>
-        </section>
-      )}
+    <section className="py-16 md:py-24" aria-labelledby="story-heading">
+      <div className="shell grid items-center gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+        <div><p className="eyebrow">The ShivAmrit story</p><h2 id="story-heading" className="mt-2 text-4xl text-navy md:text-5xl">Meaning in the little things</h2><p className="mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground">Our bracelets pair natural stone colours with the symbolism of the zodiac. Choose the one that feels like you, wear it as a reminder of your intention, and care for it so it can accompany your everyday moments.</p><Button variant="quiet" asChild className="mt-7"><Link to="/about">Our story <ArrowRight /></Link></Button></div>
+        <ol className="divide-y divide-border border-y border-border">
+          <li className="flex gap-5 py-5"><span className="font-display text-3xl text-gold">01</span><div><h3 className="text-xl text-navy">Find your sign</h3><p className="mt-1 text-sm text-muted-foreground">Explore your zodiac bracelet and its individual colours.</p></div></li>
+          <li className="flex gap-5 py-5"><span className="font-display text-3xl text-gold">02</span><div><h3 className="text-xl text-navy">Wear with intention</h3><p className="mt-1 text-sm text-muted-foreground">Make it part of a personal moment or give it to someone special.</p></div></li>
+          <li className="flex gap-5 py-5"><span className="font-display text-3xl text-gold">03</span><div><h3 className="text-xl text-navy">Keep it close</h3><p className="mt-1 text-sm text-muted-foreground">A thoughtful accent for your everyday style.</p></div></li>
+        </ol>
+      </div>
+    </section>
 
-
-      {/* MORE THAN JEWELRY */}
-      <section className="shell py-20 md:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <img
-              src={editorialImage}
-              alt="Natural stones, beads and jewellery tools on a linen workbench"
-              loading="lazy"
-              className="aspect-[4/3] w-full rounded-2xl object-cover"
-            />
-          </Reveal>
-          <Reveal delay={80}>
-            <p className="eyebrow">Our philosophy</p>
-            <h2 className="mt-3 text-3xl text-ink md:text-5xl">More than jewelry</h2>
-            <p className="mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground">
-              Every stone carries a story, a colour and a personal meaning. Our collection is created for
-              people who love combining timeless jewellery with intention, symbolism and mindful everyday
-              rituals.
-            </p>
-            <div className="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2">
-              {meaning.map((m) => (
-                <div key={m.title}>
-                  <h3 className="text-xs tracking-[0.18em] text-ink uppercase">{m.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{m.copy}</p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* WHY CHOOSE US */}
-      <section className="border-y border-border bg-sand/50 py-20 md:py-24">
-        <div className="shell">
-          <Reveal className="text-center">
-            <p className="eyebrow">Why {BRAND}</p>
-            <h2 className="mt-3 text-3xl text-ink md:text-5xl">Crafted with intention</h2>
-          </Reveal>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {why.map((w, i) => (
-              <Reveal key={w.title} delay={i * 60} className="text-center">
-                <w.icon className="mx-auto size-6 text-primary" strokeWidth={1.3} />
-                <h3 className="mt-4 text-xs tracking-[0.18em] text-ink uppercase">{w.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{w.copy}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section className="shell py-20 md:py-24">
-        <Reveal className="text-center">
-          <p className="eyebrow">Social proof</p>
-          <h2 className="mt-3 text-3xl text-ink md:text-5xl">Loved by our community</h2>
-        </Reveal>
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {reviews.map((r, i) => (
-            <Reveal key={r.text} delay={i * 70}>
-              <figure className="h-full rounded-2xl border border-border bg-card p-7">
-                <Stars rating={r.rating} />
-                <blockquote className="mt-4 font-display text-xl leading-snug text-ink">
-                  &ldquo;{r.text}&rdquo;
-                </blockquote>
-                <figcaption className="mt-4 text-xs tracking-[0.14em] text-muted-foreground uppercase">
-                  — {r.name}
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* INSTAGRAM */}
-      <section className="shell pb-4">
-        <Reveal className="text-center">
-          <p className="eyebrow">@aarohi.jewels</p>
-          <h2 className="mt-3 text-3xl text-ink md:text-5xl">Follow the journey</h2>
-        </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {lifestyleImages.map((img, i) => (
-            <a
-              key={i}
-              href="https://instagram.com"
-              target="_blank"
-              rel="noreferrer"
-              className="group overflow-hidden rounded-lg bg-sand"
-            >
-              <img
-                src={img}
-                alt="Styling inspiration from our community"
-                loading="lazy"
-                className="aspect-square w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
-              />
-            </a>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-ink uppercase hover:opacity-70"
-          >
-            Follow us on Instagram <ArrowRight className="size-3.5" />
-          </a>
-        </div>
-      </section>
-
-      <Newsletter />
-    </>
-  );
+    <section className="border-y border-border bg-navy py-14 text-navy-foreground md:py-20" aria-labelledby="guide-heading">
+      <div className="shell flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+        <div><Gift className="size-6 text-gold" strokeWidth={1.4} /><h2 id="guide-heading" className="mt-3 text-3xl text-gold md:text-4xl">Which bracelet is right for me?</h2><p className="mt-2 max-w-lg text-sm text-navy-foreground/80">Start with your zodiac sign, then consider the colours and fit that feel right to you.</p></div>
+        <Button asChild size="xl" className="border border-gold bg-gold text-gold-foreground hover:bg-gold/90"><Link to="/faq" hash="choose">Read the guide <ArrowRight /></Link></Button>
+      </div>
+    </section>
+    <Newsletter />
+  </>;
 }

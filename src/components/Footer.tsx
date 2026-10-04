@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, MessageCircle } from "lucide-react";
+import { Instagram, Facebook } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 import { BRAND } from "@/lib/products";
 
@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="mt-24 border-t border-border bg-sand/60">
       <div className="shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:py-16">
         <div className="max-w-xs">
-          <img src={logo} alt={`${BRAND} logo`} width={320} height={320} loading="lazy" className="size-24 rounded-full" />
+           <img src={logo} alt={`${BRAND} logo`} width={320} height={320} loading="lazy" className="size-24 rounded-full object-contain" />
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Natural stone jewellery made for everyday style, personal intention and meaningful gifting.
           </p>
@@ -18,9 +18,7 @@ export function Footer() {
           <p className="eyebrow">Shop</p>
           <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
             <li><Link to="/shop" className="hover:text-ink">All Products</Link></li>
-            <li><Link to="/shop" search={{ category: "Bracelets" }} className="hover:text-ink">Bracelets</Link></li>
-            <li><Link to="/shop" search={{ category: "Pendants" }} className="hover:text-ink">Pendants</Link></li>
-            <li><Link to="/collections" className="hover:text-ink">Collections</Link></li>
+            <li><Link to="/collections/zodiac-crystal-collection" className="hover:text-ink">Zodiac Bracelets</Link></li>
           </ul>
         </div>
 
@@ -47,11 +45,6 @@ export function Footer() {
             <li>
               <a href="https://facebook.com" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-ink">
                 <Facebook className="size-4" /> Facebook
-              </a>
-            </li>
-            <li>
-              <a href="https://wa.me/910000000000" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-ink">
-                <MessageCircle className="size-4" /> WhatsApp
               </a>
             </li>
           </ul>
