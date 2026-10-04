@@ -47,11 +47,6 @@ export function Footer() {
                 <Facebook className="size-4" /> Facebook
               </a>
             </li>
-            <li>
-              <a href="https://wa.me/910000000000" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-ink">
-                <MessageCircle className="size-4" /> WhatsApp
-              </a>
-            </li>
           </ul>
         </div>
       </div>

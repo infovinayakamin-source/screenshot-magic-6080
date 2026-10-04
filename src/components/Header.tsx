@@ -76,7 +76,7 @@ export function Header() {
                   <span className="flex items-center gap-3 font-display text-xl text-ink"><img src={logo} alt="" width={320} height={320} className="size-10 rounded-full" />{BRAND}</span>
                   <Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
                     <X className="size-5" />
-                  </button>
+                  </Button>
                 </div>
                 <nav className="flex flex-col px-5 py-4">
                   {nav.map((item) => (
@@ -90,13 +90,6 @@ export function Header() {
                       {item.label}
                     </Link>
                   ))}
-                  <Link
-                    to="/faq"
-                    onClick={() => setMenuOpen(false)}
-                    className="py-4 font-display text-2xl text-ink"
-                  >
-                    FAQ
-                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -125,13 +118,13 @@ export function Header() {
           </Link>
 
           <div className="flex items-center gap-0.5 justify-self-end">
-            <button
+            <Button variant="ghost" size="icon"
               aria-label="Search"
               onClick={() => setSearchOpen(true)}
               className="grid size-9 place-items-center text-ink"
             >
               <Search className="size-[18px]" />
-            </button>
+            </Button>
             <Link
               to="/contact"
               aria-label="Account"
@@ -150,7 +143,7 @@ export function Header() {
                 <span className="absolute top-1 right-0.5 size-1.5 rounded-full bg-champagne" />
               )}
             </Link>
-            <button
+            <Button variant="ghost" size="icon"
               aria-label="Open cart"
               onClick={() => setCartOpen(true)}
               className="relative grid size-9 place-items-center text-ink"
@@ -161,7 +154,7 @@ export function Header() {
                   {count}
                 </span>
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </header>
@@ -184,7 +177,7 @@ export function Header() {
             )}
             {results.map((p) => (
               <li key={p.id}>
-                <button
+                <Button variant="ghost"
                   className="flex w-full items-center gap-3 rounded-lg p-2 text-left hover:bg-sand"
                   onClick={() => {
                     setSearchOpen(false);
@@ -197,7 +190,7 @@ export function Header() {
                     <span className="block truncate text-sm text-ink">{p.name}</span>
                     <span className="block text-xs text-muted-foreground">{formatINR(p.price)}</span>
                   </span>
-                </button>
+                </Button>
               </li>
             ))}
           </ul>
@@ -216,8 +209,8 @@ function MobileNav() {
       <Link to="/" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
         <Home className="size-[18px]" /> Home
       </Link>
-      <Link to="/shop" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
-        <LayoutGrid className="size-[18px]" /> Shop
+      <Link to="/collections/zodiac-crystal-collection" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
+        <LayoutGrid className="size-[18px]" /> Zodiac
       </Link>
       <Link
         to="/shop"
@@ -226,7 +219,7 @@ function MobileNav() {
       >
         <Heart className="size-[18px]" /> Saved
       </Link>
-      <button
+      <Button variant="ghost"
         onClick={() => setCartOpen(true)}
         className="relative flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase"
       >
@@ -236,7 +229,7 @@ function MobileNav() {
             {count}
           </span>
         )}
-      </button>
+      </Button>
     </nav>
   );
 }

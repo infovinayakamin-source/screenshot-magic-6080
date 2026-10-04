@@ -69,7 +69,7 @@ function ZodiacPage() {
           <nav aria-label="Breadcrumb" className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
             <Link to="/" className="hover:text-ink">Home</Link>
             <span className="px-2">/</span>
-            <Link to="/collections" className="hover:text-ink">Collections</Link>
+            <span className="text-ink">Zodiac Bracelets</span>
           </nav>
           <h1 className="mt-4 text-4xl text-ink md:text-6xl">Zodiac Crystal Collection</h1>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{DESC}</p>
