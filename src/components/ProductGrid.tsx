@@ -208,8 +208,6 @@ export function ProductGrid({
             ))}
           </div>
         )}
-      </div>
-
       <QuickView product={quick} onOpenChange={(o) => !o && setQuick(null)} />
     </div>
   );
