@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, Minus, Plus, Check } from "lucide-react";
+import { Heart, Minus, Plus, Check, MessageCircle, Ruler, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ProductGallery } from "@/components/ProductGallery";
@@ -10,7 +10,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Stars } from "@/components/Stars";
 import { ProductCard } from "@/components/ProductCard";
 import { Newsletter } from "@/components/Newsletter";
 import { discountPercent, formatINR, getProduct, products } from "@/lib/products";
@@ -59,12 +58,6 @@ const styleTips = [
   },
 ];
 
-const reviews = [
-  { text: "Beautiful piece and the colour is even better in person.", name: "Verified Customer", rating: 5 },
-  { text: "Packaging was beautiful and it looks premium.", name: "Verified Customer", rating: 5 },
-  { text: "Really elegant for everyday wear. Comfortable too.", name: "Verified Customer", rating: 4 },
-];
-
 function ProductPage() {
   const { product } = Route.useLoaderData();
   const { add, wishlist, toggleWishlist, markViewed, recentlyViewed } = useStore();
@@ -73,6 +66,8 @@ function ProductPage() {
   const wished = wishlist.includes(product.id);
   const off = discountPercent(product);
   const soldOut = product.inventory === 0;
+  const isBracelet = product.category === "Bracelets";
+  const isZodiac = product.collection.includes("zodiac-crystal-collection");
 
   useEffect(() => {
     setQty(1);
@@ -112,12 +107,7 @@ function ProductPage() {
 
         <div>
           <h1 className="text-3xl leading-tight text-ink md:text-5xl">{product.name}</h1>
-          <div className="mt-3 flex items-center gap-2">
-            <Stars rating={product.rating} />
-            <span className="text-xs text-muted-foreground">
-              {product.rating} · {product.reviewCount} reviews
-            </span>
-          </div>
+          {isZodiac && <p className="mt-2 text-xs tracking-[0.14em] text-primary uppercase">Zodiac Crystal Collection</p>}
 
           <div className="mt-5 flex flex-wrap items-baseline gap-3">
             <span className="text-2xl text-ink">{formatINR(product.price)}</span>
@@ -138,12 +128,31 @@ function ProductPage() {
             {product.description}
           </p>
 
+          <div className="mt-6 space-y-3 border-y border-border py-5 text-sm text-ink">
+            <p className="flex items-start gap-3"><GemMark /> Natural stone colours, each piece with its own variation</p>
+            <p className="flex items-start gap-3"><Heart className="size-4 shrink-0 text-gold" /> {isZodiac ? "A personal piece inspired by your zodiac sign" : "A meaningful accessory for everyday wear"}</p>
+            <p className="flex items-start gap-3"><GiftMark /> A thoughtful gifting choice</p>
+          </div>
+
           <dl className="mt-6 grid max-w-md grid-cols-[110px_minmax(0,1fr)] gap-y-2 text-sm">
             <dt className="text-muted-foreground">Stone</dt>
             <dd className="text-ink">{product.stoneType}</dd>
             <dt className="text-muted-foreground">Size</dt>
             <dd className="text-ink">{product.size}</dd>
           </dl>
+
+          {isBracelet && <div className="mt-5 border border-border p-4">
+            <p className="flex items-center gap-2 text-sm font-medium text-navy"><Ruler className="size-4 text-gold" /> Available size</p>
+            <p className="mt-1 text-sm text-ink">{product.size}</p>
+            <p className="mt-1 text-xs text-muted-foreground">One size currently listed. See the sizing guide before ordering.</p>
+            <Link to="/faq" hash="size" className="mt-2 inline-block text-xs text-primary underline underline-offset-4">Sizing guide</Link>
+          </div>}
+
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-xs text-navy">
+            <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />{soldOut ? "Sold out" : "In stock"}</span>
+            <span className="flex items-center gap-1.5"><Truck className="size-4 text-gold" />Dispatch in 1–2 business days</span>
+            <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />Cash on delivery available</span>
+          </div>
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <div className="inline-flex items-center rounded-md border border-border">
@@ -185,7 +194,7 @@ function ProductPage() {
             <Button
               variant="quiet"
               size="xl"
-              className="flex-1 border-gold/60 text-ink hover:bg-gold/15"
+              className="flex-1 border-gold bg-gold text-gold-foreground hover:bg-gold/85"
               disabled={soldOut}
               onClick={() => buyNow(product.id, qty)}
             >
@@ -193,10 +202,12 @@ function ProductPage() {
             </Button>
           </div>
 
+          <Link to="/contact" className="mt-4 inline-flex items-center gap-2 text-sm text-primary underline underline-offset-4"><MessageCircle className="size-4" /> Ask about this piece</Link>
+
           <div className="mt-9 rounded-2xl bg-navy p-6">
             <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">Why you&apos;ll love it</p>
             <ul className="mt-4 flex flex-col gap-2.5 text-sm text-navy-foreground/80">
-              {[
+              {[ 
                 "Natural stone design",
                 "Hand-finished appearance",
                 "Comfortable everyday wear",
