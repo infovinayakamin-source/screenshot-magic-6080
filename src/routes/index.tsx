@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift, PackageCheck, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
+import { PosterCarousel } from "@/components/PosterCarousel";
 import { products } from "@/lib/products";
 import { Newsletter } from "@/components/Newsletter";
 import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
@@ -66,6 +67,8 @@ function Home() {
         </div>)}
       </div>
     </section>
+
+    <PosterCarousel />
 
     <section className="bg-sand/50 py-16 md:py-20" aria-labelledby="featured-heading">
       <div className="shell">
