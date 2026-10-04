@@ -147,10 +147,7 @@ export function ProductGrid({
   );
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-12">
-      <aside className="hidden lg:block">{filters(`${idPrefix}-desktop`)}</aside>
-
-      <div>
+    <div>
         <div className="mb-6 flex items-center justify-between gap-3">
           <p aria-live="polite" className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
             {filtered.length} of {source.length} pieces
@@ -205,7 +202,7 @@ export function ProductGrid({
             <Button variant="quiet" size="sm" className="mt-5" onClick={clearFilters}>Clear filters</Button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-5 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             {filtered.map((p) => (
               <ProductCard key={p.id} product={p} imageFit={p.collection.includes("zodiac-crystal-collection") ? "contain" : "cover"} onQuickView={setQuick} />
             ))}

@@ -35,23 +35,20 @@ function CollectionPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-border">
-        <img
-          src={collection.image}
-          alt={collection.name}
-          className="absolute inset-0 size-full object-cover"
-        />
-        <div className="absolute inset-0 bg-background/72 backdrop-blur-[2px]" />
-        <div className="shell relative py-16 text-center md:py-24">
+      <section className="border-b border-border bg-sand/50">
+        <div className="shell grid items-center gap-8 py-12 md:grid-cols-2 md:py-16">
+          <div>
           <nav className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
             <Link to="/" className="hover:text-ink">Home</Link>
             <span className="px-2">/</span>
             <Link to="/collections" className="hover:text-ink">Collections</Link>
           </nav>
           <h1 className="mt-4 text-4xl text-ink md:text-6xl">{collection.name}</h1>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
             {collection.description}
           </p>
+          </div>
+          <img src={collection.image} alt={collection.name} className="aspect-[1.5] w-full rounded-[8px] border border-gold/40 bg-background object-contain md:aspect-[1.25]" />
         </div>
       </section>
 
