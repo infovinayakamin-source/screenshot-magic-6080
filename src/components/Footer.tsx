@@ -5,7 +5,7 @@ import { BRAND } from "@/lib/products";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-border bg-sand/60">
+    <footer className="border-t border-gold/50 bg-background">
       <div className="shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:py-16">
         <div className="max-w-xs">
            <img src={logo} alt={`${BRAND} logo`} width={320} height={320} loading="lazy" className="size-24 rounded-full object-contain" />

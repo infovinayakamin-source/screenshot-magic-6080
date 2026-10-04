@@ -58,8 +58,8 @@ export function Header() {
 
       <header
         className={cn(
-          "sticky top-0 z-50 border-b border-border transition-all duration-300",
-          scrolled ? "bg-background/95 backdrop-blur-xl" : "bg-background/70 backdrop-blur",
+          "sticky top-0 z-50 border-b border-gold/40 transition-all duration-300",
+          scrolled ? "bg-background/95 backdrop-blur-xl" : "bg-background",
         )}
       >
         <div className="shell grid h-16 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 md:h-20">
@@ -98,8 +98,8 @@ export function Header() {
                 <Link
                   key={item.label}
                   to={item.to}
-                  className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-champagne"
-                  activeProps={{ className: "text-champagne" }}
+                  className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-navy"
+                  activeProps={{ className: "text-navy underline decoration-gold underline-offset-8" }}
                 >
                   {item.label}
                 </Link>

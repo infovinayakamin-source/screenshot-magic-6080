@@ -4,8 +4,8 @@ import { Reveal } from "@/components/Reveal";
 
 export function Newsletter() {
   return (
-    <section className="shell py-20 md:py-24">
-      <Reveal className="rounded-3xl bg-sand px-6 py-14 text-center md:px-16 md:py-20">
+    <section className="shell py-16 md:py-20">
+      <Reveal className="border-y border-gold/60 bg-background px-6 py-14 text-center md:px-16 md:py-20">
          <p className="eyebrow">Explore</p>
         <h2 className="mx-auto mt-4 max-w-2xl text-3xl text-ink md:text-5xl">
           Find your next favourite piece
