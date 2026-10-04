@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, Minus, Plus, Check, MessageCircle, Ruler, Truck, Gem, Gift } from "lucide-react";
+import { Heart, Minus, Plus, Check, MessageCircle, Ruler, Gem, Gift } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ProductGallery } from "@/components/ProductGallery";
@@ -150,7 +150,6 @@ function ProductPage() {
 
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-xs text-navy">
             <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />{soldOut ? "Sold out" : "In stock"}</span>
-            <span className="flex items-center gap-1.5"><Truck className="size-4 text-gold" />Dispatch in 1–2 business days</span>
             <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />Cash on delivery available</span>
           </div>
 
