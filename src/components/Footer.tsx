@@ -54,7 +54,15 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="shell flex flex-col gap-2 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 {BRAND}. All rights reserved.</p>
-          <p>Crafted with intention in India.</p>
+          <div className="flex items-center gap-4">
+            <p>Crafted with intention in India.</p>
+            <Link
+              to="/auth"
+              className="text-[11px] uppercase tracking-[0.14em] opacity-60 underline-offset-4 hover:text-ink hover:opacity-100 hover:underline"
+            >
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
