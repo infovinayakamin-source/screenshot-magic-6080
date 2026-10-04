@@ -156,7 +156,7 @@ function ProductPage() {
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <div className="inline-flex items-center rounded-md border border-border">
-              <button
+              <Button variant="ghost"
                 type="button"
                 aria-label="Decrease quantity"
                 className="grid size-11 place-items-center text-ink"
@@ -165,7 +165,7 @@ function ProductPage() {
                 <Minus className="size-4" />
               </Button>
               <span className="w-8 text-center text-sm">{qty}</span>
-              <button
+              <Button variant="ghost"
                 type="button"
                 aria-label="Increase quantity"
                 className="grid size-11 place-items-center text-ink"
@@ -174,7 +174,7 @@ function ProductPage() {
                 <Plus className="size-4" />
               </Button>
             </div>
-            <button
+            <Button variant="ghost"
               type="button"
               onClick={() => {
                 toggleWishlist(product.id);
