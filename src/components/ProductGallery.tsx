@@ -49,7 +49,7 @@ export function ProductGallery({ images, name, productId }: ProductGalleryProps)
 
   return (
     <div className="min-w-0">
-      <div className="group relative aspect-square overflow-hidden rounded-md border border-border bg-card">
+      <div className="group relative aspect-square overflow-hidden border border-gold/50 bg-card">
         <img
           key={current}
           src={current}
@@ -59,7 +59,7 @@ export function ProductGallery({ images, name, productId }: ProductGalleryProps)
           fetchPriority="high"
           className="size-full object-contain motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
         />
-        <span className="absolute left-3 top-3 rounded-sm bg-background/90 px-2.5 py-1 text-[11px] font-medium text-foreground shadow-sm backdrop-blur-sm">
+        <span className="absolute left-3 top-3 border border-gold/50 bg-background/95 px-2.5 py-1 text-[11px] font-medium text-foreground">
           {active + 1} / {count}
         </span>
         <Button

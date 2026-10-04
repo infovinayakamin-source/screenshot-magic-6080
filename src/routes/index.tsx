@@ -33,7 +33,7 @@ const intentions = [
 function Home() {
   return <>
     <section className="relative isolate overflow-hidden border-b border-gold/40 bg-background">
-      <img src={zodiacItems[0].image} alt="Aries zodiac crystal bracelet on a gold stand" className="absolute inset-0 -z-10 size-full object-cover object-center opacity-20 md:opacity-100 md:[mask-image:linear-gradient(to_right,transparent_25%,black_90%)]" fetchPriority="high" />
+      {zodiacItems[0] && <img src={zodiacItems[0].image} alt="Aries zodiac crystal bracelet on a gold stand" className="absolute inset-0 -z-10 size-full object-cover object-center opacity-20 md:opacity-100 md:[mask-image:linear-gradient(to_right,transparent_25%,black_90%)]" fetchPriority="high" />}
       <div className="shell flex min-h-[440px] flex-col items-center justify-center py-16 text-center md:min-h-[540px] md:items-start md:text-left">
         <p className="text-xs tracking-[0.22em] text-navy uppercase">ShivAmrit Healers · Zodiac crystal bracelets</p>
         <h1 className="mt-5 max-w-2xl text-5xl leading-none text-navy sm:text-7xl lg:text-8xl">Wear your energy.</h1>
