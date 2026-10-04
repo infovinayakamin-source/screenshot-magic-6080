@@ -115,7 +115,9 @@ export const listOrders = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) =>
     z
       .object({
-        status: z.enum(["all", ...ORDER_STATUSES]).default("all"),
+        status: z
+          .enum(["all", "created", "paid", "cod", "shipped", "cancelled", "refunded"])
+          .default("all"),
         limit: z.number().int().min(1).max(500).default(300),
       })
       .parse(d),
@@ -187,7 +189,7 @@ export const updateOrder = createServerFn({ method: "POST" })
     z
       .object({
         id: z.string().uuid(),
-        status: z.enum(ORDER_STATUSES).optional(),
+        status: z.enum(["created", "paid", "cod", "shipped", "cancelled", "refunded"]).optional(),
         notes: z.string().max(2000).nullable().optional(),
       })
       .refine((x) => x.status !== undefined || x.notes !== undefined, { message: "Nothing to update" })
