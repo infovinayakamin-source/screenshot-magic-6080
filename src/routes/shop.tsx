@@ -26,13 +26,15 @@ export const Route = createFileRoute("/shop")({
       {
         name: "description",
         content:
-          "Shop all ShivAmrit Healers jewellery: natural stone bracelets, chakra designs and Tree of Life pendants, filtered by stone, colour and price.",
+          "Shop ShivAmrit Healers zodiac crystal bracelets, filtered by stone, colour and price.",
       },
       { property: "og:title", content: "All Jewelry — Zodiac Crystal Bracelets | ShivAmrit Healers" },
       {
         property: "og:description",
         content: "Natural stone jewellery designed to add meaning and beauty to everyday moments.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Shop,
@@ -45,7 +47,7 @@ function Shop() {
 
   return (
     <>
-      <section className="border-b border-border bg-sand/50">
+      <section className="border-b border-gold/40 bg-background">
         <div className="shell py-14 text-center md:py-20">
           <p className="eyebrow">{wishlistView ? "Saved pieces" : "The collection"}</p>
           <h1 className="mt-3 text-4xl text-ink md:text-6xl">
@@ -61,7 +63,7 @@ function Shop() {
 
       <section className="shell py-12 md:py-16">
         {wishlistView && saved.length === 0 ? (
-          <div className="rounded-2xl bg-sand p-12 text-center">
+          <div className="border-y border-gold/50 bg-background p-12 text-center">
             <p className="text-sm text-muted-foreground">You haven&apos;t saved any pieces yet.</p>
             <Button variant="ink" size="xl" className="mt-6" asChild>
               <Link to="/shop" search={{}}>

@@ -128,7 +128,7 @@ function ProductPage() {
             {product.description}
           </p>
 
-          <div className="mt-6 space-y-3 border-y border-border py-5 text-sm text-ink">
+          <div className="mt-6 space-y-3 border-y border-gold/40 py-5 text-sm text-ink">
             <p className="flex items-start gap-3"><Gem className="size-4 shrink-0 text-gold" /> Natural stone colours, each piece with its own variation</p>
             <p className="flex items-start gap-3"><Heart className="size-4 shrink-0 text-gold" /> {isZodiac ? "A personal piece inspired by your zodiac sign" : "A meaningful accessory for everyday wear"}</p>
             <p className="flex items-start gap-3"><Gift className="size-4 shrink-0 text-gold" /> A thoughtful gifting choice</p>
@@ -141,7 +141,7 @@ function ProductPage() {
             <dd className="text-ink">{product.size}</dd>
           </dl>
 
-          {isBracelet && <div className="mt-5 border border-border p-4">
+          {isBracelet && <div className="mt-5 border border-gold/50 p-4">
             <p className="flex items-center gap-2 text-sm font-medium text-navy"><Ruler className="size-4 text-gold" /> Available size</p>
             <p className="mt-1 text-sm text-ink">{product.size}</p>
             <p className="mt-1 text-xs text-muted-foreground">One size currently listed. See the sizing guide before ordering.</p>
@@ -187,13 +187,13 @@ function ProductPage() {
           </div>
 
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <Button variant="ink" size="xl" className="flex-1" disabled={soldOut} onClick={addToCart}>
+            <Button variant="quiet" size="xl" className="w-full shrink-0 sm:w-auto sm:flex-1" disabled={soldOut} onClick={addToCart}>
               {soldOut ? "Sold out" : "Add to cart"}
             </Button>
             <Button
-              variant="quiet"
+              variant="ink"
               size="xl"
-              className="flex-1 border-gold bg-gold text-gold-foreground hover:bg-gold/85"
+              className="w-full shrink-0 sm:w-auto sm:flex-1"
               disabled={soldOut}
               onClick={() => buyNow(product.id, qty)}
             >
@@ -203,11 +203,11 @@ function ProductPage() {
 
           <Link to="/contact" className="mt-4 inline-flex items-center gap-2 text-sm text-primary underline underline-offset-4"><MessageCircle className="size-4" /> Ask about this piece</Link>
 
-          <div className="mt-9 bg-navy p-6 text-navy-foreground">
-            <p className="text-xs tracking-[0.16em] text-gold uppercase">Meaning & symbolism</p>
-            <h2 className="mt-3 text-2xl text-gold">A personal reminder</h2>
-            <p className="mt-3 text-sm leading-relaxed text-navy-foreground/85">{isZodiac ? "Your zodiac sign can be a reminder of the qualities and intentions that matter to you. Choose this bracelet for its colours and the meaning you give it." : "Natural stones and symbolic designs can be part of a personal ritual or simply a beautiful everyday accessory."}</p>
-            <p className="mt-3 text-xs text-navy-foreground/70">Traditional symbolism is personal and is not a medical or guaranteed outcome.</p>
+          <div className="mt-9 border-y border-gold/60 bg-background py-6 text-ink">
+            <p className="text-xs tracking-[0.16em] text-navy uppercase">Meaning & symbolism</p>
+            <h2 className="mt-3 text-2xl text-navy">A personal reminder</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{isZodiac ? "Your zodiac sign can be a reminder of the qualities and intentions that matter to you. Choose this bracelet for its colours and the meaning you give it." : "Natural stones and symbolic designs can be part of a personal ritual or simply a beautiful everyday accessory."}</p>
+            <p className="mt-3 text-xs text-muted-foreground">Traditional symbolism is personal and is not a medical or guaranteed outcome.</p>
           </div>
 
           <Accordion type="single" collapsible className="mt-8" defaultValue="details">
@@ -321,13 +321,13 @@ function ProductPage() {
       <Newsletter />
 
       {/* Sticky mobile add to cart */}
-      <div className="fixed inset-x-0 bottom-14 z-40 border-t border-gold/25 bg-navy px-4 py-3 md:hidden">
+      <div className="fixed inset-x-0 bottom-14 z-40 border-t border-gold/50 bg-background px-4 py-3 md:hidden">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <div className="min-w-0">
-            <p className="truncate text-sm text-navy-foreground">{product.name}</p>
-            <p className="text-xs text-gold">{formatINR(product.price)}</p>
+            <p className="truncate text-sm text-navy">{product.name}</p>
+            <p className="text-xs text-muted-foreground">{formatINR(product.price)}</p>
           </div>
-          <Button className="h-11 bg-gold px-6 text-gold-foreground hover:bg-gold/90" disabled={soldOut} onClick={addToCart}>
+          <Button variant="ink" className="h-11 px-6" disabled={soldOut} onClick={addToCart}>
             {soldOut ? "Sold out" : "Add to cart"}
           </Button>
         </div>

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Newsletter } from "@/components/Newsletter";
-import { heroImage, FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
+import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
 import { ZODIAC_SIGNS, zodiacItems } from "@/lib/zodiac";
 
 export const Route = createFileRoute("/")({
@@ -32,21 +32,20 @@ const intentions = [
 
 function Home() {
   return <>
-    <section className="relative isolate overflow-hidden bg-navy">
-      <img src={heroImage} alt="Natural stone jewellery" className="absolute inset-0 -z-20 size-full object-cover opacity-40" fetchPriority="high" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy/60 via-navy/55 to-navy/90" />
-      <div className="shell flex min-h-[min(70vh,620px)] flex-col items-center justify-center py-16 text-center md:min-h-[min(75vh,700px)]">
-        <p className="text-xs tracking-[0.22em] text-navy-foreground uppercase">ShivAmrit Healers · Zodiac crystal bracelets</p>
-        <h1 className="mt-5 text-5xl leading-none text-gold sm:text-7xl lg:text-8xl">Wear your energy.</h1>
-        <p className="mt-5 max-w-xl font-display text-xl italic text-navy-foreground md:text-2xl">A bracelet for your sign. A little meaning for every day.</p>
-        <Button asChild size="xl" className="mt-8 border border-gold bg-gold text-gold-foreground hover:bg-gold/90">
+    <section className="relative isolate overflow-hidden border-b border-gold/40 bg-background">
+      {zodiacItems[0] && <img src={zodiacItems[0].image} alt="Aries zodiac crystal bracelet on a gold stand" className="absolute inset-0 -z-10 size-full object-cover object-center opacity-20 md:opacity-100 md:[mask-image:linear-gradient(to_right,transparent_25%,black_90%)]" fetchPriority="high" />}
+      <div className="shell flex min-h-[440px] flex-col items-center justify-center py-16 text-center md:min-h-[540px] md:items-start md:text-left">
+        <p className="text-xs tracking-[0.22em] text-navy uppercase">ShivAmrit Healers · Zodiac crystal bracelets</p>
+        <h1 className="mt-5 max-w-2xl text-5xl leading-none text-navy sm:text-7xl lg:text-8xl">Wear your energy.</h1>
+        <p className="mt-5 max-w-lg font-display text-xl italic text-ink md:text-2xl">A bracelet for your sign. A little meaning for every day.</p>
+        <Button asChild variant="ink" size="xl" className="mt-8">
           <Link to="/collections/zodiac-crystal-collection">Find your zodiac sign <ArrowRight /></Link>
         </Button>
       </div>
     </section>
 
-    <section className="border-b border-border bg-background" aria-label="Shopping information">
-      <div className="shell grid grid-cols-2 gap-6 py-7 md:grid-cols-4 md:py-9">
+    <section className="border-b border-gold/40 bg-background" aria-label="Shopping information">
+      <div className="shell grid grid-cols-2 gap-6 py-6 md:grid-cols-4 md:divide-x md:divide-gold/40 md:py-8">
         {trust.map(({ icon: Icon, title, detail }) => <div key={title} className="text-center">
           <Icon className="mx-auto size-6 text-navy" strokeWidth={1.5} />
           <p className="mt-2 text-xs font-medium text-ink">{title}</p>
@@ -55,7 +54,7 @@ function Home() {
       </div>
     </section>
 
-    <section className="py-16 md:py-24" aria-labelledby="sign-heading">
+    <section className="py-16 md:py-20" aria-labelledby="sign-heading">
       <div className="shell">
         <div className="flex flex-wrap items-end justify-between gap-5">
           <div><p className="eyebrow">The zodiac collection</p><h2 id="sign-heading" className="mt-2 text-4xl text-navy md:text-5xl">Shop by zodiac sign</h2><p className="mt-3 text-sm text-muted-foreground">Choose your sign to see its bracelet.</p></div>
@@ -64,10 +63,10 @@ function Home() {
         <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {ZODIAC_SIGNS.map((sign) => {
             const item = zodiacItems.find((z) => z.sign === sign.en);
-            return item ? <Link key={sign.en} to="/product/$slug" params={{ slug: item.slug }} className="group min-w-0 border border-border bg-background p-2 transition-colors hover:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
+            return item ? <Link key={sign.en} to="/product/$slug" params={{ slug: item.slug }} className="group min-w-0 border border-gold/40 bg-background p-2 transition-colors hover:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
               <img src={item.image} alt={`${item.sign} crystal bracelet`} className="aspect-square w-full object-contain" loading="lazy" decoding="async" />
               <span className="block pt-3 pb-2 text-center text-sm text-navy">{item.sign} <span className="text-muted-foreground">· {item.hindi}</span></span>
-            </Link> : <div key={sign.en} className="flex aspect-square flex-col items-center justify-center border border-dashed border-border bg-sand/40 p-3 text-center">
+            </Link> : <div key={sign.en} className="flex aspect-square flex-col items-center justify-center border border-dashed border-gold/40 bg-background p-3 text-center">
               <span className="font-display text-xl text-navy">{sign.en}</span><span className="text-xs text-muted-foreground">{sign.hi}</span><span className="mt-2 text-xs text-muted-foreground">Coming soon</span>
             </div>;
           })}
@@ -75,7 +74,7 @@ function Home() {
       </div>
     </section>
 
-    <section className="border-y border-border bg-sand/40 py-16 md:py-24" aria-labelledby="intentions-heading">
+    <section className="border-y border-gold/40 bg-background py-16 md:py-20" aria-labelledby="intentions-heading">
       <div className="shell">
         <p className="eyebrow">Explore the symbolism</p><h2 id="intentions-heading" className="mt-2 text-4xl text-navy md:text-5xl">Choose an intention</h2>
         <p className="mt-3 max-w-2xl text-sm text-muted-foreground">Ideas from crystal traditions, not a claim about the stones in a specific bracelet. Check each piece for its actual materials.</p>
@@ -87,7 +86,7 @@ function Home() {
       </div>
     </section>
 
-    <section className="py-16 md:py-24" aria-labelledby="story-heading">
+    <section className="py-16 md:py-20" aria-labelledby="story-heading">
       <div className="shell grid items-center gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
         <div><p className="eyebrow">The ShivAmrit story</p><h2 id="story-heading" className="mt-2 text-4xl text-navy md:text-5xl">Meaning in the little things</h2><p className="mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground">Our bracelets pair natural stone colours with the symbolism of the zodiac. Choose the one that feels like you, wear it as a reminder of your intention, and care for it so it can accompany your everyday moments.</p><Button variant="quiet" asChild className="mt-7"><Link to="/about">Our story <ArrowRight /></Link></Button></div>
         <ol className="divide-y divide-border border-y border-border">

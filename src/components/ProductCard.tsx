@@ -23,8 +23,8 @@ export function ProductCard({
   const soldOut = product.inventory === 0;
 
   return (
-    <article className="group flex flex-col">
-      <div className="relative overflow-hidden rounded-xl bg-sand">
+    <article className="group flex min-w-0 flex-col border border-border bg-background transition-colors hover:border-gold">
+      <div className="relative overflow-hidden border-b border-border bg-background">
         <Link
           to="/product/$slug"
           params={{ slug: product.slug }}
@@ -44,12 +44,12 @@ export function ProductCard({
         <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-2.5 sm:p-3">
           <div className="flex flex-col gap-1.5">
             {off > 0 && (
-              <span className="pointer-events-auto rounded-full bg-background/90 px-2.5 py-1 text-[10px] font-medium tracking-[0.12em] text-ink backdrop-blur">
+              <span className="pointer-events-auto border border-gold bg-background/95 px-2.5 py-1 text-[10px] font-medium tracking-[0.12em] text-navy">
                 {off}% OFF
               </span>
             )}
             {soldOut && (
-              <span className="pointer-events-auto rounded-full bg-ink/90 px-2.5 py-1 text-[10px] font-medium tracking-[0.12em] text-background">
+              <span className="pointer-events-auto border border-gold bg-navy px-2.5 py-1 text-[10px] font-medium tracking-[0.12em] text-gold">
                 SOLD OUT
               </span>
             )}
@@ -73,7 +73,7 @@ export function ProductCard({
           <div className="absolute inset-x-2 bottom-2 transition-all duration-300 md:inset-x-2.5 md:bottom-2.5 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100">
             <Button
               variant="ink"
-              className="h-9 w-full gap-1 px-2 text-[10px] shadow-[var(--shadow-lift)] sm:h-10 sm:gap-2 sm:text-xs"
+              className="h-9 w-full gap-1 px-2 text-[10px] sm:h-10 sm:gap-2 sm:text-xs"
               onClick={() => onQuickView(product)}
             >
               <Eye /> Quick View
@@ -82,7 +82,7 @@ export function ProductCard({
         )}
       </div>
 
-      <div className="mt-3.5 flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col p-3 sm:p-4">
         <h3 className="font-display text-lg leading-snug text-ink">
           <Link to="/product/$slug" params={{ slug: product.slug }} className="hover:opacity-70">
             {product.name}
@@ -97,22 +97,24 @@ export function ProductCard({
             </span>
           )}
         </div>
-        <Button
-          variant="quiet"
-          className="mt-3.5 w-full"
-          disabled={soldOut}
-          onClick={() => {
-            add(product.id);
-            toast.success(`${product.name} added to cart`);
-          }}
-        >
-          {soldOut ? "Sold out" : "Add to cart"}
-        </Button>
-        {!soldOut && (
-          <Button variant="ink" className="mt-2 w-full" onClick={() => buyNow(product.id)}>
-            Buy it now
+        <div className="mt-auto grid gap-2 pt-4">
+          <Button
+            variant="quiet"
+            className="h-10 w-full px-3 text-[10px] sm:text-xs"
+            disabled={soldOut}
+            onClick={() => {
+              add(product.id);
+              toast.success(`${product.name} added to cart`);
+            }}
+          >
+            {soldOut ? "Sold out" : "Add to cart"}
           </Button>
-        )}
+          {!soldOut && (
+            <Button variant="ink" className="h-10 w-full px-3 text-[10px] sm:text-xs" onClick={() => buyNow(product.id)}>
+              Buy it now
+            </Button>
+          )}
+        </div>
       </div>
     </article>
   );

@@ -3,4 +3,5 @@
 - [x] Improve product detail benefits, sizing information, and purchase cues; omit WhatsApp inquiry until a number is supplied.
 - [x] Verify phone, tablet, and desktop browsing; note missing Aquarius image, customer reviews/photos, verified ritual details, and WhatsApp number.
 - [x] Admin dashboard visible to admin role only (customers/other devs blocked) — signed-out visitors bounce to /auth, non-admins see "no access", admin sees orders
+- [x] Apply Pure Minimalist styling to home, navigation, zodiac shop cards, product details, buttons, and page spacing; verify phone and desktop.
 - [ ] Close public sign-up once the owner account has claimed access

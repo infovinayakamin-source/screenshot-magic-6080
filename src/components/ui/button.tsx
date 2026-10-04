@@ -5,20 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        default: "border border-gold bg-navy text-gold hover:bg-navy/90",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+          "border border-border bg-background hover:border-gold hover:bg-accent hover:text-accent-foreground",
+        secondary: "border border-border bg-secondary text-secondary-foreground hover:border-gold hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        ink: "bg-ink text-background tracking-[0.14em] uppercase text-xs font-medium transition-all duration-300 hover:bg-ink/88 hover:shadow-[var(--shadow-lift)]",
+        ink: "border border-gold bg-navy text-gold tracking-[0.14em] uppercase text-xs font-medium transition-colors duration-300 hover:bg-navy/90",
         quiet:
-          "border border-ink/25 bg-transparent text-ink tracking-[0.14em] uppercase text-xs font-medium transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-background",
+          "border border-gold bg-background text-navy tracking-[0.14em] uppercase text-xs font-medium transition-colors duration-300 hover:bg-navy hover:text-gold",
         sand: "bg-sand text-ink tracking-[0.14em] uppercase text-xs font-medium hover:bg-champagne/45 transition-colors duration-300",
       },
       size: {
