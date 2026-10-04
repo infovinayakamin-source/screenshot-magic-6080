@@ -2,4 +2,5 @@
 - [x] Reorganize home around Zodiac browsing, truthful trust information, intention guide, brand story, FAQ; omit reviews until supplied.
 - [x] Improve product detail benefits, sizing information, and purchase cues; omit WhatsApp inquiry until a number is supplied.
 - [x] Verify phone, tablet, and desktop browsing; note missing Aquarius image, customer reviews/photos, verified ritual details, and WhatsApp number.
-- [ ] Admin dashboard visible to admin role only (customers/other devs blocked) — in progress
+- [x] Admin dashboard visible to admin role only (customers/other devs blocked) — signed-out visitors bounce to /auth, non-admins see "no access", admin sees orders
+- [ ] Close public sign-up once the owner account has claimed access
