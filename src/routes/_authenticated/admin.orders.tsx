@@ -463,7 +463,15 @@ function Dashboard() {
   );
 }
 
-function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
+function Stat({
+  label,
+  value,
+  hint,
+}: {
+  label: string;
+  value: string;
+  hint?: string | undefined;
+}) {
   return (
     <div className="rounded-lg border border-border bg-card p-4">
       <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
@@ -515,7 +523,7 @@ function OrderItem({
         <span className="flex shrink-0 flex-col items-end gap-1.5">
           <span className="text-sm text-ink">{formatINR(order.amount / 100)}</span>
           <span
-            className={`rounded-full px-2.5 py-0.5 text-[11px] ${STATUS_CLASS[order.status] ?? STATUS_CLASS.created}`}
+            className={`rounded-full px-2.5 py-0.5 text-[11px] ${STATUS_CLASS[order.status] ?? STATUS_CLASS["created"]}`}
           >
             {STATUS_LABEL[order.status] ?? order.status}
           </span>
