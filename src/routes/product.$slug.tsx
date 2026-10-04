@@ -184,7 +184,7 @@ function ProductPage() {
               className="grid size-11 place-items-center rounded-md border border-border text-ink"
             >
               <Heart className={cn("size-4", wished && "fill-destructive text-destructive")} />
-            </button>
+              </Button>
           </div>
 
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
