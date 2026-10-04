@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift } from "lucide-react";
+import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift, PackageCheck, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/ProductCard";
+import { products } from "@/lib/products";
 import { Newsletter } from "@/components/Newsletter";
 import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
 import { ZODIAC_SIGNS, zodiacItems } from "@/lib/zodiac";
@@ -32,15 +34,26 @@ const intentions = [
 
 function Home() {
   return <>
-    <section className="relative isolate overflow-hidden border-b border-gold/40 bg-background">
-      {zodiacItems[0] && <img src={zodiacItems[0].image} alt="Aries zodiac crystal bracelet on a gold stand" className="absolute inset-0 -z-10 size-full object-cover object-center opacity-20 md:opacity-100 md:[mask-image:linear-gradient(to_right,transparent_25%,black_90%)]" fetchPriority="high" />}
-      <div className="shell flex min-h-[440px] flex-col items-center justify-center py-16 text-center md:min-h-[540px] md:items-start md:text-left">
-        <p className="text-xs tracking-[0.22em] text-navy uppercase">ShivAmrit Healers · Zodiac crystal bracelets</p>
-        <h1 className="mt-5 max-w-2xl text-5xl leading-none text-navy sm:text-7xl lg:text-8xl">Wear your energy.</h1>
-        <p className="mt-5 max-w-lg font-display text-xl italic text-ink md:text-2xl">A bracelet for your sign. A little meaning for every day.</p>
-        <Button asChild variant="ink" size="xl" className="mt-8">
-          <Link to="/collections/zodiac-crystal-collection">Find your zodiac sign <ArrowRight /></Link>
-        </Button>
+    <section className="border-b border-border bg-sand/50">
+      <div className="shell grid items-center gap-8 py-9 md:min-h-[540px] md:grid-cols-2 md:gap-12 md:py-12 lg:min-h-[610px]">
+        <div className="order-2 md:order-1">
+          <p className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-background px-4 py-2 text-xs font-medium text-navy"><span className="size-2 rounded-full bg-gold" /> ShivAmrit Healers · Zodiac crystal bracelets</p>
+          <h1 className="mt-6 max-w-xl text-5xl leading-[0.92] text-navy sm:text-7xl lg:text-8xl">Wear your energy.</h1>
+          <p className="mt-5 max-w-lg font-display text-2xl text-ink md:text-3xl">A bracelet for your sign. A little meaning for every day.</p>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">Explore natural stone colours inspired by the zodiac. Choose a piece that feels personal to you.</p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Button asChild variant="ink" size="xl" className="rounded-full"><Link to="/collections/zodiac-crystal-collection">Shop bracelets <ArrowRight /></Link></Button>
+            <Button asChild variant="quiet" size="xl" className="rounded-full"><Link to="/about">Our story</Link></Button>
+          </div>
+          <div className="mt-8 flex gap-10 border-t border-gold/40 pt-5 text-navy">
+            <div><strong className="block font-display text-3xl">11</strong><span className="text-xs text-muted-foreground">Zodiac bracelets</span></div>
+            <div><strong className="block font-display text-3xl">₹999</strong><span className="text-xs text-muted-foreground">Each piece</span></div>
+          </div>
+        </div>
+        <div className="order-1 relative md:order-2">
+          {zodiacItems[0] && <img src={zodiacItems[0].image} alt="Aries zodiac crystal bracelet on a gold stand" className="aspect-[1.45] w-full rounded-[8px] border border-gold/40 bg-background object-contain md:aspect-[0.96]" fetchPriority="high" />}
+          <div className="absolute -bottom-3 left-4 rounded-[8px] border border-gold/40 bg-background px-4 py-3 shadow-soft md:-left-4"><span className="block text-xs text-muted-foreground">Explore the collection</span><strong className="font-display text-lg text-navy">Find your sign</strong></div>
+        </div>
       </div>
     </section>
 
@@ -51,6 +64,13 @@ function Home() {
           <p className="mt-2 text-xs font-medium text-ink">{title}</p>
           <p className="mt-1 text-xs text-muted-foreground">{detail}</p>
         </div>)}
+      </div>
+    </section>
+
+    <section className="bg-sand/50 py-16 md:py-20" aria-labelledby="featured-heading">
+      <div className="shell">
+        <div className="flex items-end justify-between gap-4"><div><p className="eyebrow">The collection</p><h2 id="featured-heading" className="mt-2 text-4xl text-navy md:text-5xl">Zodiac bracelets</h2><p className="mt-2 text-sm text-muted-foreground">Your sign, your everyday piece.</p></div><Link to="/collections/zodiac-crystal-collection" className="shrink-0 text-sm text-navy underline underline-offset-4">See all <ArrowRight className="inline size-4" /></Link></div>
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">{products.slice(0, 4).map((product) => <ProductCard key={product.id} product={product} imageFit="contain" />)}</div>
       </div>
     </section>
 
@@ -86,14 +106,23 @@ function Home() {
       </div>
     </section>
 
-    <section className="py-16 md:py-20" aria-labelledby="story-heading">
-      <div className="shell grid items-center gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
-        <div><p className="eyebrow">The ShivAmrit story</p><h2 id="story-heading" className="mt-2 text-4xl text-navy md:text-5xl">Meaning in the little things</h2><p className="mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground">Our bracelets pair natural stone colours with the symbolism of the zodiac. Choose the one that feels like you, wear it as a reminder of your intention, and care for it so it can accompany your everyday moments.</p><Button variant="quiet" asChild className="mt-7"><Link to="/about">Our story <ArrowRight /></Link></Button></div>
-        <ol className="divide-y divide-border border-y border-border">
-          <li className="flex gap-5 py-5"><span className="font-display text-3xl text-gold">01</span><div><h3 className="text-xl text-navy">Find your sign</h3><p className="mt-1 text-sm text-muted-foreground">Explore your zodiac bracelet and its individual colours.</p></div></li>
-          <li className="flex gap-5 py-5"><span className="font-display text-3xl text-gold">02</span><div><h3 className="text-xl text-navy">Wear with intention</h3><p className="mt-1 text-sm text-muted-foreground">Make it part of a personal moment or give it to someone special.</p></div></li>
-          <li className="flex gap-5 py-5"><span className="font-display text-3xl text-gold">03</span><div><h3 className="text-xl text-navy">Keep it close</h3><p className="mt-1 text-sm text-muted-foreground">A thoughtful accent for your everyday style.</p></div></li>
-        </ol>
+    <section className="bg-sand/50 py-16 md:py-20" aria-labelledby="story-heading">
+      <div className="shell">
+        <h2 id="story-heading" className="text-4xl text-navy md:text-5xl">How we work</h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">Discover bracelets inspired by your zodiac sign. Choose by colour and meaning, then make your selection your own.</p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: Gem, title: "Explore your sign", text: "Browse the zodiac collection to find your bracelet." },
+            { icon: Sparkles, title: "Look closer", text: "See the real product photo, colours and details of each piece." },
+            { icon: ShoppingBag, title: "Choose your quantity", text: "Select how many you need and add them to your bag." },
+            { icon: PackageCheck, title: "Place your order", text: "Choose online payment or cash on delivery at checkout." },
+          ].map(({ icon: Icon, title, text }) => <div key={title} className="rounded-[8px] border border-border bg-background p-5 shadow-soft md:p-7"><span className="grid size-11 place-items-center rounded-full bg-sand text-navy"><Icon size={21} strokeWidth={1.5} /></span><h3 className="mt-5 text-2xl text-navy">{title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>)}
+        </div>
+        <div className="mt-12 grid gap-8 rounded-[8px] border border-border bg-background p-6 md:grid-cols-3 md:p-9">
+          <div><Gem className="size-6 text-navy" strokeWidth={1.5} /><h3 className="mt-4 text-2xl text-navy">What we offer</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Zodiac-inspired natural stone bracelets, one design for each available sign.</p></div>
+          <div><Heart className="size-6 text-navy" strokeWidth={1.5} /><h3 className="mt-4 text-2xl text-navy">Make it personal</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Choose the colours and symbolism that feel meaningful to you.</p></div>
+          <div><Truck className="size-6 text-navy" strokeWidth={1.5} /><h3 className="mt-4 text-2xl text-navy">Delivery</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Free shipping on orders above {formatINR(FREE_SHIPPING_THRESHOLD)}. Shipping is ₹99 below that amount.</p></div>
+        </div>
       </div>
     </section>
 

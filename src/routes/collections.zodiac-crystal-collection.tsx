@@ -64,15 +64,15 @@ function ZodiacPage() {
 
   return (
     <>
-      <section className="border-b border-gold/40 bg-background">
-        <div className="shell py-14 text-center md:py-20">
+      <section className="border-b border-gold/40 bg-sand/50">
+        <div className="shell py-12 md:py-16">
           <nav aria-label="Breadcrumb" className="text-xs tracking-[0.12em] text-muted-foreground uppercase">
             <Link to="/" className="hover:text-ink">Home</Link>
             <span className="px-2">/</span>
             <span className="text-ink">Zodiac Bracelets</span>
           </nav>
           <h1 className="mt-4 text-4xl text-ink md:text-6xl">Zodiac Crystal Collection</h1>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{DESC}</p>
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{DESC}</p>
         </div>
       </section>
 
@@ -134,7 +134,7 @@ function ZodiacPage() {
             </Button>
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
             {list.map((z) => {
               const product = getProduct(z.slug);
               return product ? <ProductCard key={z.sign} product={product} imageFit="contain" onQuickView={setQuick} /> : null;

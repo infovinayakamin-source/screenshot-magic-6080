@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Heart, Eye } from "lucide-react";
+import { Heart, Eye, Minus, Plus, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { discountPercent, formatINR, type Product } from "@/lib/products";
@@ -17,14 +18,15 @@ export function ProductCard({
   imageFit?: "cover" | "contain";
 }) {
   const { add, wishlist, toggleWishlist } = useStore();
+  const [qty, setQty] = useState(1);
   const buyNow = useBuyNow();
   const wished = wishlist.includes(product.id);
   const off = discountPercent(product);
   const soldOut = product.inventory === 0;
 
   return (
-    <article className="group flex min-w-0 flex-col border border-border bg-background transition-colors hover:border-gold">
-      <div className="relative overflow-hidden border-b border-border bg-background">
+    <article className="group flex min-w-0 flex-col overflow-hidden rounded-[8px] border border-border bg-background shadow-soft transition-all duration-300 hover:border-gold hover:shadow-lift">
+      <div className="relative overflow-hidden bg-background">
         <Link
           to="/product/$slug"
           params={{ slug: product.slug }}
@@ -37,7 +39,7 @@ export function ProductCard({
             loading="lazy"
             width={1200}
             height={1200}
-            className={cn("aspect-square w-full transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105", imageFit === "contain" ? "object-contain" : "object-cover")}
+            className={cn("aspect-square w-full p-3 transition-transform duration-500 group-hover:scale-[1.03]", imageFit === "contain" ? "object-contain" : "object-cover")}
           />
         </Link>
 
@@ -82,35 +84,41 @@ export function ProductCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-3 sm:p-4">
-        <h3 className="font-display text-lg leading-snug text-ink">
+      <div className="flex flex-1 flex-col px-3 pb-3 pt-1 sm:px-5 sm:pb-5">
+        <p className="mb-2 text-[10px] font-bold uppercase text-navy sm:text-xs">Zodiac bracelets</p>
+        <h3 className="font-display text-xl leading-snug text-ink sm:text-2xl">
           <Link to="/product/$slug" params={{ slug: product.slug }} className="hover:opacity-70">
             {product.name}
           </Link>
         </h3>
-        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{product.shortDescription}</p>
-        <div className="mt-2 flex flex-wrap items-baseline gap-2">
-          <span className="text-base font-medium text-ink">{formatINR(product.price)}</span>
+        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground sm:text-sm">{product.shortDescription}</p>
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-4">
+          <div className="inline-flex h-9 items-center rounded-full border border-border sm:h-10">
+            <Button variant="ghost" size="icon" className="size-8 rounded-full sm:size-9" aria-label={`Decrease ${product.name} quantity`} onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="size-3" /></Button>
+            <span className="w-5 text-center text-sm text-ink" aria-live="polite">{qty}</span>
+            <Button variant="ghost" size="icon" className="size-8 rounded-full sm:size-9" aria-label={`Increase ${product.name} quantity`} onClick={() => setQty(qty + 1)}><Plus className="size-3" /></Button>
+          </div>
+          <span className="text-lg font-bold text-navy sm:text-xl">{formatINR(product.price * qty)}</span>
           {product.compareAtPrice && (
             <span className="text-sm text-muted-foreground line-through">
               {formatINR(product.compareAtPrice)}
             </span>
           )}
         </div>
-        <div className="mt-auto grid gap-2 pt-4">
+        <div className="grid gap-2 pt-3">
           <Button
-            variant="quiet"
-            className="h-10 w-full px-3 text-[10px] sm:text-xs"
+            variant="ink"
+            className="h-10 w-full rounded-full px-2 text-[10px] sm:h-11 sm:text-xs"
             disabled={soldOut}
             onClick={() => {
-              add(product.id);
+              add(product.id, qty);
               toast.success(`${product.name} added to cart`);
             }}
           >
-            {soldOut ? "Sold out" : "Add to cart"}
+            <ShoppingBag className="size-4" /> {soldOut ? "Sold out" : "Add to cart"}
           </Button>
           {!soldOut && (
-            <Button variant="ink" className="h-10 w-full px-3 text-[10px] sm:text-xs" onClick={() => buyNow(product.id)}>
+            <Button variant="quiet" className="h-9 w-full rounded-full px-2 text-[10px] sm:text-xs" onClick={() => buyNow(product.id, qty)}>
               Buy it now
             </Button>
           )}

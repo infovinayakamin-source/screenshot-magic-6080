@@ -49,7 +49,7 @@ export function ProductGallery({ images, name, productId }: ProductGalleryProps)
 
   return (
     <div className="min-w-0">
-      <div className="group relative aspect-square overflow-hidden border border-gold/50 bg-card">
+      <div className="group relative aspect-square overflow-hidden rounded-[8px] border border-gold/50 bg-card">
         <img
           key={current}
           src={current}
