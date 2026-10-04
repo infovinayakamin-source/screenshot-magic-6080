@@ -197,41 +197,10 @@ export type Collection = {
 
 export const collections: Collection[] = [
   {
-    slug: "crystal-bracelets",
-    name: "Crystal Bracelets",
-    description:
-      "Natural stone bracelets designed for everyday styling, personal intention and meaningful gifting.",
-    image: braceletTurquoise,
-  },
-  {
-    slug: "chakra-jewelry",
-    name: "Chakra Jewelry",
-    description: "Seven-stone designs with colour, symbolism and a calm, modern finish.",
-    image: braceletChakra,
-  },
-  {
-    slug: "tree-of-life",
-    name: "Tree of Life",
-    description: "Wire-wrapped pieces built around roots, growth and quiet symbolism.",
-    image: pendantTree,
-  },
-  {
-    slug: "healing-inspired",
-    name: "Healing-Inspired Jewelry",
-    description: "Pieces traditionally associated with calm, clarity and mindful routine.",
-    image: braceletEnergy,
-  },
-  {
-    slug: "crystal-pendants",
-    name: "Crystal Pendants",
-    description: "Raw and set natural stones on fine chains, made to be worn daily.",
-    image: pendantStone,
-  },
-  {
-    slug: "gift-collection",
-    name: "Gift Collection",
-    description: "Ready-to-give sets in premium packaging with a care and meaning card.",
-    image: giftSet,
+    slug: "zodiac-crystal-collection",
+    name: "Zodiac Crystal Bracelets",
+    description: "Natural stone bracelets inspired by your zodiac sign.",
+    image: zodiacItems[0]?.image ?? braceletTurquoise,
   },
 ];
 
