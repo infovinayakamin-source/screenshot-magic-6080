@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Menu, Search, User, Heart, ShoppingBag, X, Home, LayoutGrid } from "lucide-react";
+import { Menu, Search, Heart, ShoppingBag, X, Home, LayoutGrid } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -73,7 +73,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="left" className="w-[85vw] max-w-sm p-0">
                 <div className="flex items-center justify-between border-b border-border px-5 py-4">
-                  <span className="flex items-center gap-3 font-display text-xl text-ink"><img src={logo} alt="" width={320} height={320} className="size-10 rounded-full" />{BRAND}</span>
+                   <span className="flex items-center gap-3 font-display text-xl text-ink"><img src={logo} alt="" width={320} height={320} className="size-10 rounded-full object-contain" />{BRAND}</span>
                   <Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
                     <X className="size-5" />
                   </Button>
@@ -83,7 +83,6 @@ export function Header() {
                     <Link
                       key={item.label}
                       to={item.to}
-                      
                       onClick={() => setMenuOpen(false)}
                       className="border-b border-border/70 py-4 font-display text-2xl text-ink"
                     >
@@ -99,7 +98,6 @@ export function Header() {
                 <Link
                   key={item.label}
                   to={item.to}
-                      
                   className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-champagne"
                   activeProps={{ className: "text-champagne" }}
                 >
@@ -114,7 +112,7 @@ export function Header() {
             className="justify-self-center"
             aria-label={`${BRAND} home`}
           >
-            <img src={logo} alt={`${BRAND} logo`} width={320} height={320} className="size-12 rounded-full md:size-14" />
+             <img src={logo} alt={`${BRAND} logo`} width={320} height={320} className="size-12 rounded-full object-contain md:size-14" />
           </Link>
 
           <div className="flex items-center gap-0.5 justify-self-end">
@@ -125,13 +123,6 @@ export function Header() {
             >
               <Search className="size-[18px]" />
             </Button>
-            <Link
-              to="/contact"
-              aria-label="Account"
-              className="hidden size-9 place-items-center text-ink sm:grid"
-            >
-              <User className="size-[18px]" />
-            </Link>
             <Link
               to="/shop"
               search={{ wishlist: true }}
