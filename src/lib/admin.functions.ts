@@ -197,7 +197,7 @@ export const updateOrder = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const db = await adminClient(context.userId);
-    const patch: Record<string, unknown> = {};
+    const patch: { status?: string; paid_at?: string | null; notes?: string | null } = {};
     if (data.status) {
       patch.status = data.status;
       if (data.status === "paid") patch.paid_at = new Date().toISOString();
