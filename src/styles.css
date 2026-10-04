@@ -51,14 +51,14 @@
   /* Logo-led Premium: warm ivory canvas, charcoal text, logo navy + restrained gold */
   --background: oklch(1 0 0);
   --foreground: oklch(0.26 0 0);
-  --ink: oklch(0.17 0.035 258);
+  --ink: oklch(0.2217 0.0412 259.27);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.26 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.26 0 0);
   /* Logo navy */
-  --primary: oklch(0.17 0.035 258);
-  --primary-foreground: oklch(0.86 0.09 88);
+  --primary: oklch(0.2217 0.0412 259.27);
+  --primary-foreground: oklch(0.7665 0.1387 91.06);
   --secondary: oklch(0.98 0.005 85);
   --secondary-foreground: oklch(0.26 0 0);
   --muted: oklch(0.98 0.005 85);
@@ -69,17 +69,17 @@
   --destructive-foreground: oklch(0.985 0.006 88);
   --border: oklch(0.83 0.045 85 / 65%);
   --input: oklch(0.83 0.045 85 / 65%);
-  --ring: oklch(0.68 0.1 85);
+  --ring: oklch(0.7665 0.1387 91.06);
   /* Soft sand */
   --sand: oklch(0.98 0.005 85);
   /* Muted champagne gold (logo) */
-  --champagne: oklch(0.68 0.1 85);
+  --champagne: oklch(0.7665 0.1387 91.06);
   --sage: oklch(0.93 0.018 140);
   /* Deep navy + soft gold (hero / premium accents) */
-  --navy: oklch(0.17 0.035 258);
+  --navy: oklch(0.2217 0.0412 259.27);
   --navy-foreground: oklch(0.97 0.01 90);
-  --gold: oklch(0.86 0.09 88);
-  --gold-foreground: oklch(0.17 0.035 258);
+  --gold: oklch(0.7665 0.1387 91.06);
+  --gold-foreground: oklch(0.2217 0.0412 259.27);
 }
 
 @layer base {
