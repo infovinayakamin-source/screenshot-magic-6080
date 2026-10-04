@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, Minus, Plus, Check, MessageCircle, Ruler, Truck } from "lucide-react";
+import { Heart, Minus, Plus, Check, MessageCircle, Ruler, Truck, Gem, Gift } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ProductGallery } from "@/components/ProductGallery";
@@ -129,9 +129,9 @@ function ProductPage() {
           </p>
 
           <div className="mt-6 space-y-3 border-y border-border py-5 text-sm text-ink">
-            <p className="flex items-start gap-3"><GemMark /> Natural stone colours, each piece with its own variation</p>
+            <p className="flex items-start gap-3"><Gem className="size-4 shrink-0 text-gold" /> Natural stone colours, each piece with its own variation</p>
             <p className="flex items-start gap-3"><Heart className="size-4 shrink-0 text-gold" /> {isZodiac ? "A personal piece inspired by your zodiac sign" : "A meaningful accessory for everyday wear"}</p>
-            <p className="flex items-start gap-3"><GiftMark /> A thoughtful gifting choice</p>
+            <p className="flex items-start gap-3"><Gift className="size-4 shrink-0 text-gold" /> A thoughtful gifting choice</p>
           </div>
 
           <dl className="mt-6 grid max-w-md grid-cols-[110px_minmax(0,1fr)] gap-y-2 text-sm">
@@ -163,7 +163,7 @@ function ProductPage() {
                 onClick={() => setQty(Math.max(1, qty - 1))}
               >
                 <Minus className="size-4" />
-              </button>
+              </Button>
               <span className="w-8 text-center text-sm">{qty}</span>
               <button
                 type="button"
@@ -172,7 +172,7 @@ function ProductPage() {
                 onClick={() => setQty(qty + 1)}
               >
                 <Plus className="size-4" />
-              </button>
+              </Button>
             </div>
             <button
               type="button"
@@ -204,21 +204,11 @@ function ProductPage() {
 
           <Link to="/contact" className="mt-4 inline-flex items-center gap-2 text-sm text-primary underline underline-offset-4"><MessageCircle className="size-4" /> Ask about this piece</Link>
 
-          <div className="mt-9 rounded-2xl bg-navy p-6">
-            <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">Why you&apos;ll love it</p>
-            <ul className="mt-4 flex flex-col gap-2.5 text-sm text-navy-foreground/80">
-              {[ 
-                "Natural stone design",
-                "Hand-finished appearance",
-                "Comfortable everyday wear",
-                "Meaningful gifting option",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2.5">
-                  <Check className="mt-0.5 size-4 shrink-0 text-gold" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <div className="mt-9 bg-navy p-6 text-navy-foreground">
+            <p className="text-xs tracking-[0.16em] text-gold uppercase">Meaning & symbolism</p>
+            <h2 className="mt-3 text-2xl text-gold">A personal reminder</h2>
+            <p className="mt-3 text-sm leading-relaxed text-navy-foreground/85">{isZodiac ? "Your zodiac sign can be a reminder of the qualities and intentions that matter to you. Choose this bracelet for its colours and the meaning you give it." : "Natural stones and symbolic designs can be part of a personal ritual or simply a beautiful everyday accessory."}</p>
+            <p className="mt-3 text-xs text-navy-foreground/70">Traditional symbolism is personal and is not a medical or guaranteed outcome.</p>
           </div>
 
           <Accordion type="single" collapsible className="mt-8" defaultValue="details">
@@ -304,22 +294,6 @@ function ProductPage() {
               Add all three
             </Button>
           </div>
-        </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section className="shell py-12">
-        <h2 className="text-3xl text-ink md:text-4xl">Reviews</h2>
-        <div className="mt-6 grid gap-5 md:grid-cols-3">
-          {reviews.map((r) => (
-            <figure key={r.text} className="rounded-2xl bg-sand p-6">
-              <Stars rating={r.rating} />
-              <blockquote className="mt-3 text-sm leading-relaxed text-ink">&ldquo;{r.text}&rdquo;</blockquote>
-              <figcaption className="mt-3 text-xs tracking-[0.12em] text-muted-foreground uppercase">
-                — {r.name}
-              </figcaption>
-            </figure>
-          ))}
         </div>
       </section>
 
