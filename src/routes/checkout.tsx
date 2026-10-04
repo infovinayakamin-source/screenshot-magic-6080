@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Lock, Check } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
 import { useStore } from "@/lib/store";
+import { createRazorpayOrder, placeCodOrder, verifyRazorpayPayment } from "@/lib/payments.functions";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -21,10 +24,79 @@ export const Route = createFileRoute("/checkout")({
   component: Checkout,
 });
 
+declare global {
+  interface Window {
+    Razorpay?: new (opts: Record<string, unknown>) => { open: () => void; on: (e: string, cb: () => void) => void };
+  }
+}
+
+function loadRazorpay(): Promise<boolean> {
+  if (window.Razorpay) return Promise.resolve(true);
+  return new Promise((resolve) => {
+    const s = document.createElement("script");
+    s.src = "https://checkout.razorpay.com/v1/checkout.js";
+    s.onload = () => resolve(true);
+    s.onerror = () => resolve(false);
+    document.body.appendChild(s);
+  });
+}
+
 function Checkout() {
-  const { items, subtotal, clear } = useStore();
-  const [placed, setPlaced] = useState(false);
+  const { items, lines, subtotal, clear } = useStore();
+  const [placed, setPlaced] = useState<null | { paymentId?: string }>(null);
+  const [method, setMethod] = useState("card");
+  const [busy, setBusy] = useState(false);
+  const createOrder = useServerFn(createRazorpayOrder);
+  const verify = useServerFn(verifyRazorpayPayment);
+  const placeCod = useServerFn(placeCodOrder);
   const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 99;
+
+  async function handleSubmit(form: HTMLFormElement) {
+    const fd = new FormData(form);
+    const get = (k: string) => String(fd.get(k) ?? "").trim();
+    const customer = {
+      email: get("email"), phone: get("phone"), first: get("first"), last: get("last"),
+      address: get("address"), city: get("city"), state: get("state"), pin: get("pin"),
+    };
+    setBusy(true);
+    try {
+      if (method === "cod") {
+        await placeCod({ data: { lines, customer } });
+        clear();
+        setPlaced({});
+        return;
+      }
+      if (!(await loadRazorpay()) || !window.Razorpay) throw new Error("Could not load payment window");
+      const order = await createOrder({ data: { lines, customer } });
+      const rzp = new window.Razorpay({
+        key: order.keyId,
+        amount: order.amount,
+        currency: "INR",
+        name: "ShivAmrit Healers",
+        description: "Order payment",
+        order_id: order.orderId,
+        prefill: { name: `${customer.first} ${customer.last}`, email: customer.email, contact: customer.phone },
+        theme: { color: "#1f2a44" },
+        handler: async (resp: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
+          const r = await verify({ data: resp });
+          if (r.ok) {
+            clear();
+            setPlaced({ paymentId: r.paymentId });
+          } else {
+            toast.error("Payment could not be verified. Please contact us.");
+          }
+        },
+        modal: { ondismiss: () => setBusy(false) },
+      });
+      rzp.on("payment.failed", () => toast.error("Payment failed. Please try again."));
+      rzp.open();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      if (method === "cod") setBusy(false);
+      else setTimeout(() => setBusy(false), 1500);
+    }
+  }
 
   if (placed) {
     return (
@@ -32,8 +104,9 @@ function Checkout() {
         <Check className="mx-auto size-8 text-primary" />
         <h1 className="mt-6 text-4xl text-ink md:text-5xl">Thank you</h1>
         <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-          Your order has been recorded in this demo store. Connect a payment provider to accept real
-          orders and send confirmation emails.
+          {placed.paymentId
+            ? `Your payment was successful. Payment ID: ${placed.paymentId}`
+            : "Your cash-on-delivery order has been placed. We'll contact you to confirm."}
         </p>
         <Button variant="ink" size="xl" className="mt-8" asChild>
           <Link to="/shop">Continue shopping</Link>
@@ -59,8 +132,7 @@ function Checkout() {
             className="flex flex-col gap-8"
             onSubmit={(e) => {
               e.preventDefault();
-              clear();
-              setPlaced(true);
+              void handleSubmit(e.currentTarget);
             }}
           >
             <fieldset className="flex flex-col gap-5">
@@ -87,7 +159,7 @@ function Checkout() {
 
             <fieldset>
               <legend className="eyebrow mb-4">Payment</legend>
-              <RadioGroup defaultValue="card" className="flex flex-col gap-3">
+              <RadioGroup value={method} onValueChange={setMethod} className="flex flex-col gap-3">
                 {[
                   { value: "card", label: "Card / UPI / Netbanking" },
                   { value: "cod", label: "Cash on delivery" },
@@ -102,12 +174,12 @@ function Checkout() {
                 ))}
               </RadioGroup>
               <p className="mt-3 inline-flex items-center gap-2 text-xs text-muted-foreground">
-                <Lock className="size-3.5" /> No payment is taken in this demo store.
+                <Lock className="size-3.5" /> Secure payments by Razorpay — UPI, cards, netbanking & wallets.
               </p>
             </fieldset>
 
-            <Button type="submit" variant="ink" size="xl" className="self-start">
-              Place order
+            <Button type="submit" variant="ink" size="xl" className="self-start" disabled={busy}>
+              {busy ? "Please wait…" : method === "cod" ? "Place order" : `Pay ${formatINR(subtotal + shipping)}`}
             </Button>
           </form>
 
@@ -160,7 +232,7 @@ function Field({
   return (
     <div className="flex flex-col gap-2">
       <Label htmlFor={id}>{label}</Label>
-      <Input id={id} type={type} required placeholder={placeholder} className="h-11" />
+      <Input id={id} name={id} type={type} required placeholder={placeholder} className="h-11" />
     </div>
   );
 }
