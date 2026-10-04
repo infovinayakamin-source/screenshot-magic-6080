@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, MessageCircle } from "lucide-react";
+import { Instagram, Facebook } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 import { BRAND } from "@/lib/products";
 
@@ -18,9 +18,7 @@ export function Footer() {
           <p className="eyebrow">Shop</p>
           <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
             <li><Link to="/shop" className="hover:text-ink">All Products</Link></li>
-            <li><Link to="/shop" search={{ category: "Bracelets" }} className="hover:text-ink">Bracelets</Link></li>
-            <li><Link to="/shop" search={{ category: "Pendants" }} className="hover:text-ink">Pendants</Link></li>
-            <li><Link to="/collections" className="hover:text-ink">Collections</Link></li>
+            <li><Link to="/collections/zodiac-crystal-collection" className="hover:text-ink">Zodiac Bracelets</Link></li>
           </ul>
         </div>
 
