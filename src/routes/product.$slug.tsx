@@ -187,13 +187,13 @@ function ProductPage() {
           </div>
 
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <Button variant="quiet" size="xl" className="flex-1" disabled={soldOut} onClick={addToCart}>
+            <Button variant="quiet" size="xl" className="w-full shrink-0 sm:w-auto sm:flex-1" disabled={soldOut} onClick={addToCart}>
               {soldOut ? "Sold out" : "Add to cart"}
             </Button>
             <Button
               variant="ink"
               size="xl"
-              className="flex-1"
+              className="w-full shrink-0 sm:w-auto sm:flex-1"
               disabled={soldOut}
               onClick={() => buyNow(product.id, qty)}
             >

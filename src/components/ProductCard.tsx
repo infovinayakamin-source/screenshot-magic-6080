@@ -97,10 +97,10 @@ export function ProductCard({
             </span>
           )}
         </div>
-        <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
+        <div className="mt-auto grid gap-2 pt-4">
           <Button
             variant="quiet"
-            className="h-10 min-w-0 px-1 text-[10px] sm:px-3"
+            className="h-10 w-full px-3 text-[10px] sm:text-xs"
             disabled={soldOut}
             onClick={() => {
               add(product.id);
@@ -110,7 +110,7 @@ export function ProductCard({
             {soldOut ? "Sold out" : "Add to cart"}
           </Button>
           {!soldOut && (
-            <Button variant="ink" className="h-10 min-w-0 px-1 text-[10px] sm:px-3" onClick={() => buyNow(product.id)}>
+            <Button variant="ink" className="h-10 w-full px-3 text-[10px] sm:text-xs" onClick={() => buyNow(product.id)}>
               Buy it now
             </Button>
           )}
