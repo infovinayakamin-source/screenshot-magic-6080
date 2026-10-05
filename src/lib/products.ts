@@ -59,7 +59,7 @@ export const collections: Collection[] = [
     slug: "zodiac-crystal-collection",
     name: "Zodiac Crystal Bracelets",
     description: "Natural stone bracelets inspired by your zodiac sign.",
-    image: zodiacItems[0].image,
+    image: zodiacItems[0]?.image ?? "",
   },
 ];
 

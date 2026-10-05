@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift, PackageCheck, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HeroRotator } from "@/components/HeroRotator";
 import { ProductCard } from "@/components/ProductCard";
+
 import { PosterCarousel } from "@/components/PosterCarousel";
 import { products } from "@/lib/products";
 import { Newsletter } from "@/components/Newsletter";
@@ -52,7 +54,7 @@ function Home() {
           </div>
         </div>
         <div className="order-1 relative md:order-2">
-          {zodiacItems[0] && <img src={zodiacItems[0].image} alt="Aries zodiac crystal bracelet on a gold stand" className="aspect-[1.45] w-full rounded-[8px] border border-gold/40 bg-background object-contain md:aspect-[0.96]" fetchPriority="high" />}
+          <HeroRotator />
           <div className="absolute -bottom-3 left-4 rounded-[8px] border border-gold/40 bg-background px-4 py-3 shadow-soft md:-left-4"><span className="block text-xs text-muted-foreground">Explore the collection</span><strong className="font-display text-lg text-navy">Find your sign</strong></div>
         </div>
       </div>
