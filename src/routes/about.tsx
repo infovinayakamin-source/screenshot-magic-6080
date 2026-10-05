@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import { Newsletter } from "@/components/Newsletter";
-import { BRAND, editorialImage, heroImage } from "@/lib/products";
+import { BRAND } from "@/lib/products";
+import { zodiacItems } from "@/lib/zodiac";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -62,10 +63,10 @@ function About() {
 
       <Reveal className="shell">
         <img
-          src={heroImage}
-          alt="Turquoise bracelet and Tree of Life pendant styled on warm ivory stone"
+          src={zodiacItems[0].image}
+          alt="Aries zodiac crystal bracelet on a gold stand"
           loading="lazy"
-          className="aspect-[16/9] w-full rounded-2xl object-cover"
+          className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
         />
       </Reveal>
 
@@ -95,10 +96,10 @@ function About() {
 
       <Reveal className="shell">
         <img
-          src={editorialImage}
-          alt="Natural stones and jewellery tools on a linen workbench"
+          src={zodiacItems[1].image}
+          alt="Taurus zodiac crystal bracelet on a gold stand"
           loading="lazy"
-          className="aspect-[16/9] w-full rounded-2xl object-cover"
+          className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
         />
         <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
           Our pieces are designed for style, symbolism and personal ritual. They are not medical products
