@@ -62,12 +62,15 @@ function About() {
       </section>
 
       <Reveal className="shell">
-        <img
-          src={zodiacItems[0].image}
-          alt="Aries zodiac crystal bracelet on a gold stand"
-          loading="lazy"
-          className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
-        />
+        {zodiacItems[0] && (
+          <img
+            src={zodiacItems[0].image}
+            alt="Aries zodiac crystal bracelet on a gold stand"
+            loading="lazy"
+            className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
+          />
+        )}
+
       </Reveal>
 
       <section className="shell grid gap-12 py-20 md:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
