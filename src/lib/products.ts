@@ -1,5 +1,3 @@
-import editorial from "@/assets/editorial.jpg";
-import hero from "@/assets/hero.jpg";
 import { zodiacItems, zodiacTitle } from "@/lib/zodiac";
 
 export const BRAND = "ShivAmrit Healers";
@@ -61,12 +59,11 @@ export const collections: Collection[] = [
     slug: "zodiac-crystal-collection",
     name: "Zodiac Crystal Bracelets",
     description: "Natural stone bracelets inspired by your zodiac sign.",
-    image: zodiacItems[0]?.image ?? hero,
+    image: zodiacItems[0].image,
   },
 ];
 
-export const heroImage = hero;
-export const editorialImage = editorial;
+
 
 export const formatINR = (value: number) =>
   "₹" + value.toLocaleString("en-IN", { maximumFractionDigits: 0 });
