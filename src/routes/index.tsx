@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift, PackageCheck, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HeroRotator } from "@/components/HeroRotator";
 import { ProductCard } from "@/components/ProductCard";
+
 import { PosterCarousel } from "@/components/PosterCarousel";
 import { products } from "@/lib/products";
 import { Newsletter } from "@/components/Newsletter";
