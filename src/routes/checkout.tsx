@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
+import { formatINR } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { createRazorpayOrder, placeCodOrder, verifyRazorpayPayment } from "@/lib/payments.functions";
 
@@ -49,7 +49,7 @@ function Checkout() {
   const createOrder = useServerFn(createRazorpayOrder);
   const verify = useServerFn(verifyRazorpayPayment);
   const placeCod = useServerFn(placeCodOrder);
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 99;
+  const shipping = 0;
 
   async function handleSubmit(form: HTMLFormElement) {
     const fd = new FormData(form);
