@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { FREE_SHIPPING_THRESHOLD, products } from "@/lib/products";
+import { products } from "@/lib/products";
 
 const lineSchema = z.object({ id: z.string().min(1).max(100), qty: z.number().int().min(1).max(50) });
 const customerSchema = z.object({
@@ -22,7 +22,7 @@ function priceCart(lines: z.infer<typeof lineSchema>[]) {
     return { id: p.id, name: p.name, price: p.price, qty: l.qty };
   });
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 99;
+  const shipping = 0;
   return { items, total: subtotal + shipping };
 }
 
