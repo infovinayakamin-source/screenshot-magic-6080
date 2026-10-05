@@ -95,12 +95,15 @@ function About() {
       </section>
 
       <Reveal className="shell">
-        <img
-          src={zodiacItems[1].image}
-          alt="Taurus zodiac crystal bracelet on a gold stand"
-          loading="lazy"
-          className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
-        />
+        {zodiacItems[1] && (
+          <img
+            src={zodiacItems[1].image}
+            alt="Taurus zodiac crystal bracelet on a gold stand"
+            loading="lazy"
+            className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
+          />
+        )}
+
         <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
           Our pieces are designed for style, symbolism and personal ritual. They are not medical products
           and are not intended to treat, cure or prevent any condition.
