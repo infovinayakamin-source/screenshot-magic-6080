@@ -7,3 +7,6 @@
 - [ ] Close public sign-up once the owner account has claimed access
 - [x] Match the supplied reference's hero, featured product cards, process section, and product purchase layout using only ShivAmrit zodiac bracelets while retaining navy/gold theme; omit farm-specific claims and delivery promises.
 - [x] Add a navy-and-gold rotating poster section between the homepage shopping information and featured products using real zodiac bracelet photos.
+- [ ] Order confirmation by email + WhatsApp for COD/online orders — waits on owner's email domain and WhatsApp provider choice
+- [ ] Database-driven Zodiac Bracelet admin: products table, image upload, auto logo branding (original kept), branding settings, stock + history, low-stock, product/stock status, bulk import with preview, admin table filters
+- [ ] Customer shop/product pages read live from database (filters by sign, search, in-stock, sorting, stock-aware buttons)
