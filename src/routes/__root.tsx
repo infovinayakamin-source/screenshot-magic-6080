@@ -18,6 +18,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CartDrawer } from "@/components/CartDrawer";
 import { StoreProvider } from "@/lib/store";
+import { getCatalog } from "@/lib/catalog.functions";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -79,6 +80,14 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  loader: async () => {
+    try {
+      return await getCatalog();
+    } catch (e) {
+      console.error(e);
+      return { products: [] };
+    }
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },

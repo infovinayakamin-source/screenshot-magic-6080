@@ -1,4 +1,4 @@
-import { useRouteContext } from "@tanstack/react-router";
+import { useLoaderData } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { zodiacItems } from "@/lib/zodiac";
 import { getCatalog } from "@/lib/catalog.functions";
@@ -46,7 +46,7 @@ export const catalogQuery = {
 
 /** Live catalogue from the database. Seeded by the root loader so SSR has it. */
 export function useProducts(): Product[] {
-  const { initialCatalog } = useRouteContext({ from: "__root__" }) as { initialCatalog?: { products: Product[] } };
+  const initialCatalog = useLoaderData({ from: "__root__" }) as { products: Product[] } | undefined;
   const { data } = useQuery({ ...catalogQuery, initialData: initialCatalog });
   return data?.products ?? [];
 }
