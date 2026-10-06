@@ -29,6 +29,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const products = useProducts();
   const [scrolled, setScrolled] = useState(false);
   const [msg, setMsg] = useState(0);
   const navigate = useNavigate();
