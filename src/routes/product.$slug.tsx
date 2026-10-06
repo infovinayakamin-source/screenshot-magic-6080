@@ -126,7 +126,7 @@ function ProductPage() {
             <div className="inline-flex h-11 items-center rounded-full border border-border">
               <Button variant="ghost" type="button" aria-label="Decrease quantity" className="grid size-10 place-items-center rounded-full text-ink" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="size-4" /></Button>
               <span className="w-8 text-center text-sm">{qty}</span>
-              <Button variant="ghost" type="button" aria-label="Increase quantity" className="grid size-10 place-items-center rounded-full text-ink" onClick={() => setQty(qty + 1)}><Plus className="size-4" /></Button>
+              <Button variant="ghost" type="button" aria-label="Increase quantity" className="grid size-10 place-items-center rounded-full text-ink" disabled={qty >= maxQty} onClick={() => setQty(Math.min(maxQty, qty + 1))}><Plus className="size-4" /></Button>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">Total quantity: {qty} {qty === 1 ? "bracelet" : "bracelets"}</p>
           </div>
@@ -139,6 +139,7 @@ function ProductPage() {
             <Button variant="quiet" size="xl" className="w-full shrink-0 rounded-full sm:w-auto sm:flex-1" disabled={soldOut} onClick={() => buyNow(product.id, qty)}>Buy it now</Button>
           </div>
           <p className="mt-7 max-w-lg text-sm leading-relaxed text-muted-foreground">{product.description}</p>
+          {product.productInfo && <div className="mt-4 max-w-lg whitespace-pre-line border-l-2 border-gold pl-4 text-sm leading-relaxed text-ink">{product.productInfo}</div>}
 
           <div className="mt-6 space-y-3 border-y border-gold/40 py-5 text-sm text-ink">
             <p className="flex items-start gap-3"><Gem className="size-4 shrink-0 text-gold" /> Natural stone colours, each piece with its own variation</p>
