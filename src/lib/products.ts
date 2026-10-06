@@ -1,58 +1,57 @@
-import { zodiacItems, zodiacTitle } from "@/lib/zodiac";
+import { useRouteContext } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { zodiacItems } from "@/lib/zodiac";
+import { getCatalog } from "@/lib/catalog.functions";
 
 export const BRAND = "ShivAmrit Healers";
+
+export type StockStatus = "in" | "low" | "out";
 
 export type Product = {
   id: string;
   name: string;
+  nameHi: string;
   slug: string;
   description: string;
   shortDescription: string;
+  productInfo: string;
   price: number;
-  compareAtPrice?: number;
+  compareAtPrice?: number | undefined;
   images: string[];
   category: "Bracelets" | "Pendants" | "Gift Sets";
   collection: string[];
   stoneType: string;
+  stones: string;
   color: string;
   size: string;
   weight: string;
   rating: number;
   reviewCount: number;
   inventory: number;
+  stockStatus: StockStatus;
   featured: boolean;
   bestseller: boolean;
+  sign: string;
+  signHi: string;
+  symbol: string;
+  signSlug: string;
+  createdAt: string;
 };
 
-export const products: Product[] = zodiacItems.map(
-  (z): Product => ({
-    id: `z-${z.sign.toLowerCase()}`,
-    name: zodiacTitle(z),
-    slug: z.slug,
-    description: z.description,
-    shortDescription: z.shortDescription,
-    price: z.price ?? 0,
-    images: [z.image],
-    category: "Bracelets",
-    collection: ["zodiac-crystal-collection", "crystal-bracelets", "healing-inspired"],
-    stoneType: "Natural stone",
-    color: z.colours,
-    size: "8 mm beads, elastic stretch",
-    weight: "",
-    rating: 0,
-    reviewCount: 0,
-    inventory: z.inventory ?? 0,
-    featured: false,
-    bestseller: false,
-  }),
-);
-
-export type Collection = {
-  slug: string;
-  name: string;
-  description: string;
-  image: string;
+export const catalogQuery = {
+  queryKey: ["catalog"] as const,
+  queryFn: () => getCatalog(),
+  staleTime: 15_000,
 };
+
+/** Live catalogue from the database. Seeded by the root loader so SSR has it. */
+export function useProducts(): Product[] {
+  const { initialCatalog } = useRouteContext({ from: "__root__" }) as { initialCatalog?: { products: Product[] } };
+  const { data } = useQuery({ ...catalogQuery, initialData: initialCatalog });
+  return data?.products ?? [];
+}
+
+export type Collection = { slug: string; name: string; description: string; image: string };
 
 export const collections: Collection[] = [
   {
@@ -63,17 +62,12 @@ export const collections: Collection[] = [
   },
 ];
 
-
-
 export const formatINR = (value: number) =>
   "₹" + value.toLocaleString("en-IN", { maximumFractionDigits: 0 });
 
 export const discountPercent = (p: Product) =>
   p.compareAtPrice ? Math.round(((p.compareAtPrice - p.price) / p.compareAtPrice) * 100) : 0;
 
-export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
 export const getCollection = (slug: string) => collections.find((c) => c.slug === slug);
-export const productsInCollection = (slug: string) =>
-  products.filter((p) => p.collection.includes(slug));
 
 export const FREE_SHIPPING_THRESHOLD = 2500;
