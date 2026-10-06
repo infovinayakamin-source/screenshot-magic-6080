@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpg";
-import { BRAND, FREE_SHIPPING_THRESHOLD, formatINR, products } from "@/lib/products";
+import { BRAND, FREE_SHIPPING_THRESHOLD, formatINR, useProducts } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -45,7 +45,7 @@ export function Header() {
   }, []);
 
   const results = query.trim()
-    ? products.filter((p) => (p.name + p.stoneType + p.category).toLowerCase().includes(query.toLowerCase()))
+    ? products.filter((p) => (p.name + p.nameHi + p.sign + p.signHi + p.stones).toLowerCase().includes(query.toLowerCase()))
     : products.slice(0, 3);
 
   return (

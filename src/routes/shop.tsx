@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Newsletter } from "@/components/Newsletter";
 import { Button } from "@/components/ui/button";
-import { products } from "@/lib/products";
+import { useProducts } from "@/lib/products";
 import { useStore } from "@/lib/store";
 
 
@@ -43,6 +43,7 @@ export const Route = createFileRoute("/shop")({
 function Shop() {
   const { category, wishlist: wishlistView } = Route.useSearch();
   const { wishlist } = useStore();
+  const products = useProducts();
   const saved = products.filter((p) => wishlist.includes(p.id));
 
   return (
