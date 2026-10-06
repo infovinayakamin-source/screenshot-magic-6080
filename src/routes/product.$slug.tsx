@@ -12,14 +12,16 @@ import {
 } from "@/components/ui/accordion";
 import { ProductCard } from "@/components/ProductCard";
 import { Newsletter } from "@/components/Newsletter";
-import { discountPercent, formatINR, getProduct, products } from "@/lib/products";
+import { discountPercent, formatINR, useProducts } from "@/lib/products";
+import { getCatalog } from "@/lib/catalog.functions";
 import { useStore } from "@/lib/store";
 import { useBuyNow } from "@/lib/use-buy-now";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/product/$slug")({
-  loader: ({ params }) => {
-    const product = getProduct(params.slug);
+  loader: async ({ params }) => {
+    const { products } = await getCatalog();
+    const product = products.find((p) => p.slug === params.slug);
     if (!product) throw notFound();
     return { product };
   },
@@ -59,13 +61,15 @@ const styleTips = [
 ];
 
 function ProductPage() {
-  const { product } = Route.useLoaderData();
+  const { product: initial } = Route.useLoaderData();
+  const products = useProducts();
+  const product = products.find((p) => p.slug === initial.slug) ?? initial;
   const { add, wishlist, toggleWishlist, markViewed, recentlyViewed } = useStore();
   const buyNow = useBuyNow();
   const [qty, setQty] = useState(1);
   const wished = wishlist.includes(product.id);
   const off = discountPercent(product);
-  const soldOut = product.inventory === 0;
+  const soldOut = product.stockStatus === "out";
   const isBracelet = product.category === "Bracelets";
   const isZodiac = product.collection.includes("zodiac-crystal-collection");
 
@@ -74,9 +78,10 @@ function ProductPage() {
     markViewed(product.id);
   }, [product.id, markViewed]);
 
-  const related = products.filter(
-    (p) => p.id !== product.id && p.collection.some((c) => product.collection.includes(c)),
-  ).slice(0, 3);
+  const related = products
+    .filter((p) => p.id !== product.id)
+    .sort((a, b) => Number(b.sign === product.sign) - Number(a.sign === product.sign))
+    .slice(0, 3);
   const bundle = products.filter((p) => p.id !== product.id).slice(0, 2);
   const bundleTotal = [product, ...bundle].reduce((s, p) => s + p.price, 0);
   const viewed = recentlyViewed
@@ -84,6 +89,7 @@ function ProductPage() {
     .map((id) => products.find((p) => p.id === id))
     .filter(Boolean)
     .slice(0, 3) as typeof products;
+  const maxQty = Math.max(1, product.inventory);
 
   const addToCart = () => {
     add(product.id, qty);
@@ -98,8 +104,9 @@ function ProductPage() {
         <ProductGallery productId={product.id} images={product.images} name={product.name} />
 
         <div>
-          {isZodiac && <p className="mb-4 text-xs font-bold text-navy uppercase">Zodiac bracelets</p>}
+          {isZodiac && <p className="mb-4 text-xs font-bold text-navy uppercase"><span className="mr-1 text-base text-gold">{product.symbol}</span> {product.sign} · {product.signHi}</p>}
           <h1 className="text-4xl leading-tight text-ink md:text-5xl">{product.name}</h1>
+          {product.nameHi && <p className="mt-1 text-lg text-muted-foreground">{product.nameHi}</p>}
 
           <div className="mt-2 flex flex-wrap items-baseline gap-3 text-sm text-muted-foreground">
             <span>{product.size} · {formatINR(product.price)}</span>
@@ -127,7 +134,7 @@ function ProductPage() {
           <p className="mt-1 text-xs text-muted-foreground">Inclusive of all taxes</p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Button variant="ink" size="xl" className="w-full shrink-0 rounded-full sm:w-auto sm:flex-1" disabled={soldOut} onClick={addToCart}>
-              <ShoppingBag className="size-4" /> {soldOut ? "Sold out" : "Add to cart"}
+              <ShoppingBag className="size-4" /> {soldOut ? "Out of stock" : "Add to cart"}
             </Button>
             <Button variant="quiet" size="xl" className="w-full shrink-0 rounded-full sm:w-auto sm:flex-1" disabled={soldOut} onClick={() => buyNow(product.id, qty)}>Buy it now</Button>
           </div>
@@ -140,6 +147,8 @@ function ProductPage() {
           </div>
 
           <dl className="mt-6 grid max-w-md grid-cols-[110px_minmax(0,1fr)] gap-y-2 text-sm">
+            <dt className="text-muted-foreground">Zodiac</dt>
+            <dd className="text-ink">{product.symbol} {product.sign} · {product.signHi}</dd>
             <dt className="text-muted-foreground">Stone</dt>
             <dd className="text-ink">{product.stoneType}</dd>
             <dt className="text-muted-foreground">Size</dt>
@@ -154,7 +163,7 @@ function ProductPage() {
           </div>}
 
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-xs text-navy">
-            <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />{soldOut ? "Sold out" : "In stock"}</span>
+            <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />{soldOut ? "Out of stock" : product.stockStatus === "low" ? "Only a few left" : "In stock"}</span>
             <span className="flex items-center gap-1.5"><Check className="size-4 text-gold" />Cash on delivery available</span>
           </div>
 
@@ -194,10 +203,6 @@ function ProductPage() {
                   <dd className="text-ink">{product.stoneType}</dd>
                   <dt className="text-muted-foreground">Approx. size</dt>
                   <dd className="text-ink">{product.size}</dd>
-                  <dt className="text-muted-foreground">Weight</dt>
-                  <dd className="text-ink">{product.weight}</dd>
-                  <dt className="text-muted-foreground">Colour</dt>
-                  <dd className="text-ink">{product.color}</dd>
                   <dt className="text-muted-foreground">Care</dt>
                   <dd className="text-ink">
                     Keep away from water and perfume. Store in the pouch provided and wipe with a soft
@@ -299,7 +304,7 @@ function ProductPage() {
             <p className="text-xs text-muted-foreground">{formatINR(product.price)}</p>
           </div>
           <Button variant="ink" className="h-11 px-6" disabled={soldOut} onClick={addToCart}>
-            {soldOut ? "Sold out" : "Add to cart"}
+            {soldOut ? "Out of stock" : "Add to cart"}
           </Button>
         </div>
       </div>

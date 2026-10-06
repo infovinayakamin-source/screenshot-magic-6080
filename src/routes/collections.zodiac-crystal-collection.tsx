@@ -13,8 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getProduct, type Product } from "@/lib/products";
-import { ZODIAC_SIGNS, zodiacItems, zodiacTitle } from "@/lib/zodiac";
+import { useProducts, type Product } from "@/lib/products";
+import { ZODIAC_SIGNS } from "@/lib/zodiac";
 import { cn } from "@/lib/utils";
 
 const DESC =
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/collections/zodiac-crystal-collection")({
   component: ZodiacPage,
 });
 
-type Sort = "default" | "price-asc" | "price-desc";
+type Sort = "default" | "newest" | "price-asc" | "price-desc";
 
 function ZodiacPage() {
   const [sign, setSign] = useState("all");
@@ -42,23 +42,23 @@ function ZodiacPage() {
   const [query, setQuery] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [quick, setQuick] = useState<Product | null>(null);
+  const products = useProducts();
 
   const list = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase();
-    const l = zodiacItems.filter((z) =>
-      (sign === "all" || z.sign === sign) &&
-      (!inStockOnly || (z.inventory ?? 0) > 0) &&
-      (!normalized || `${z.sign} ${z.hindi} ${zodiacTitle(z)}`.toLocaleLowerCase().includes(normalized))
+    const l = products.filter((p) =>
+      (sign === "all" || p.sign === sign) &&
+      (!inStockOnly || p.stockStatus !== "out") &&
+      (!normalized || `${p.sign} ${p.signHi} ${p.name} ${p.nameHi} ${p.stones}`.toLocaleLowerCase().includes(normalized))
     );
-    if (sort !== "default") {
-      l.sort((a, b) => {
-        if (a.price == null) return 1;
-        if (b.price == null) return -1;
-        return sort === "price-asc" ? a.price - b.price : b.price - a.price;
-      });
-    }
+    l.sort((a, b) => {
+      if (sort === "price-asc") return a.price - b.price;
+      if (sort === "price-desc") return b.price - a.price;
+      if (sort === "newest") return b.createdAt.localeCompare(a.createdAt);
+      return Number(b.featured) - Number(a.featured);
+    });
     return l;
-  }, [sign, sort, query, inStockOnly]);
+  }, [products, sign, sort, query, inStockOnly]);
 
   const clearFilters = () => { setSign("all"); setQuery(""); setInStockOnly(false); };
 
@@ -88,7 +88,7 @@ function ZodiacPage() {
         </div>
 
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by zodiac sign">
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" role="group" aria-label="Filter by zodiac sign">
             {[{ en: "all", hi: "" }, ...ZODIAC_SIGNS].map((s) => (
               <Button
                 key={s.en}
@@ -98,7 +98,7 @@ function ZodiacPage() {
                 onClick={() => setSign(s.en)}
                 aria-pressed={sign === s.en}
                 className={cn(
-                  "h-8 rounded-sm px-3.5 text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                  "h-9 shrink-0 rounded-sm px-3.5 text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                   sign === s.en
                     ? "border-navy bg-navy text-gold"
                     : "border-border bg-card text-ink hover:bg-sand",
@@ -114,6 +114,7 @@ function ZodiacPage() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="default" className="text-xs">Featured</SelectItem>
+              <SelectItem value="newest" className="text-xs">Newest</SelectItem>
               <SelectItem value="price-asc" className="text-xs">Price: Low to High</SelectItem>
               <SelectItem value="price-desc" className="text-xs">Price: High to Low</SelectItem>
             </SelectContent>
@@ -121,7 +122,7 @@ function ZodiacPage() {
         </div>
 
         <div className="mt-5 flex items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p aria-live="polite">Showing {list.length} of {zodiacItems.length} bracelets</p>
+          <p aria-live="polite">Showing {list.length} of {products.length} bracelets</p>
           {(sign !== "all" || query || inStockOnly) && <Button variant="link" size="sm" onClick={clearFilters}>Clear filters</Button>}
         </div>
 
@@ -135,10 +136,9 @@ function ZodiacPage() {
           </div>
         ) : (
           <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
-            {list.map((z) => {
-              const product = getProduct(z.slug);
-              return product ? <ProductCard key={z.sign} product={product} imageFit="contain" onQuickView={setQuick} /> : null;
-            })}
+            {list.map((product) => (
+              <ProductCard key={product.id} product={product} imageFit="contain" onQuickView={setQuick} />
+            ))}
           </div>
         )}
       </section>
