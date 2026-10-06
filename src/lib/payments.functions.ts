@@ -89,12 +89,14 @@ export const verifyRazorpayPayment = createServerFn({ method: "POST" })
     if (expected !== data.razorpay_signature) return { ok: false as const };
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    await supabaseAdmin
+    // Only the first successful verification flips the order to paid and reduces stock.
+    const { data: order } = await supabaseAdmin
       .from("orders")
       .update({ status: "paid", razorpay_payment_id: data.razorpay_payment_id, paid_at: new Date().toISOString() })
       .eq("razorpay_order_id", data.razorpay_order_id)
-      .neq("status", "paid");
-    const { data: order } = await supabaseAdmin.from("orders").select("id, items, paid_at").eq("razorpay_order_id", data.razorpay_order_id).maybeSingle();
+      .neq("status", "paid")
+      .select("id, items")
+      .maybeSingle();
     if (order) {
       const { error: stockErr } = await supabaseAdmin.rpc("consume_stock", { _items: order.items, _reason: `order ${order.id}` });
       if (stockErr) console.error("Stock update failed for paid order", order.id, stockErr);
