@@ -22,7 +22,8 @@ export function ProductCard({
   const buyNow = useBuyNow();
   const wished = wishlist.includes(product.id);
   const off = discountPercent(product);
-  const soldOut = product.inventory === 0;
+  const soldOut = product.stockStatus === "out";
+  const maxQty = Math.max(1, product.inventory);
 
   return (
     <article className="group flex min-w-0 flex-col overflow-hidden rounded-[8px] border border-border bg-background shadow-soft transition-all duration-300 hover:border-gold hover:shadow-lift">
@@ -52,7 +53,7 @@ export function ProductCard({
             )}
             {soldOut && (
               <span className="pointer-events-auto border border-gold bg-navy px-2.5 py-1 text-[10px] font-medium tracking-[0.12em] text-gold">
-                SOLD OUT
+                OUT OF STOCK
               </span>
             )}
           </div>
@@ -85,18 +86,19 @@ export function ProductCard({
       </div>
 
       <div className="flex flex-1 flex-col px-3 pb-3 pt-1 sm:px-5 sm:pb-5">
-        <p className="mb-2 text-[10px] font-bold uppercase text-navy sm:text-xs">Zodiac bracelets</p>
+        <p className="mb-2 text-[10px] font-bold uppercase text-navy sm:text-xs"><span className="text-gold">{product.symbol}</span> {product.sign} · {product.signHi}</p>
         <h3 className="font-display text-xl leading-snug text-ink sm:text-2xl">
           <Link to="/product/$slug" params={{ slug: product.slug }} className="hover:opacity-70">
             {product.name}
           </Link>
         </h3>
-        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground sm:text-sm">{product.shortDescription}</p>
+        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground sm:text-sm">{product.stones || product.shortDescription}</p>
+        <p className={cn("mt-2 text-[11px] font-medium", soldOut ? "text-destructive" : "text-navy")}>{soldOut ? "Out of stock" : product.stockStatus === "low" ? "Only a few left" : "In stock"}</p>
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-4">
           <div className="inline-flex h-9 items-center rounded-full border border-border sm:h-10">
             <Button variant="ghost" size="icon" className="size-8 rounded-full sm:size-9" aria-label={`Decrease ${product.name} quantity`} onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="size-3" /></Button>
             <span className="w-5 text-center text-sm text-ink" aria-live="polite">{qty}</span>
-            <Button variant="ghost" size="icon" className="size-8 rounded-full sm:size-9" aria-label={`Increase ${product.name} quantity`} onClick={() => setQty(qty + 1)}><Plus className="size-3" /></Button>
+            <Button variant="ghost" size="icon" className="size-8 rounded-full sm:size-9" aria-label={`Increase ${product.name} quantity`} disabled={soldOut || qty >= maxQty} onClick={() => setQty(Math.min(maxQty, qty + 1))}><Plus className="size-3" /></Button>
           </div>
           <span className="text-lg font-bold text-navy sm:text-xl">{formatINR(product.price * qty)}</span>
           {product.compareAtPrice && (
@@ -115,7 +117,7 @@ export function ProductCard({
               toast.success(`${product.name} added to cart`);
             }}
           >
-            <ShoppingBag className="size-4" /> {soldOut ? "Sold out" : "Add to cart"}
+            <ShoppingBag className="size-4" /> {soldOut ? "Out of stock" : "Add to cart"}
           </Button>
           {!soldOut && (
             <Button variant="quiet" className="h-9 w-full rounded-full px-2 text-[10px] sm:text-xs" onClick={() => buyNow(product.id, qty)}>

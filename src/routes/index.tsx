@@ -35,6 +35,7 @@ const intentions = [
 ];
 
 function Home() {
+  const products = useProducts();
   return <>
     <section className="border-b border-border bg-sand/50">
       <div className="shell grid items-center gap-8 py-9 md:min-h-[540px] md:grid-cols-2 md:gap-12 md:py-12 lg:min-h-[610px]">
