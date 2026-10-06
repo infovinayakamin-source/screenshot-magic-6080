@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Newsletter } from "@/components/Newsletter";
-import { getCollection, productsInCollection } from "@/lib/products";
+import { getCollection, useProducts } from "@/lib/products";
 
 export const Route = createFileRoute("/collections/$slug")({
   loader: ({ params }) => {
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/collections/$slug")({
 
 function CollectionPage() {
   const { collection } = Route.useLoaderData();
-  const items = productsInCollection(collection.slug);
+  const items = useProducts();
 
   return (
     <>

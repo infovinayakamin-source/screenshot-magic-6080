@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { products, type Product } from "@/lib/products";
+import { useProducts, type Product } from "@/lib/products";
 
 export type CartLine = { id: string; qty: number };
 
@@ -61,6 +61,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [wishlist, setWishlist] = usePersisted<string[]>("aarohi-wishlist", []);
   const [recentlyViewed, setRecentlyViewed] = usePersisted<string[]>("aarohi-viewed", []);
   const [cartOpen, setCartOpen] = useState(false);
+  const products = useProducts();
 
   const add = useCallback(
     (id: string, qty = 1) => {
@@ -104,7 +105,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           return product ? { product, qty: l.qty } : null;
         })
         .filter((v): v is { product: Product; qty: number } => v !== null),
-    [lines],
+    [lines, products],
   );
 
   const subtotal = items.reduce((sum, i) => sum + i.product.price * i.qty, 0);

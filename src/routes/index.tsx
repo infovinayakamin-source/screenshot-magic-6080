@@ -5,9 +5,8 @@ import { HeroRotator } from "@/components/HeroRotator";
 import { ProductCard } from "@/components/ProductCard";
 
 import { PosterCarousel } from "@/components/PosterCarousel";
-import { products } from "@/lib/products";
 import { Newsletter } from "@/components/Newsletter";
-import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/products";
+import { FREE_SHIPPING_THRESHOLD, formatINR, useProducts } from "@/lib/products";
 import { ZODIAC_SIGNS, zodiacItems } from "@/lib/zodiac";
 
 export const Route = createFileRoute("/")({
@@ -36,6 +35,7 @@ const intentions = [
 ];
 
 function Home() {
+  const products = useProducts();
   return <>
     <section className="border-b border-border bg-sand/50">
       <div className="shell grid items-center gap-8 py-9 md:min-h-[540px] md:grid-cols-2 md:gap-12 md:py-12 lg:min-h-[610px]">
@@ -75,7 +75,7 @@ function Home() {
     <section className="bg-sand/50 py-16 md:py-20" aria-labelledby="featured-heading">
       <div className="shell">
         <div className="flex items-end justify-between gap-4"><div><p className="eyebrow">The collection</p><h2 id="featured-heading" className="mt-2 text-4xl text-navy md:text-5xl">Zodiac bracelets</h2><p className="mt-2 text-sm text-muted-foreground">Your sign, your everyday piece.</p></div><Link to="/collections/zodiac-crystal-collection" className="shrink-0 text-sm text-navy underline underline-offset-4">See all <ArrowRight className="inline size-4" /></Link></div>
-        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">{products.slice(0, 4).map((product) => <ProductCard key={product.id} product={product} imageFit="contain" />)}</div>
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">{[...products].sort((a, b) => Number(b.featured) - Number(a.featured)).slice(0, 4).map((product) => <ProductCard key={product.id} product={product} imageFit="contain" />)}</div>
       </div>
     </section>
 

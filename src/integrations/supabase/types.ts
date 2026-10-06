@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      inventory_history: {
+        Row: {
+          actor: string | null
+          change: number
+          created_at: string
+          id: string
+          product_id: string
+          reason: string
+          stock_after: number
+        }
+        Insert: {
+          actor?: string | null
+          change: number
+          created_at?: string
+          id?: string
+          product_id: string
+          reason: string
+          stock_after: number
+        }
+        Update: {
+          actor?: string | null
+          change?: number
+          created_at?: string
+          id?: string
+          product_id?: string
+          reason?: string
+          stock_after?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_history_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           amount: number
@@ -56,6 +94,154 @@ export type Database = {
         }
         Relationships: []
       }
+      product_branding_settings: {
+        Row: {
+          enabled: boolean
+          id: number
+          logo_url: string | null
+          opacity: number
+          padding: number
+          position: string
+          size: string
+          updated_at: string
+        }
+        Insert: {
+          enabled?: boolean
+          id?: number
+          logo_url?: string | null
+          opacity?: number
+          padding?: number
+          position?: string
+          size?: string
+          updated_at?: string
+        }
+        Update: {
+          enabled?: boolean
+          id?: number
+          logo_url?: string | null
+          opacity?: number
+          padding?: number
+          position?: string
+          size?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      product_images: {
+        Row: {
+          branded_image_url: string | null
+          branding_error: string | null
+          created_at: string
+          id: string
+          is_primary: boolean
+          original_image_url: string
+          product_id: string
+          sort_order: number
+        }
+        Insert: {
+          branded_image_url?: string | null
+          branding_error?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          original_image_url: string
+          product_id: string
+          sort_order?: number
+        }
+        Update: {
+          branded_image_url?: string | null
+          branding_error?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          original_image_url?: string
+          product_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          apply_branding: boolean
+          created_at: string
+          description: string | null
+          featured: boolean
+          id: string
+          low_stock_threshold: number
+          name: string
+          name_hi: string | null
+          original_price: number | null
+          price: number
+          product_info: string | null
+          short_description: string | null
+          sku: string
+          slug: string
+          status: string
+          stock: number
+          stones: string | null
+          updated_at: string
+          zodiac_sign_id: number
+        }
+        Insert: {
+          apply_branding?: boolean
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          low_stock_threshold?: number
+          name: string
+          name_hi?: string | null
+          original_price?: number | null
+          price: number
+          product_info?: string | null
+          short_description?: string | null
+          sku: string
+          slug: string
+          status?: string
+          stock?: number
+          stones?: string | null
+          updated_at?: string
+          zodiac_sign_id: number
+        }
+        Update: {
+          apply_branding?: boolean
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          low_stock_threshold?: number
+          name?: string
+          name_hi?: string | null
+          original_price?: number | null
+          price?: number
+          product_info?: string | null
+          short_description?: string | null
+          sku?: string
+          slug?: string
+          status?: string
+          stock?: number
+          stones?: string | null
+          updated_at?: string
+          zodiac_sign_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_zodiac_sign_id_fkey"
+            columns: ["zodiac_sign_id"]
+            isOneToOne: false
+            referencedRelation: "zodiac_signs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -77,12 +263,40 @@ export type Database = {
         }
         Relationships: []
       }
+      zodiac_signs: {
+        Row: {
+          id: number
+          name_en: string
+          name_hi: string
+          slug: string
+          symbol: string
+        }
+        Insert: {
+          id: number
+          name_en: string
+          name_hi: string
+          slug: string
+          symbol: string
+        }
+        Update: {
+          id?: number
+          name_en?: string
+          name_hi?: string
+          slug?: string
+          symbol?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
       claim_admin: { Args: { _user_id: string }; Returns: boolean }
+      consume_stock: {
+        Args: { _items: Json; _reason: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

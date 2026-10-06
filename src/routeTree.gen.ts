@@ -22,7 +22,10 @@ import { Route as CollectionsIndexRouteImport } from './routes/collections.index
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as CollectionsZodiacCrystalCollectionRouteImport } from './routes/collections.zodiac-crystal-collection'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
+import { Route as AuthenticatedAdminBraceletsRouteImport } from './routes/_authenticated/admin.bracelets'
+import { Route as AuthenticatedAdminBrandingRouteImport } from './routes/_authenticated/admin.branding'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin.orders'
+import { Route as ApiPublicImgSplatRouteImport } from './routes/api/public/img.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -89,12 +92,29 @@ const ProductSlugRoute = ProductSlugRouteImport.update({
   path: '/product/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminBraceletsRoute =
+  AuthenticatedAdminBraceletsRouteImport.update({
+    id: '/admin/bracelets',
+    path: '/admin/bracelets',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminBrandingRoute =
+  AuthenticatedAdminBrandingRouteImport.update({
+    id: '/admin/branding',
+    path: '/admin/branding',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminOrdersRoute =
   AuthenticatedAdminOrdersRouteImport.update({
     id: '/admin/orders',
     path: '/admin/orders',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicImgSplatRoute = ApiPublicImgSplatRouteImport.update({
+  id: '/api/public/img/$',
+  path: '/api/public/img/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -109,7 +129,10 @@ export interface FileRoutesByFullPath {
   '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
+  '/admin/bracelets': typeof AuthenticatedAdminBraceletsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/api/public/img/$': typeof ApiPublicImgSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -124,7 +147,10 @@ export interface FileRoutesByTo {
   '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections': typeof CollectionsIndexRoute
+  '/admin/bracelets': typeof AuthenticatedAdminBraceletsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/api/public/img/$': typeof ApiPublicImgSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -141,7 +167,10 @@ export interface FileRoutesById {
   '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
+  '/_authenticated/admin/bracelets': typeof AuthenticatedAdminBraceletsRoute
+  '/_authenticated/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/api/public/img/$': typeof ApiPublicImgSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -158,7 +187,10 @@ export interface FileRouteTypes {
     | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections/'
+    | '/admin/bracelets'
+    | '/admin/branding'
     | '/admin/orders'
+    | '/api/public/img/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -173,7 +205,10 @@ export interface FileRouteTypes {
     | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections'
+    | '/admin/bracelets'
+    | '/admin/branding'
     | '/admin/orders'
+    | '/api/public/img/$'
   id:
     | '__root__'
     | '/'
@@ -189,7 +224,10 @@ export interface FileRouteTypes {
     | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections/'
+    | '/_authenticated/admin/bracelets'
+    | '/_authenticated/admin/branding'
     | '/_authenticated/admin/orders'
+    | '/api/public/img/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -206,6 +244,7 @@ export interface RootRouteChildren {
   CollectionsZodiacCrystalCollectionRoute: typeof CollectionsZodiacCrystalCollectionRoute
   ProductSlugRoute: typeof ProductSlugRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
+  ApiPublicImgSplatRoute: typeof ApiPublicImgSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -301,6 +340,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/bracelets': {
+      id: '/_authenticated/admin/bracelets'
+      path: '/admin/bracelets'
+      fullPath: '/admin/bracelets'
+      preLoaderRoute: typeof AuthenticatedAdminBraceletsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/branding': {
+      id: '/_authenticated/admin/branding'
+      path: '/admin/branding'
+      fullPath: '/admin/branding'
+      preLoaderRoute: typeof AuthenticatedAdminBrandingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/orders': {
       id: '/_authenticated/admin/orders'
       path: '/admin/orders'
@@ -308,14 +361,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminOrdersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/img/$': {
+      id: '/api/public/img/$'
+      path: '/api/public/img/$'
+      fullPath: '/api/public/img/$'
+      preLoaderRoute: typeof ApiPublicImgSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminBraceletsRoute: typeof AuthenticatedAdminBraceletsRoute
+  AuthenticatedAdminBrandingRoute: typeof AuthenticatedAdminBrandingRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminBraceletsRoute: AuthenticatedAdminBraceletsRoute,
+  AuthenticatedAdminBrandingRoute: AuthenticatedAdminBrandingRoute,
   AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
 }
 
@@ -337,6 +401,7 @@ const rootRouteChildren: RootRouteChildren = {
     CollectionsZodiacCrystalCollectionRoute,
   ProductSlugRoute: ProductSlugRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
+  ApiPublicImgSplatRoute: ApiPublicImgSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { Newsletter } from "@/components/Newsletter";
-import { collections, productsInCollection } from "@/lib/products";
+import { collections, useProducts } from "@/lib/products";
 
 export const Route = createFileRoute("/collections/")({
   head: () => ({
@@ -26,6 +26,7 @@ export const Route = createFileRoute("/collections/")({
 });
 
 function Collections() {
+  const products = useProducts();
   return (
     <>
       <section className="border-b border-gold/40 bg-background">
@@ -53,7 +54,7 @@ function Collections() {
               <h2 className="mt-4 font-display text-2xl text-ink">{c.name}</h2>
               <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.description}</p>
               <p className="mt-2 text-xs text-muted-foreground">
-                {productsInCollection(c.slug).length} pieces
+                {products.length} pieces
               </p>
               <span className="mt-3 inline-flex items-center gap-1.5 text-xs tracking-[0.14em] text-ink uppercase">
                 Explore collection{" "}

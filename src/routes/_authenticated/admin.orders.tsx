@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import logo from "@/assets/logo.jpg";
+import { AdminNav } from "@/components/AdminShell";
 
 const STATUS_LABEL: Record<string, string> = {
   created: "Awaiting payment",
@@ -125,13 +126,8 @@ function PageShell({ children }: { children: ReactNode }) {
               Orders
             </span>
           </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <Link
-              to="/"
-              className="text-xs text-navy-foreground/70 underline-offset-4 hover:text-gold hover:underline"
-            >
-              Store
-            </Link>
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <AdminNav />
             <SignOutButton />
           </div>
         </div>
