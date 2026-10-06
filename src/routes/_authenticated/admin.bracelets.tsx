@@ -251,7 +251,7 @@ function ProductForm({ product, settings, onClose, onSaved }: { product: AdminPr
 
   async function submit() {
     const price = Number(f.price);
-    if (!f.name.trim() || !f.sku.trim() || !Number.isInteger(price)) return toast.error("Name, SKU and a whole-number price are required");
+    if (!f.name.trim() || !f.sku.trim() || !Number.isInteger(price)) { toast.error("Name, SKU and a whole-number price are required"); return; }
     setBusy(true);
     try {
       const res = await save({

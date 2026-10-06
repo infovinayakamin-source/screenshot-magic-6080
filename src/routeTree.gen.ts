@@ -23,6 +23,7 @@ import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as CollectionsZodiacCrystalCollectionRouteImport } from './routes/collections.zodiac-crystal-collection'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as AuthenticatedAdminBraceletsRouteImport } from './routes/_authenticated/admin.bracelets'
+import { Route as AuthenticatedAdminBrandingRouteImport } from './routes/_authenticated/admin.branding'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin.orders'
 import { Route as ApiPublicImgSplatRouteImport } from './routes/api/public/img.$'
 
@@ -97,6 +98,12 @@ const AuthenticatedAdminBraceletsRoute =
     path: '/admin/bracelets',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminBrandingRoute =
+  AuthenticatedAdminBrandingRouteImport.update({
+    id: '/admin/branding',
+    path: '/admin/branding',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminOrdersRoute =
   AuthenticatedAdminOrdersRouteImport.update({
     id: '/admin/orders',
@@ -123,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
   '/admin/bracelets': typeof AuthenticatedAdminBraceletsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/api/public/img/$': typeof ApiPublicImgSplatRoute
 }
@@ -140,6 +148,7 @@ export interface FileRoutesByTo {
   '/product/$slug': typeof ProductSlugRoute
   '/collections': typeof CollectionsIndexRoute
   '/admin/bracelets': typeof AuthenticatedAdminBraceletsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/api/public/img/$': typeof ApiPublicImgSplatRoute
 }
@@ -159,6 +168,7 @@ export interface FileRoutesById {
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
   '/_authenticated/admin/bracelets': typeof AuthenticatedAdminBraceletsRoute
+  '/_authenticated/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/api/public/img/$': typeof ApiPublicImgSplatRoute
 }
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/collections/'
     | '/admin/bracelets'
+    | '/admin/branding'
     | '/admin/orders'
     | '/api/public/img/$'
   fileRoutesByTo: FileRoutesByTo
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/collections'
     | '/admin/bracelets'
+    | '/admin/branding'
     | '/admin/orders'
     | '/api/public/img/$'
   id:
@@ -213,6 +225,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/collections/'
     | '/_authenticated/admin/bracelets'
+    | '/_authenticated/admin/branding'
     | '/_authenticated/admin/orders'
     | '/api/public/img/$'
   fileRoutesById: FileRoutesById
@@ -334,6 +347,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBraceletsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/branding': {
+      id: '/_authenticated/admin/branding'
+      path: '/admin/branding'
+      fullPath: '/admin/branding'
+      preLoaderRoute: typeof AuthenticatedAdminBrandingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/orders': {
       id: '/_authenticated/admin/orders'
       path: '/admin/orders'
@@ -353,11 +373,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminBraceletsRoute: typeof AuthenticatedAdminBraceletsRoute
+  AuthenticatedAdminBrandingRoute: typeof AuthenticatedAdminBrandingRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminBraceletsRoute: AuthenticatedAdminBraceletsRoute,
+  AuthenticatedAdminBrandingRoute: AuthenticatedAdminBrandingRoute,
   AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
 }
 
