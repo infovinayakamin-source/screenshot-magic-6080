@@ -10,6 +10,8 @@ import { Newsletter } from "@/components/Newsletter";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "FAQ — Stones, Sizing, Shipping & Returns | ShivAmrit Healers" },
       {
         name: "description",

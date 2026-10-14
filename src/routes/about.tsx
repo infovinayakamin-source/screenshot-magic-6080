@@ -8,6 +8,8 @@ import { zodiacItems } from "@/lib/zodiac";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Jewelry With Meaning — Our Story | ShivAmrit Healers" },
       {
         name: "description",

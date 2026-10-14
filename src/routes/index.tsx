@@ -1,142 +1,100 @@
+import { useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Gem, Heart, ShieldCheck, Truck, ArrowRight, Sparkles, Gift, PackageCheck, ShoppingBag } from "lucide-react";
+import { ArrowLeft, ArrowRight, Gem, Gift, Heart, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { HeroRotator } from "@/components/HeroRotator";
+import { StorefrontHero } from "@/components/StorefrontHero";
 import { ProductCard } from "@/components/ProductCard";
-
 import { PosterCarousel } from "@/components/PosterCarousel";
+import { QuickView } from "@/components/QuickView";
+import { Reveal } from "@/components/Reveal";
 import { Newsletter } from "@/components/Newsletter";
-import { FREE_SHIPPING_THRESHOLD, formatINR, useProducts } from "@/lib/products";
-import { ZODIAC_SIGNS, zodiacItems } from "@/lib/zodiac";
+import { useProducts, type Product } from "@/lib/products";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
-    { title: "Zodiac Crystal Bracelets | ShivAmrit Healers" },
-    { name: "description", content: "Explore ShivAmrit Healers zodiac crystal bracelets. Find your sign and discover natural stone jewellery for everyday style and personal intention." },
-    { property: "og:title", content: "Zodiac Crystal Bracelets | ShivAmrit Healers" },
-    { property: "og:description", content: "Find your zodiac sign and explore natural stone bracelets for everyday style and personal intention." },
+    { title: "ShivAmrit Healers — Zodiac Crystal Bracelets" },
+    { name: "description", content: "Explore ShivAmrit Healers zodiac crystal bracelets. Natural stone jewellery for everyday style, personal meaning and thoughtful gifting." },
+    { property: "og:title", content: "ShivAmrit Healers — Zodiac Crystal Bracelets" },
+    { property: "og:description", content: "Your sign. Your story. Your bracelet. Discover the ShivAmrit zodiac crystal collection." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),
   component: Home,
 });
 
-const trust = [
-  { icon: Gem, title: "Natural stone jewellery", detail: "Each piece has its own character" },
-  { icon: Sparkles, title: "Made with intention", detail: "A personal symbol to carry" },
-  { icon: ShieldCheck, title: "7-day returns", detail: "On unworn pieces" },
-  { icon: Truck, title: "Free shipping", detail: `On orders above ${formatINR(FREE_SHIPPING_THRESHOLD)}` },
-];
-
-const intentions = [
-  { icon: Sparkles, title: "Wealth & abundance", stones: "Pyrite · Citrine", description: "Traditionally associated with optimism and new possibilities." },
-  { icon: ShieldCheck, title: "Protection & grounding", stones: "Tiger Eye · Black Tourmaline", description: "Symbols of steadiness and personal boundaries." },
-  { icon: Heart, title: "Love & reflection", stones: "Rose Quartz", description: "A gentle reminder to make space for connection." },
-];
-
 function Home() {
   const products = useProducts();
+  const [view, setView] = useState<"featured" | "newest">("featured");
+  const [quick, setQuick] = useState<Product | null>(null);
+  const signRail = useRef<HTMLDivElement>(null);
+  const giftRail = useRef<HTMLDivElement>(null);
+  const sorted = [...products].sort((a, b) => view === "newest" ? b.createdAt.localeCompare(a.createdAt) : Number(b.featured) - Number(a.featured));
+  const signs = products.filter((p, i) => products.findIndex((other) => other.sign === p.sign) === i);
+
   return <>
-    <section className="border-b border-border bg-sand/50">
-      <div className="shell grid items-center gap-8 py-9 md:min-h-[540px] md:grid-cols-2 md:gap-12 md:py-12 lg:min-h-[610px]">
-        <div className="order-2 md:order-1">
-          <p className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-background px-4 py-2 text-xs font-medium text-navy"><span className="size-2 rounded-full bg-gold" /> ShivAmrit Healers · Zodiac crystal bracelets</p>
-          <h1 className="mt-6 max-w-xl text-5xl leading-[0.92] text-navy sm:text-7xl lg:text-8xl">Wear your energy.</h1>
-          <p className="mt-5 max-w-lg font-display text-2xl text-ink md:text-3xl">A bracelet for your sign. A little meaning for every day.</p>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">Explore natural stone colours inspired by the zodiac. Choose a piece that feels personal to you.</p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Button asChild variant="ink" size="xl" className="rounded-full"><Link to="/collections/zodiac-crystal-collection">Shop bracelets <ArrowRight /></Link></Button>
-            <Button asChild variant="quiet" size="xl" className="rounded-full"><Link to="/about">Our story</Link></Button>
-          </div>
-          <div className="mt-8 flex gap-10 border-t border-gold/40 pt-5 text-navy">
-            <div><strong className="block font-display text-3xl">11</strong><span className="text-xs text-muted-foreground">Zodiac bracelets</span></div>
-            <div><strong className="block font-display text-3xl">₹999</strong><span className="text-xs text-muted-foreground">Each piece</span></div>
-          </div>
-        </div>
-        <div className="order-1 relative md:order-2">
-          <HeroRotator />
-          <div className="absolute -bottom-3 left-4 rounded-[8px] border border-gold/40 bg-background px-4 py-3 shadow-soft md:-left-4"><span className="block text-xs text-muted-foreground">Explore the collection</span><strong className="font-display text-lg text-navy">Find your sign</strong></div>
+    <StorefrontHero />
+
+    <section className="border-b border-border bg-background" aria-label="Collection highlights">
+      <div className="shell grid grid-cols-2 gap-y-5 py-6 md:grid-cols-4 md:py-7">
+        {[
+          { icon: Gem, title: "Natural stone colours" },
+          { icon: Sparkles, title: "Zodiac-inspired designs" },
+          { icon: Gift, title: "Meaningful gifting" },
+          { icon: ShieldCheck, title: "Online payment & COD" },
+        ].map(({ icon: Icon, title }) => <div key={title} className="flex items-center justify-center gap-2.5 border-gold/30 px-2 text-xs text-navy md:border-r md:last:border-r-0"><Icon className="size-5 shrink-0 text-gold" strokeWidth={1.5} /><span>{title}</span></div>)}
+      </div>
+    </section>
+
+    <section className="py-12 md:py-16" aria-labelledby="sign-heading">
+      <div className="shell">
+        <Reveal><div className="flex items-center justify-between gap-4">
+          <div><p className="eyebrow">A little more personal</p><h2 id="sign-heading" className="mt-2 text-3xl text-navy md:text-4xl">Find your zodiac</h2></div>
+          <div className="flex gap-1"><Button variant="ghost" size="icon" aria-label="Previous zodiac signs" onClick={() => signRail.current?.scrollBy({ left: -380, behavior: "smooth" })}><ArrowLeft /></Button><Button variant="ghost" size="icon" aria-label="Next zodiac signs" onClick={() => signRail.current?.scrollBy({ left: 380, behavior: "smooth" })}><ArrowRight /></Button></div>
+        </div></Reveal>
+        <div ref={signRail} className="zodiac-rail mt-7 flex gap-5 overflow-x-auto pb-4 sm:gap-7">
+          {signs.map((product) => <Link key={product.sign} to="/product/$slug" params={{ slug: product.slug }} className="group w-28 shrink-0 text-center md:w-36">
+            <span className="block aspect-square overflow-hidden rounded-full border border-gold/40 bg-muted"><img src={product.images[0]} alt={`${product.sign} bracelet`} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" /></span>
+            <span className="mt-3 block text-sm font-medium text-navy">{product.sign}</span><span className="mt-1 block text-xs text-muted-foreground">{product.signHi}</span>
+          </Link>)}
         </div>
       </div>
     </section>
 
-    <section className="border-b border-gold/40 bg-background" aria-label="Shopping information">
-      <div className="shell grid grid-cols-2 gap-6 py-6 md:grid-cols-4 md:divide-x md:divide-gold/40 md:py-8">
-        {trust.map(({ icon: Icon, title, detail }) => <div key={title} className="text-center">
-          <Icon className="mx-auto size-6 text-navy" strokeWidth={1.5} />
-          <p className="mt-2 text-xs font-medium text-ink">{title}</p>
-          <p className="mt-1 text-xs text-muted-foreground">{detail}</p>
-        </div>)}
+    <section className="border-y border-border bg-muted/40 py-12 md:py-16" aria-labelledby="featured-heading">
+      <div className="shell">
+        <Reveal className="text-center"><p className="eyebrow">The zodiac crystal collection</p><h2 id="featured-heading" className="mt-3 text-4xl text-navy md:text-5xl">A piece of your story</h2><p className="mt-3 text-sm text-muted-foreground">Your everyday companion, chosen by you.</p>
+          <div className="mt-6 inline-flex gap-5 border-b border-border" role="group" aria-label="Product selection">
+            <Button variant="ghost" aria-pressed={view === "featured"} onClick={() => setView("featured")} className={`rounded-none border-b-2 px-1 hover:bg-transparent ${view === "featured" ? "border-navy text-navy" : "border-transparent text-muted-foreground"}`}>Featured bracelets</Button>
+            <Button variant="ghost" aria-pressed={view === "newest"} onClick={() => setView("newest")} className={`rounded-none border-b-2 px-1 hover:bg-transparent ${view === "newest" ? "border-navy text-navy" : "border-transparent text-muted-foreground"}`}>Newest additions</Button>
+          </div>
+        </Reveal>
+        <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4 md:gap-x-6">{sorted.slice(0, 8).map((product, i) => <Reveal key={product.id} delay={(i % 4) * 70} className="min-w-0"><ProductCard product={product} imageFit="contain" onQuickView={setQuick} /></Reveal>)}</div>
+        <div className="mt-10 text-center"><Button asChild variant="quiet" size="xl"><Link to="/collections/zodiac-crystal-collection">Explore all bracelets <ArrowRight /></Link></Button></div>
       </div>
     </section>
 
     <PosterCarousel />
 
-    <section className="bg-sand/50 py-16 md:py-20" aria-labelledby="featured-heading">
-      <div className="shell">
-        <div className="flex items-end justify-between gap-4"><div><p className="eyebrow">The collection</p><h2 id="featured-heading" className="mt-2 text-4xl text-navy md:text-5xl">Zodiac bracelets</h2><p className="mt-2 text-sm text-muted-foreground">Your sign, your everyday piece.</p></div><Link to="/collections/zodiac-crystal-collection" className="shrink-0 text-sm text-navy underline underline-offset-4">See all <ArrowRight className="inline size-4" /></Link></div>
-        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">{[...products].sort((a, b) => Number(b.featured) - Number(a.featured)).slice(0, 4).map((product) => <ProductCard key={product.id} product={product} imageFit="contain" />)}</div>
-      </div>
-    </section>
-
-    <section className="py-16 md:py-20" aria-labelledby="sign-heading">
-      <div className="shell">
-        <div className="flex flex-wrap items-end justify-between gap-5">
-          <div><p className="eyebrow">The zodiac collection</p><h2 id="sign-heading" className="mt-2 text-4xl text-navy md:text-5xl">Shop by zodiac sign</h2><p className="mt-3 text-sm text-muted-foreground">Choose your sign to see its bracelet.</p></div>
-          <Link to="/collections/zodiac-crystal-collection" className="inline-flex items-center gap-2 text-sm text-navy underline underline-offset-4">View all bracelets <ArrowRight className="size-4" /></Link>
-        </div>
-        <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {ZODIAC_SIGNS.map((sign) => {
-            const item = zodiacItems.find((z) => z.sign === sign.en);
-            return item ? <Link key={sign.en} to="/product/$slug" params={{ slug: item.slug }} className="group min-w-0 border border-gold/40 bg-background p-2 transition-colors hover:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
-              <img src={item.image} alt={`${item.sign} crystal bracelet`} className="aspect-square w-full object-contain" loading="lazy" decoding="async" />
-              <span className="block pt-3 pb-2 text-center text-sm text-navy">{item.sign} <span className="text-muted-foreground">· {item.hindi}</span></span>
-            </Link> : <div key={sign.en} className="flex aspect-square flex-col items-center justify-center border border-dashed border-gold/40 bg-background p-3 text-center">
-              <span className="font-display text-xl text-navy">{sign.en}</span><span className="text-xs text-muted-foreground">{sign.hi}</span><span className="mt-2 text-xs text-muted-foreground">Coming soon</span>
-            </div>;
-          })}
-        </div>
-      </div>
-    </section>
-
-    <section className="border-y border-gold/40 bg-background py-16 md:py-20" aria-labelledby="intentions-heading">
-      <div className="shell">
-        <p className="eyebrow">Explore the symbolism</p><h2 id="intentions-heading" className="mt-2 text-4xl text-navy md:text-5xl">Choose an intention</h2>
-        <p className="mt-3 max-w-2xl text-sm text-muted-foreground">Ideas from crystal traditions, not a claim about the stones in a specific bracelet. Check each piece for its actual materials.</p>
-        <div className="mt-9 grid gap-8 md:grid-cols-3">
-          {intentions.map(({ icon: Icon, title, stones, description }) => <div key={title} className="border-t border-gold pt-5">
-            <Icon className="size-6 text-navy" strokeWidth={1.4} /><h3 className="mt-4 text-2xl text-navy">{title}</h3><p className="mt-1 text-xs tracking-[0.12em] text-primary uppercase">{stones}</p><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{description}</p>
-          </div>)}
-        </div>
-      </div>
-    </section>
-
-    <section className="bg-sand/50 py-16 md:py-20" aria-labelledby="story-heading">
-      <div className="shell">
-        <h2 id="story-heading" className="text-4xl text-navy md:text-5xl">How we work</h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">Discover bracelets inspired by your zodiac sign. Choose by colour and meaning, then make your selection your own.</p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="py-12 md:py-16" aria-labelledby="personal-heading">
+      <div className="shell"><Reveal><div className="mb-8 text-center"><p className="eyebrow">Chosen with intention</p><h2 id="personal-heading" className="mt-3 text-4xl text-navy md:text-5xl">Small details. Personal meaning.</h2></div></Reveal>
+        <div className="grid gap-5 md:grid-cols-2">
           {[
-            { icon: Gem, title: "Explore your sign", text: "Browse the zodiac collection to find your bracelet." },
-            { icon: Sparkles, title: "Look closer", text: "See the real product photo, colours and details of each piece." },
-            { icon: ShoppingBag, title: "Choose your quantity", text: "Select how many you need and add them to your bag." },
-            { icon: PackageCheck, title: "Place your order", text: "Choose online payment or cash on delivery at checkout." },
-          ].map(({ icon: Icon, title, text }) => <div key={title} className="rounded-[8px] border border-border bg-background p-5 shadow-soft md:p-7"><span className="grid size-11 place-items-center rounded-full bg-sand text-navy"><Icon size={21} strokeWidth={1.5} /></span><h3 className="mt-5 text-2xl text-navy">{title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>)}
-        </div>
-        <div className="mt-12 grid gap-8 rounded-[8px] border border-border bg-background p-6 md:grid-cols-3 md:p-9">
-          <div><Gem className="size-6 text-navy" strokeWidth={1.5} /><h3 className="mt-4 text-2xl text-navy">What we offer</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Zodiac-inspired natural stone bracelets, one design for each available sign.</p></div>
-          <div><Heart className="size-6 text-navy" strokeWidth={1.5} /><h3 className="mt-4 text-2xl text-navy">Make it personal</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Choose the colours and symbolism that feel meaningful to you.</p></div>
-          <div><Truck className="size-6 text-navy" strokeWidth={1.5} /><h3 className="mt-4 text-2xl text-navy">Delivery</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Free shipping on orders above {formatINR(FREE_SHIPPING_THRESHOLD)}. Shipping is ₹99 below that amount.</p></div>
+            { product: products[1], title: "A gift that feels personal", text: "For their sign. For their story.", action: "Find their bracelet" },
+            { product: products[4] ?? products[0], title: "Make it your everyday", text: "Natural colours. Your own style.", action: "Find your bracelet" },
+          ].map(({ product, title, text, action }, i) => product && <Reveal key={title} delay={i * 100}><Link to="/product/$slug" params={{ slug: product.slug }} className="editorial-tile group relative isolate block overflow-hidden bg-navy text-navy-foreground"><img src={product.images[0]} alt={product.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" /><div className="editorial-scrim absolute inset-0" /><div className="relative flex h-full flex-col justify-end p-6 md:p-8"><p className="mb-2 text-xs text-gold">{product.sign} · {product.signHi}</p><h3 className="max-w-xs text-3xl md:text-4xl">{title}</h3><p className="mt-2 text-sm text-navy-foreground/80">{text}</p><span className="mt-5 inline-flex items-center gap-2 text-xs underline underline-offset-4">{action}<ArrowRight className="size-4" /></span></div></Link></Reveal>)}
         </div>
       </div>
     </section>
 
-    <section className="border-y border-border bg-navy py-14 text-navy-foreground md:py-20" aria-labelledby="guide-heading">
-      <div className="shell flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-        <div><Gift className="size-6 text-gold" strokeWidth={1.4} /><h2 id="guide-heading" className="mt-3 text-3xl text-gold md:text-4xl">Which bracelet is right for me?</h2><p className="mt-2 max-w-lg text-sm text-navy-foreground/80">Start with your zodiac sign, then consider the colours and fit that feel right to you.</p></div>
-        <Button asChild size="xl" className="border border-gold bg-gold text-gold-foreground hover:bg-gold/90"><Link to="/faq" hash="choose">Read the guide <ArrowRight /></Link></Button>
-      </div>
-    </section>
+    <div className="meaning-marquee overflow-hidden border-y border-gold/30 bg-navy py-5 text-gold" aria-label="Natural stone jewellery. Personal meaning. Zodiac-inspired."><div className="marquee-track flex w-max items-center gap-10" aria-hidden="true">{Array.from({ length: 4 }, (_, i) => <span key={i} className="flex shrink-0 items-center gap-10 font-display text-2xl"><span>Natural stone jewellery</span><Sparkles className="size-4" /><span>Personal meaning</span><Sparkles className="size-4" /><span>Zodiac-inspired</span><Sparkles className="size-4" /></span>)}</div></div>
+
+    <section className="py-12 md:py-16" aria-labelledby="gift-heading"><div className="shell">
+      <Reveal><div className="flex items-end justify-between gap-3"><div><p className="eyebrow">The gift edit</p><h2 id="gift-heading" className="mt-2 text-3xl text-navy md:text-4xl">For someone special</h2></div><div className="flex gap-1"><Button variant="ghost" size="icon" aria-label="Previous gift bracelets" onClick={() => giftRail.current?.scrollBy({ left: -400, behavior: "smooth" })}><ArrowLeft /></Button><Button variant="ghost" size="icon" aria-label="Next gift bracelets" onClick={() => giftRail.current?.scrollBy({ left: 400, behavior: "smooth" })}><ArrowRight /></Button></div></div></Reveal>
+      <div ref={giftRail} className="gift-rail mt-8 grid auto-cols-[72%] grid-flow-col gap-4 overflow-x-auto pb-4 sm:auto-cols-[38%] md:auto-cols-[28%] lg:auto-cols-[23%]">{products.slice(3, 10).map((product) => <ProductCard key={product.id} product={product} onQuickView={setQuick} imageFit="contain" />)}</div>
+    </div></section>
+
+    <section className="border-y border-border bg-muted/40 py-14 md:py-20"><div className="shell"><Reveal className="mx-auto max-w-2xl text-center"><Heart className="mx-auto size-6 text-gold" strokeWidth={1.5} /><p className="eyebrow mt-5">The ShivAmrit story</p><h2 className="mt-3 text-4xl text-navy md:text-5xl">More than an accessory.<br />Something that feels like you.</h2><p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground">We believe in the beauty of natural stone colours and the meaning you bring to them. Explore zodiac-inspired bracelets for everyday wear and thoughtful gifting.</p><Button variant="link" asChild className="mt-5"><Link to="/about">Our story <ArrowRight /></Link></Button></Reveal></div></section>
     <Newsletter />
+    <QuickView product={quick} onOpenChange={(open) => { if (!open) setQuick(null); }} />
   </>;
 }

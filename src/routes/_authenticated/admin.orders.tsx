@@ -52,6 +52,10 @@ const ALL_STATUSES: OrderStatus[] = ["created", "paid", "cod", "shipped", "cance
 export const Route = createFileRoute("/_authenticated/admin/orders")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Orders — ShivAmrit Healers Admin" },
+      { property: "og:description", content: "Private order management for the ShivAmrit Healers team." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: `Orders — ${BRAND}` },
       {
         name: "description",

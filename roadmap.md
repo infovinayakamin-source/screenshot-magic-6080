@@ -10,3 +10,4 @@
 - [ ] Order confirmation by email + WhatsApp for COD/online orders — waits on owner's email domain and WhatsApp provider choice
 - [ ] (built; full click-through test pending) Database-driven Zodiac Bracelet admin: products table, image upload, auto logo branding (original kept), branding settings, stock + history, low-stock, product/stock status, bulk import with preview, admin table filters
 - [x] Customer shop/product pages read live from database (filters by sign, search, in-stock, sorting, stock-aware buttons)
+- [x] Adapt Meeranshu-inspired storefront layout, effects and motion while retaining real products and ShivAmrit branding; verify desktop/mobile/tablet, carousel controls, quick view, add-to-cart and zodiac filtering.

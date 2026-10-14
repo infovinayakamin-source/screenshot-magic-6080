@@ -14,6 +14,8 @@ import { createRazorpayOrder, placeCodOrder, verifyRazorpayPayment } from "@/lib
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Checkout | ShivAmrit Healers" },
       { name: "description", content: "Secure checkout for your ShivAmrit Healers natural stone jewellery order." },
       { property: "og:title", content: "Checkout | ShivAmrit Healers" },

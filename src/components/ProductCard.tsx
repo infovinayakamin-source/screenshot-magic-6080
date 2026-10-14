@@ -26,8 +26,8 @@ export function ProductCard({
   const maxQty = Math.max(1, product.inventory);
 
   return (
-    <article className="group flex min-w-0 flex-col overflow-hidden rounded-[8px] border border-border bg-background shadow-soft transition-all duration-300 hover:border-gold hover:shadow-lift">
-      <div className="relative overflow-hidden bg-background">
+    <article className="group flex min-w-0 flex-col overflow-hidden bg-transparent transition-all duration-300">
+      <div className="relative overflow-hidden border border-border/50 bg-background">
         <Link
           to="/product/$slug"
           params={{ slug: product.slug }}
@@ -85,7 +85,7 @@ export function ProductCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col px-3 pb-3 pt-1 sm:px-5 sm:pb-5">
+      <div className="flex flex-1 flex-col px-1 pb-2 pt-4">
         <p className="mb-2 text-[10px] font-bold uppercase text-navy sm:text-xs"><span className="text-gold">{product.symbol}</span> {product.sign} · {product.signHi}</p>
         <h3 className="font-display text-xl leading-snug text-ink sm:text-2xl">
           <Link to="/product/$slug" params={{ slug: product.slug }} className="hover:opacity-70">
@@ -110,7 +110,7 @@ export function ProductCard({
         <div className="grid gap-2 pt-3">
           <Button
             variant="ink"
-            className="h-10 w-full rounded-full px-2 text-[10px] sm:h-11 sm:text-xs"
+            className="h-10 w-full rounded-none px-2 text-[10px] sm:h-11 sm:text-xs"
             disabled={soldOut}
             onClick={() => {
               add(product.id, qty);
@@ -120,7 +120,7 @@ export function ProductCard({
             <ShoppingBag className="size-4" /> {soldOut ? "Out of stock" : "Add to cart"}
           </Button>
           {!soldOut && (
-            <Button variant="quiet" className="h-9 w-full rounded-full px-2 text-[10px] sm:text-xs" onClick={() => buyNow(product.id, qty)}>
+            <Button variant="quiet" className="h-9 w-full rounded-none px-2 text-[10px] sm:text-xs" onClick={() => buyNow(product.id, qty)}>
               Buy it now
             </Button>
           )}
