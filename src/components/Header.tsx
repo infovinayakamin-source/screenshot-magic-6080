@@ -63,7 +63,7 @@ export function Header() {
           scrolled ? "bg-background/95 backdrop-blur-xl" : "bg-background",
         )}
       >
-        <div className="shell grid h-16 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 md:h-20">
+        <div className="shell grid h-16 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 md:h-20 lg:grid-cols-[1fr_auto_1fr]">
           <div className="flex items-center gap-1">
             <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
               <SheetTrigger
@@ -94,12 +94,12 @@ export function Header() {
               </SheetContent>
             </Sheet>
 
-            <nav className="hidden items-center gap-7 lg:flex">
+            <nav className="hidden items-center gap-5 lg:flex">
               {nav.map((item) => (
                 <Link
                   key={item.label}
                   to={item.to}
-                  className="text-xs tracking-[0.16em] text-ink/75 uppercase transition-colors hover:text-navy"
+                  className="text-xs tracking-[0.08em] text-ink/75 uppercase transition-colors hover:text-navy"
                   activeProps={{ className: "text-navy underline decoration-gold underline-offset-8" }}
                 >
                   {item.label}
