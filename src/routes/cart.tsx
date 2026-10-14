@@ -7,6 +7,8 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Your Cart | ShivAmrit Healers" },
       { name: "description", content: "Review the natural stone jewellery in your ShivAmrit Healers cart before checkout." },
       { property: "og:title", content: "Your Cart | ShivAmrit Healers" },

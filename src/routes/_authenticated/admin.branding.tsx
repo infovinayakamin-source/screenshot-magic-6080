@@ -24,6 +24,10 @@ import defaultLogo from "@/assets/logo.jpg";
 export const Route = createFileRoute("/_authenticated/admin/branding")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Product Image Branding — ShivAmrit Healers Admin" },
+      { property: "og:description", content: "Logo placement settings for product photos." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: `Product Image Branding — ${BRAND} admin` },
       { name: "description", content: "Logo placement settings for product photos." },
       { name: "robots", content: "noindex, nofollow" },

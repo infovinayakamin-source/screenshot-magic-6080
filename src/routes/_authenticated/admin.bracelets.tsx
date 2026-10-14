@@ -37,6 +37,10 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_authenticated/admin/bracelets")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Zodiac Bracelets — ShivAmrit Healers Admin" },
+      { property: "og:description", content: "Manage zodiac bracelets, photos, prices and stock." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: `Zodiac Bracelets — ${BRAND} admin` },
       { name: "description", content: "Manage zodiac bracelets, photos, prices and stock." },
       { name: "robots", content: "noindex, nofollow" },
