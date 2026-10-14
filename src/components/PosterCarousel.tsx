@@ -3,18 +3,20 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
-import { zodiacItems } from "@/lib/zodiac";
+import { useProducts } from "@/lib/products";
 
-const posters = [
+const posterCopy = [
   { sign: "Aries", eyebrow: "The zodiac collection", title: "A little meaning, worn every day.", copy: "Discover the Aries crystal bracelet.", action: "Explore Aries" },
   { sign: "Taurus", eyebrow: "Find your sign", title: "Your sign. Your everyday piece.", copy: "Discover the Taurus crystal bracelet.", action: "Explore Taurus" },
   { sign: "Pisces", eyebrow: "Made personal", title: "A colour story that feels like you.", copy: "Discover the Pisces crystal bracelet.", action: "Explore Pisces" },
-].flatMap((poster) => {
-  const product = zodiacItems.find((item) => item.sign === poster.sign);
-  return product ? [{ ...poster, product }] : [];
-});
+];
 
 export function PosterCarousel() {
+  const products = useProducts();
+  const posters = posterCopy.flatMap((poster) => {
+    const product = products.find((item) => item.sign === poster.sign && item.images[0]);
+    return product ? [{ ...poster, product }] : [];
+  });
   const [api, setApi] = useState<CarouselApi>();
   const [selected, setSelected] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -49,7 +51,7 @@ export function PosterCarousel() {
                   </Button>
                 </div>
                 <div className="order-1 mx-auto w-full max-w-[360px] md:order-2 md:max-w-[460px]">
-                  <img src={product.image} alt={`${product.sign} zodiac crystal bracelet`} className="aspect-[1.7] w-full object-contain md:aspect-square" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                  <img src={product.images[0]} alt={`${product.sign} zodiac crystal bracelet`} className="aspect-[1.7] w-full object-contain md:aspect-square" loading="lazy" decoding="async" />
                 </div>
               </div>
             </CarouselItem>
