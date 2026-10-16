@@ -273,6 +273,10 @@ function ClaimGate() {
         {busy ? "Please wait…" : "Claim owner access"}
       </Button>
       {error && <p className="text-sm text-destructive">{error}</p>}
+      <p className="text-xs leading-relaxed text-muted-foreground">
+        After you claim, public sign-up will be switched off, so nobody else can create an account
+        or reach this area. Only this owner account will keep access.
+      </p>
     </Panel>
   );
 }
