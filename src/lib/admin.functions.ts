@@ -123,14 +123,14 @@ export const getAdminAccess = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    return checkAdminAccess(supabaseAdmin, context.userId);
+    return checkAdminAccess(supabaseAdmin as unknown as AdminRpcClient, context.userId);
   });
 
 export const claimAdminAccess = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    return claimAdminFor(supabaseAdmin, context.userId);
+    return claimAdminFor(supabaseAdmin as unknown as AdminRpcClient, context.userId);
   });
 
 export const listOrders = createServerFn({ method: "POST" })
