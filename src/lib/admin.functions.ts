@@ -78,36 +78,59 @@ function toOrder(row: OrderRow): AdminOrder {
   };
 }
 
+type AdminRpcClient = {
+  rpc: (
+    fn: string,
+    args: { _user_id: string; _role?: string },
+  ) => Promise<{ data: unknown; error: unknown | null }>;
+  from: (table: string) => {
+    select: (cols: string) => {
+      eq: (
+        col: string,
+        val: string,
+      ) => { limit: (n: number) => Promise<{ data: unknown[] | null; error: unknown | null }> };
+    };
+  };
+};
+
 /** Is this account an admin, and does an owner account exist yet? */
+export async function checkAdminAccess(db: AdminRpcClient, userId: string) {
+  const [role, owners] = await Promise.all([
+    db.rpc("has_role", { _user_id: userId, _role: "admin" }),
+    db.from("user_roles").select("id").eq("role", "admin").limit(1),
+  ]);
+  if (role.error) {
+    console.error(role.error);
+    throw new Error("Could not verify access");
+  }
+  return { isAdmin: Boolean(role.data), adminExists: (owners.data?.length ?? 0) > 0 };
+}
+
+/**
+ * One-time bootstrap: the very first confirmed account can make itself owner.
+ * The database refuses as soon as any admin exists, so it can never be used twice.
+ */
+export async function claimAdminFor(db: AdminRpcClient, userId: string) {
+  const { data, error } = await db.rpc("claim_admin", { _user_id: userId });
+  if (error) {
+    console.error(error);
+    throw new Error("Could not grant access");
+  }
+  return { claimed: Boolean(data) };
+}
+
 export const getAdminAccess = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const [role, owners] = await Promise.all([
-      supabaseAdmin.rpc("has_role", { _user_id: context.userId, _role: "admin" }),
-      supabaseAdmin.from("user_roles").select("id").eq("role", "admin").limit(1),
-    ]);
-    if (role.error) {
-      console.error(role.error);
-      throw new Error("Could not verify access");
-    }
-    return { isAdmin: Boolean(role.data), adminExists: (owners.data?.length ?? 0) > 0 };
+    return checkAdminAccess(supabaseAdmin as unknown as AdminRpcClient, context.userId);
   });
 
-/**
- * One-time bootstrap: the very first confirmed account can make itself owner.
- * Refuses as soon as any admin exists, so it can never be used twice.
- */
 export const claimAdminAccess = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data, error } = await supabaseAdmin.rpc("claim_admin", { _user_id: context.userId });
-    if (error) {
-      console.error(error);
-      throw new Error("Could not grant access");
-    }
-    return { claimed: Boolean(data) };
+    return claimAdminFor(supabaseAdmin as unknown as AdminRpcClient, context.userId);
   });
 
 export const listOrders = createServerFn({ method: "POST" })
