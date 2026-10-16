@@ -14,6 +14,14 @@ const state = {
   currentUser: "user-1",
 };
 
+// Server functions expect a TanStack Start request context; in tests there is
+// none, so provide a minimal one with no global function middleware.
+vi.mock("@tanstack/start-storage-context", () => ({
+  getStartContext: () => ({ startOptions: { functionMiddleware: [] } }),
+  createStartContext: () => ({}),
+  createNullStartContext: () => ({}),
+}));
+
 vi.mock("@/integrations/supabase/auth-middleware", () => ({
   requireSupabaseAuth: createMiddleware().server(({ next }) =>
     next({ context: { userId: state.currentUser } }),
