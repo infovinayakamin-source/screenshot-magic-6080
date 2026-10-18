@@ -1,227 +1,49 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { Menu, Search, Heart, ShoppingBag, X, Home, LayoutGrid } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.jpg";
-import { BRAND, FREE_SHIPPING_THRESHOLD, formatINR, useProducts } from "@/lib/products";
-import { useStore } from "@/lib/store";
-import { cn } from "@/lib/utils";
-
+import { useState } from 'react';
+import { Link } from '@tanstack/react-router';
+import { Menu, Search, Heart, ShoppingBag, UserRound, X } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import logo from '@/assets/logo.jpg';
+import { BRAND, formatINR, useProducts } from '@/lib/products';
+import { useStore } from '@/lib/store';
+import { storefrontContent } from '@/lib/storefront-content';
 const nav = [
-  { label: "Zodiac Bracelets", to: "/collections/zodiac-crystal-collection" as const },
-  { label: "All Jewelry", to: "/shop" as const },
-  { label: "About", to: "/about" as const },
-  { label: "FAQ", to: "/faq" as const },
+  { label: 'Home', to: '/' as const },
+  { label: 'Zodiac Bracelets', to: '/collections/zodiac-crystal-collection' as const },
+  { label: 'Shop All', to: '/shop' as const },
+  { label: 'About Us', to: '/about' as const },
+  { label: 'Contact', to: '/contact' as const },
+  { label: 'FAQ', to: '/faq' as const },
 ];
-
-const announcements = [
-  `Free shipping on orders above ${formatINR(FREE_SHIPPING_THRESHOLD)}`,
-  "Discover your zodiac bracelet",
-  "Natural stone jewelry",
-  "Secure checkout",
-];
-
 export function Header() {
   const { count, setCartOpen, wishlist } = useStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const products = useProducts();
-  const [scrolled, setScrolled] = useState(false);
-  const [msg, setMsg] = useState(0);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const t = window.setInterval(() => setMsg((m) => (m + 1) % announcements.length), 4000);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.clearInterval(t);
-    };
-  }, []);
-
-  const results = query.trim()
-    ? products.filter((p) => (p.name + p.nameHi + p.sign + p.signHi + p.stones).toLowerCase().includes(query.toLowerCase()))
-    : products.slice(0, 3);
-
-  return (
-    <>
-      <div className="bg-navy py-1.5 text-center text-[10px] tracking-[0.2em] text-gold uppercase">
-        <span key={msg} className="inline-block animate-in fade-in duration-700">
-          {announcements[msg]}
-        </span>
-      </div>
-
-      <header
-        className={cn(
-          "sticky top-0 z-50 border-b border-gold/40 transition-all duration-300",
-          scrolled ? "bg-background/95 backdrop-blur-xl" : "bg-background",
-        )}
-      >
-        <div className="shell grid h-16 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 md:h-20 lg:grid-cols-[1fr_auto_1fr]">
-          <div className="flex items-center gap-1">
-            <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-              <SheetTrigger
-                aria-label="Open menu"
-                className="grid size-9 shrink-0 place-items-center text-navy lg:hidden"
-              >
-                <Menu className="size-5" />
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[85vw] max-w-sm p-0">
-                <div className="flex items-center justify-between border-b border-border px-5 py-4">
-                   <span className="flex items-center gap-3 font-display text-xl text-ink"><img src={logo} alt="" width={320} height={320} className="size-10 rounded-full object-contain" />{BRAND}</span>
-                  <Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
-                    <X className="size-5" />
-                  </Button>
-                </div>
-                <nav className="flex flex-col px-5 py-4">
-                  {nav.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.to}
-                      onClick={() => setMenuOpen(false)}
-                      className="border-b border-border/70 py-4 font-display text-2xl text-ink"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-              </SheetContent>
-            </Sheet>
-
-            <nav className="hidden items-center gap-5 lg:flex">
-              {nav.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  className="text-xs tracking-[0.08em] text-ink/75 uppercase transition-colors hover:text-navy"
-                  activeProps={{ className: "text-navy underline decoration-gold underline-offset-8" }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          <Link
-            to="/"
-            className="justify-self-center"
-            aria-label={`${BRAND} home`}
-          >
-             <img src={logo} alt={`${BRAND} logo`} width={320} height={320} className="size-12 rounded-full object-contain md:size-14" />
-          </Link>
-
-          <div className="flex items-center gap-0.5 justify-self-end">
-            <Button variant="ghost" size="icon"
-              aria-label="Search"
-              onClick={() => setSearchOpen(true)}
-              className="grid size-9 place-items-center text-ink"
-            >
-              <Search className="size-[18px]" />
-            </Button>
-            <Link
-              to="/shop"
-              search={{ wishlist: true }}
-              aria-label="Wishlist"
-              className="relative hidden size-9 place-items-center text-ink sm:grid"
-            >
-              <Heart className="size-[18px]" />
-              {wishlist.length > 0 && (
-                <span className="absolute top-1 right-0.5 size-1.5 rounded-full bg-champagne" />
-              )}
-            </Link>
-            <Button variant="ghost" size="icon"
-              aria-label="Open cart"
-              onClick={() => setCartOpen(true)}
-              className="relative grid size-9 place-items-center text-ink"
-            >
-              <ShoppingBag className="size-[18px]" />
-              {count > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-navy px-1 text-[10px] leading-4 text-gold">
-                  {count}
-                </span>
-              )}
-            </Button>
-          </div>
+  const term = query.trim().toLowerCase();
+  const results = (term ? products.filter(p => [p.name, p.nameHi, p.sign, p.signHi, p.stones].join(' ').toLowerCase().includes(term)) : products).slice(0, 8);
+  return <>
+    <div className="reference-announcement">{storefrontContent.announcement}</div>
+    <header className="reference-header">
+      <div className="shell reference-header-inner">
+        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+          <SheetTrigger asChild><Button variant="ghost" size="icon" aria-label="Open menu" className="mobile-menu-button"><Menu /></Button></SheetTrigger>
+          <SheetContent side="left"><SheetTitle>{BRAND}</SheetTitle><p className="mt-2 text-xs">{storefrontContent.tagline}</p><nav className="mt-6 flex flex-col">{nav.map(item => <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)} className="border-b border-border py-4 text-sm">{item.label}</Link>)}</nav></SheetContent>
+        </Sheet>
+        <Link to="/" aria-label={`${BRAND} home`} className="reference-brand"><img src={logo} alt={`${BRAND} original logo`} width={512} height={512} /><span><strong>{BRAND}</strong><small>{storefrontContent.tagline}</small></span></Link>
+        <nav className="reference-desktop-nav" aria-label="Main navigation">{nav.map(item => <Link key={item.label} to={item.to} activeOptions={{ exact: true }} activeProps={{ className: 'reference-active' }}>{item.label}</Link>)}</nav>
+        <div className="reference-header-tools">
+          <Button variant="ghost" className="reference-search" aria-label="Search products" onClick={() => setSearchOpen(true)}><Search /><span>Search crystals...</span></Button>
+          <Button variant="ghost" size="icon" className="mobile-search-button" aria-label="Search products" onClick={() => setSearchOpen(true)}><Search /></Button>
+          <Link to="/auth" className="reference-account" aria-label="Account"><UserRound /></Link>
+          <Link to="/shop" search={{ wishlist: true }} className="reference-wishlist" aria-label="Wishlist"><Heart />{wishlist.length > 0 && <span>{wishlist.length}</span>}</Link>
+          <Button variant="ghost" size="icon" aria-label="Open cart" className="reference-cart" onClick={() => setCartOpen(true)}><ShoppingBag /><span>{count}</span></Button>
         </div>
-      </header>
-
-      <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-        <DialogContent className="top-24 max-w-xl translate-y-0 p-0">
-          <DialogTitle className="sr-only">Search products</DialogTitle>
-          <div className="border-b border-border p-3">
-            <Input
-              autoFocus
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search jewellery, stones, collections"
-              className="border-0 shadow-none focus-visible:ring-0"
-            />
-          </div>
-          <ul className="max-h-80 overflow-y-auto p-2">
-            {results.length === 0 && (
-              <li className="p-4 text-sm text-muted-foreground">No pieces match that search.</li>
-            )}
-            {results.map((p) => (
-              <li key={p.id}>
-                <Button variant="ghost"
-                  className="flex w-full items-center gap-3 rounded-lg p-2 text-left hover:bg-sand"
-                  onClick={() => {
-                    setSearchOpen(false);
-                    setQuery("");
-                    navigate({ to: "/product/$slug", params: { slug: p.slug } });
-                  }}
-                >
-                  <img src={p.images[0]} alt="" loading="lazy" className="size-12 rounded-md object-cover" />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm text-ink">{p.name}</span>
-                    <span className="block text-xs text-muted-foreground">{formatINR(p.price)}</span>
-                  </span>
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </DialogContent>
-      </Dialog>
-
-      <MobileNav />
-    </>
-  );
-}
-
-function MobileNav() {
-  const { count, setCartOpen } = useStore();
-  return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-border bg-background/95 backdrop-blur-xl md:hidden">
-      <Link to="/" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
-        <Home className="size-[18px]" /> Home
-      </Link>
-      <Link to="/collections/zodiac-crystal-collection" className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase">
-        <LayoutGrid className="size-[18px]" /> Zodiac
-      </Link>
-      <Link
-        to="/shop"
-        search={{ wishlist: true }}
-        className="flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase"
-      >
-        <Heart className="size-[18px]" /> Saved
-      </Link>
-      <Button variant="ghost"
-        onClick={() => setCartOpen(true)}
-        className="relative flex flex-col items-center gap-1 py-2.5 text-[10px] tracking-[0.1em] text-ink uppercase"
-      >
-        <ShoppingBag className="size-[18px]" /> Cart
-        {count > 0 && (
-          <span className="absolute top-1.5 right-[22%] grid min-w-4 place-items-center rounded-full bg-navy px-1 text-[10px] leading-4 text-gold">
-            {count}
-          </span>
-        )}
-      </Button>
-    </nav>
-  );
+      </div>
+    </header>
+    <Dialog open={searchOpen} onOpenChange={setSearchOpen}><DialogContent className="max-w-xl"><DialogTitle>Search ShivAmrit Healers</DialogTitle><div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2"><Input aria-label="Search jewellery" placeholder="Search by zodiac sign, stone or bracelet" maxLength={100} value={query} onChange={event => setQuery(event.target.value)} />{query && <Button variant="ghost" size="icon" aria-label="Clear search" onClick={() => setQuery('')}><X /></Button>}</div><p className="text-xs text-muted-foreground" aria-live="polite">{results.length ? `${results.length} matching pieces` : 'No pieces match that search.'}</p><ul className="max-h-96 overflow-y-auto">{results.map(p => <li key={p.id}><Link to="/product/$slug" params={{ slug: p.slug }} onClick={() => { setSearchOpen(false); setQuery(''); }} className="grid grid-cols-[56px_minmax(0,1fr)_auto] items-center gap-3 py-3"><img src={p.images[0]} alt={p.name} width={56} height={56} className="size-14 object-cover" /><span className="min-w-0 text-sm">{p.name}<small className="block text-muted-foreground">{p.signHi}</small></span><span className="text-sm">{formatINR(p.price)}</span></Link></li>)}</ul></DialogContent></Dialog>
+  </>;
 }
