@@ -8,12 +8,14 @@ import { useStore } from "@/lib/store";
 
 type ShopSearch = {
   category?: string | undefined;
+  stone?: string | undefined;
   sort?: string | undefined;
   wishlist?: boolean | undefined;
 };
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => ({
+    stone: typeof search["stone"] === "string" ? search["stone"] : undefined,
     category: typeof search["category"] === "string" ? search["category"] : undefined,
     sort: typeof search["sort"] === "string" ? search["sort"] : undefined,
     wishlist: search["wishlist"] === true || search["wishlist"] === "true" ? true : undefined,
@@ -41,7 +43,7 @@ export const Route = createFileRoute("/shop")({
 });
 
 function Shop() {
-  const { category, wishlist: wishlistView } = Route.useSearch();
+  const { category, stone, wishlist: wishlistView } = Route.useSearch();
   const { wishlist } = useStore();
   const products = useProducts();
   const saved = products.filter((p) => wishlist.includes(p.id));
@@ -52,7 +54,7 @@ function Shop() {
         <div className="shell py-14 text-center md:py-20">
           <p className="eyebrow">{wishlistView ? "Saved pieces" : "The collection"}</p>
           <h1 className="mt-3 text-4xl text-ink md:text-6xl">
-            {wishlistView ? "Your wishlist" : "All jewelry"}
+            {wishlistView ? "Your wishlist" : stone ? `${stone} Bracelets` : "All jewelry"}
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
             {wishlistView
@@ -73,7 +75,7 @@ function Shop() {
             </Button>
           </div>
         ) : (
-          <ProductGrid source={wishlistView ? saved : products} initialCategory={category} />
+          <ProductGrid source={wishlistView ? saved : stone ? products.filter(p => p.stones.toLowerCase().includes(stone.toLowerCase())) : products} initialCategory={category} />
         )}
       </section>
 

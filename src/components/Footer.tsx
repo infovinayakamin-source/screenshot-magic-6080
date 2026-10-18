@@ -1,70 +1,17 @@
-import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook } from "lucide-react";
-import logo from "@/assets/logo.jpg";
-import { BRAND } from "@/lib/products";
-
+import { Link } from '@tanstack/react-router';
+import { Instagram, Facebook } from 'lucide-react';
+import logo from '@/assets/logo.jpg';
+import { BRAND } from '@/lib/products';
+import { NewsletterForm } from '@/components/NewsletterForm';
+import { storefrontContent } from '@/lib/storefront-content';
 export function Footer() {
-  return (
-    <footer className="border-t border-gold/50 bg-background">
-      <div className="shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:py-16">
-        <div className="max-w-xs">
-           <img src={logo} alt={`${BRAND} logo`} width={320} height={320} loading="lazy" className="size-24 rounded-full object-contain" />
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Natural stone jewellery made for everyday style, personal intention and meaningful gifting.
-          </p>
-        </div>
-
-        <div>
-          <p className="eyebrow">Shop</p>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
-            <li><Link to="/shop" className="hover:text-ink">All Products</Link></li>
-            <li><Link to="/collections/zodiac-crystal-collection" className="hover:text-ink">Zodiac Bracelets</Link></li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="eyebrow">Help</p>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
-            <li><Link to="/contact" className="hover:text-ink">Contact</Link></li>
-            <li><Link to="/faq" className="hover:text-ink">FAQ</Link></li>
-            <li><Link to="/faq" hash="shipping" className="hover:text-ink">Shipping</Link></li>
-            <li><Link to="/faq" hash="returns" className="hover:text-ink">Returns</Link></li>
-            <li><Link to="/faq" hash="privacy" className="hover:text-ink">Privacy Policy</Link></li>
-            <li><Link to="/faq" hash="terms" className="hover:text-ink">Terms</Link></li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="eyebrow">Follow</p>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
-            <li>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-ink">
-                <Instagram className="size-4" /> Instagram
-              </a>
-            </li>
-            <li>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-ink">
-                <Facebook className="size-4" /> Facebook
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-border">
-        <div className="shell flex flex-col gap-2 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 {BRAND}. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <p>Crafted with intention in India.</p>
-            <Link
-              to="/auth"
-              className="text-[11px] uppercase tracking-[0.14em] opacity-60 underline-offset-4 hover:text-ink hover:opacity-100 hover:underline"
-            >
-              Admin
-            </Link>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
+  return <footer className="reference-footer">
+    <div className="shell reference-footer-grid">
+      <div className="footer-brand"><img src={logo} alt={`${BRAND} original logo`} width={512} height={512} loading="lazy" /><h2>{BRAND}</h2><p>{storefrontContent.tagline}</p><div className="footer-socials">{storefrontContent.socialLinks.instagram ? <a href={storefrontContent.socialLinks.instagram} aria-label="Instagram" rel="noreferrer" target="_blank"><Instagram /></a> : <span title="Instagram account not supplied"><Instagram /></span>}{storefrontContent.socialLinks.facebook ? <a href={storefrontContent.socialLinks.facebook} aria-label="Facebook" rel="noreferrer" target="_blank"><Facebook /></a> : <span title="Facebook account not supplied"><Facebook /></span>}</div></div>
+      <div><h3>Explore</h3><ul><li><Link to="/">Home</Link></li><li><Link to="/shop">Shop All</Link></li><li><Link to="/collections/zodiac-crystal-collection">Zodiac Bracelets</Link></li><li><Link to="/about">About Us</Link></li></ul></div>
+      <div><h3>Information</h3><ul><li><Link to="/contact">Contact Us</Link></li><li><Link to="/faq">FAQs & Care</Link></li><li><Link to="/cart">Your Cart</Link></li><li><Link to="/shop" search={{ wishlist: true }}>Wishlist</Link></li><li><Link to="/auth">Admin Sign In</Link></li></ul></div>
+      <div><h3>Stay in the Loop</h3><p>Discover new bracelets, stone stories and thoughtful gifting ideas.</p><NewsletterForm /></div>
+    </div>
+    <div className="shell reference-footer-bottom"><span>© 2026 {BRAND}. All rights reserved.</span><span>Crystal jewellery · Personal meaning</span></div>
+  </footer>;
 }
