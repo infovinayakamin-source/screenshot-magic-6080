@@ -5,7 +5,7 @@
 - [x] Admin dashboard visible to admin role only (customers/other devs blocked) — signed-out visitors bounce to /auth, non-admins see "no access", admin sees orders
 - [x] Apply Pure Minimalist styling to home, navigation, zodiac shop cards, product details, buttons, and page spacing; verify phone and desktop.
 - [ ] Close public sign-up once the owner account has claimed access
-- [ ] Reconstruct all 19 homepage sections from the uploaded screenshot; match shared storefront styling and verify desktop/mobile shopping flows without changing existing integrations.
+- [x] Reconstruct all 19 homepage sections from the uploaded screenshot; match shared storefront styling and verify desktop/mobile shopping flows without changing existing integrations.
 - [x] Match the supplied reference's hero, featured product cards, process section, and product purchase layout using only ShivAmrit zodiac bracelets while retaining navy/gold theme; omit farm-specific claims and delivery promises.
 - [x] Add a navy-and-gold rotating poster section between the homepage shopping information and featured products using real zodiac bracelet photos.
 - [ ] Order confirmation by email + WhatsApp for COD/online orders — waits on owner's email domain and WhatsApp provider choice
