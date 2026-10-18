@@ -20,6 +20,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
+import { Route as CollectionsSaltRouteImport } from './routes/collections.salt'
 import { Route as CollectionsZodiacCrystalCollectionRouteImport } from './routes/collections.zodiac-crystal-collection'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as AuthenticatedAdminBraceletsRouteImport } from './routes/_authenticated/admin.bracelets'
@@ -81,6 +82,11 @@ const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
   path: '/collections/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionsSaltRoute = CollectionsSaltRouteImport.update({
+  id: '/collections/salt',
+  path: '/collections/salt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CollectionsZodiacCrystalCollectionRoute =
   CollectionsZodiacCrystalCollectionRouteImport.update({
     id: '/collections/zodiac-crystal-collection',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/shop': typeof ShopRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/collections/salt': typeof CollectionsSaltRoute
   '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/shop': typeof ShopRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/collections/salt': typeof CollectionsSaltRoute
   '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections': typeof CollectionsIndexRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/shop': typeof ShopRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/collections/salt': typeof CollectionsSaltRoute
   '/collections/zodiac-crystal-collection': typeof CollectionsZodiacCrystalCollectionRoute
   '/product/$slug': typeof ProductSlugRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/shop'
     | '/collections/$slug'
+    | '/collections/salt'
     | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections/'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/shop'
     | '/collections/$slug'
+    | '/collections/salt'
     | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/shop'
     | '/collections/$slug'
+    | '/collections/salt'
     | '/collections/zodiac-crystal-collection'
     | '/product/$slug'
     | '/collections/'
@@ -241,6 +253,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   ShopRoute: typeof ShopRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
+  CollectionsSaltRoute: typeof CollectionsSaltRoute
   CollectionsZodiacCrystalCollectionRoute: typeof CollectionsZodiacCrystalCollectionRoute
   ProductSlugRoute: typeof ProductSlugRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
@@ -326,6 +339,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collections/salt': {
+      id: '/collections/salt'
+      path: '/collections/salt'
+      fullPath: '/collections/salt'
+      preLoaderRoute: typeof CollectionsSaltRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/collections/zodiac-crystal-collection': {
       id: '/collections/zodiac-crystal-collection'
       path: '/collections/zodiac-crystal-collection'
@@ -397,6 +417,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   ShopRoute: ShopRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
+  CollectionsSaltRoute: CollectionsSaltRoute,
   CollectionsZodiacCrystalCollectionRoute:
     CollectionsZodiacCrystalCollectionRoute,
   ProductSlugRoute: ProductSlugRoute,

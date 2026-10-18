@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Menu, Search, Heart, ShoppingBag, UserRound, X } from 'lucide-react';
+import { Menu, Search, Heart, ShoppingBag, UserRound, X, ChevronDown } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -31,10 +32,10 @@ export function Header() {
       <div className="shell reference-header-inner">
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger asChild><Button variant="ghost" size="icon" aria-label="Open menu" className="mobile-menu-button"><Menu /></Button></SheetTrigger>
-          <SheetContent side="left"><SheetTitle>{BRAND}</SheetTitle><p className="mt-2 text-xs">{storefrontContent.tagline}</p><nav className="mt-6 flex flex-col">{nav.map(item => <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)} className="border-b border-border py-4 text-sm">{item.label}</Link>)}</nav></SheetContent>
+          <SheetContent side="left"><SheetTitle>{BRAND}</SheetTitle><p className="mt-2 text-xs">{storefrontContent.tagline}</p><nav className="mt-6 flex flex-col">{nav.map(item => <div key={item.label} className="flex flex-col"><Link to={item.to} onClick={() => setMenuOpen(false)} className="border-b border-border py-4 text-sm">{item.label}</Link>{item.to === '/shop' && <Link to="/collections/salt" onClick={() => setMenuOpen(false)} className="border-b border-border py-3 pl-4 text-sm text-muted-foreground">Salt</Link>}</div>)}</nav></SheetContent>
         </Sheet>
         <Link to="/" aria-label={`${BRAND} home`} className="reference-brand"><img src={logo} alt={`${BRAND} original logo`} width={512} height={512} /><span><strong>{BRAND}</strong><small>{storefrontContent.tagline}</small></span></Link>
-        <nav className="reference-desktop-nav" aria-label="Main navigation">{nav.map(item => <Link key={item.label} to={item.to} activeOptions={{ exact: true }} activeProps={{ className: 'reference-active' }}>{item.label}</Link>)}</nav>
+        <nav className="reference-desktop-nav" aria-label="Main navigation">{nav.map(item => item.to === '/shop' ? <DropdownMenu key={item.label}><DropdownMenuTrigger className="inline-flex items-center gap-1">{item.label}<ChevronDown className="size-3" /></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem asChild><Link to="/shop">Shop All</Link></DropdownMenuItem><DropdownMenuItem asChild><Link to="/collections/salt">Salt</Link></DropdownMenuItem></DropdownMenuContent></DropdownMenu> : <Link key={item.label} to={item.to} activeOptions={{ exact: true }} activeProps={{ className: 'reference-active' }}>{item.label}</Link>)}</nav>
         <div className="reference-header-tools">
           <Button variant="ghost" className="reference-search" aria-label="Search products" onClick={() => setSearchOpen(true)}><Search /><span>Search crystals...</span></Button>
           <Button variant="ghost" size="icon" className="mobile-search-button" aria-label="Search products" onClick={() => setSearchOpen(true)}><Search /></Button>
