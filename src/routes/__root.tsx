@@ -153,7 +153,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
-        <div className={`flex min-h-screen flex-col ${bare ? "" : "pb-14 md:pb-0"}`}>
+        <div className={`flex min-h-screen flex-col ${bare ? "" : "storefront-shell"}`}>
           {!bare && <Header />}
           <main className="flex-1">
             {/* Required: nested routes render here. */}
