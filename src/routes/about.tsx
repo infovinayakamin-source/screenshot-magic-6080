@@ -1,121 +1,76 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/Reveal";
-import { Newsletter } from "@/components/Newsletter";
-import { BRAND } from "@/lib/products";
-import { zodiacItems } from "@/lib/zodiac";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
+      { title: "About ShivAmrit Healers — Parul Suthar" },
+      { name: "description", content: "Meet Parul Suthar and explore ShivAmrit Healers’ spiritual practices, personal guidance and self-care offerings." },
+      { property: "og:title", content: "About ShivAmrit Healers — Parul Suthar" },
+      { property: "og:description", content: "Spiritual practices, personal guidance and self-care offerings for people exploring their own path to wellbeing." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Jewelry With Meaning — Our Story | ShivAmrit Healers" },
-      {
-        name: "description",
-        content:
-          "ShivAmrit Healers is built around natural stones, careful craftsmanship and modern design — jewellery made for intention, everyday wear and meaningful gifting.",
-      },
-      { property: "og:title", content: "Jewelry With Meaning — Our Story | ShivAmrit Healers" },
-      {
-        property: "og:description",
-        content: "Natural stones, careful craftsmanship and quiet, modern design.",
-      },
     ],
   }),
   component: About,
 });
 
-const pillars = [
-  {
-    title: "Natural stones",
-    copy: "We work with natural stones, so colour, veining and texture vary from piece to piece. That variation is the point.",
-  },
-  {
-    title: "Craftsmanship",
-    copy: "Each piece is hand-strung or wire-wrapped and checked by hand for finish, tension and comfort before it ships.",
-  },
-  {
-    title: "Personal intention",
-    copy: "Stones have carried symbolic meaning across cultures for centuries. We share those traditions without overstating them.",
-  },
-  {
-    title: "Modern design",
-    copy: "Minimal silhouettes, restrained metal and a calm palette, made to sit alongside the jewellery you already wear.",
-  },
-  {
-    title: "Meaningful gifting",
-    copy: "Everything arrives in premium packaging with a care and meaning card, ready to give as it is.",
-  },
+const offerings = [
+  "Reiki sessions and learning programmes",
+  "Crystal healing and crystal products",
+  "Astrology consultations",
+  "Tarot card readings",
+  "Akashic record readings",
+  "Bath salts and self-care products",
 ];
 
 function About() {
   return (
-    <>
-      <section className="shell py-16 text-center md:py-24">
-        <p className="eyebrow">Our story</p>
-        <h1 className="mx-auto mt-4 max-w-3xl text-4xl leading-[1.05] text-ink md:text-7xl">
-          Jewelry with meaning.
-        </h1>
-        <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          {BRAND} began with a simple idea: that the jewellery we wear every day can be beautiful and
-          personal at the same time.
-        </p>
-      </section>
-
-      <Reveal className="shell">
-        {zodiacItems[0] && (
-          <img
-            src={zodiacItems[0].image}
-            alt="Aries zodiac crystal bracelet on a gold stand"
-            loading="lazy"
-            className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
-          />
-        )}
-
-      </Reveal>
-
-      <section className="shell grid gap-12 py-20 md:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-        <Reveal>
-          <h2 className="text-3xl text-ink md:text-5xl">
-            Made slowly, worn daily.
-          </h2>
+    <div className="shell py-10 md:py-14">
+      <div className="mx-auto max-w-2xl">
+        <section aria-labelledby="about-heading" className="border-b border-border pb-8">
+          <h1 id="about-heading" className="text-3xl leading-tight text-foreground">About ShivAmrit Healers</h1>
+          <p className="mt-3 text-xs font-semibold text-muted-foreground">ALIGN • HEAL • EVOLVE</p>
           <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-            We source natural stones in small batches, string them by hand and keep our designs deliberately
-            quiet. Nothing here is meant to be worn once. Our pieces are made to move with you — to work,
-            to dinner, to the everyday moments in between.
+            A little time for yourself can make space for reflection, renewed intention and a more mindful everyday life. ShivAmrit Healers brings together spiritual practices, personal guidance and self-care rituals for people exploring their own path to wellbeing.
           </p>
-          <Button variant="quiet" size="xl" className="mt-8" asChild>
-            <Link to="/shop">Shop the collection</Link>
+        </section>
+
+        <section aria-labelledby="approach-heading" className="pt-8">
+          <h2 id="approach-heading" className="text-xl text-foreground">Our Approach</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            We believe personal growth begins with taking time to understand yourself. Our approach encourages self-awareness, thoughtful reflection and meaningful moments of pause, while respecting each person’s individual beliefs and journey.
+          </p>
+        </section>
+
+        <section aria-labelledby="practitioner-heading" className="pt-8">
+          <h2 id="practitioner-heading" className="text-xl text-foreground">Meet Parul Suthar</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            ShivAmrit Healers is led by Parul Suthar. Through its sessions, learning experiences and self-care offerings, the brand invites you to explore spiritual wellbeing at your own pace.
+          </p>
+        </section>
+
+        <section aria-labelledby="offerings-heading" className="py-8">
+          <h2 id="offerings-heading" className="text-xl text-foreground">What We Offer</h2>
+          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
+            {offerings.map(offering => <li key={offering}>{offering}</li>)}
+          </ul>
+        </section>
+
+        <section aria-labelledby="contact-heading" className="border-t border-border pt-8">
+          <h2 id="contact-heading" className="text-xl text-foreground">Let’s Connect</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Want to learn more about our sessions, courses or products? Connect with ShivAmrit Healers for details and help choosing where to begin.
+          </p>
+          <Button asChild className="mt-5">
+            <a href="https://wa.me/919016330390" target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" />Chat on WhatsApp</a>
           </Button>
-        </Reveal>
-        <Reveal delay={80} className="grid gap-8 sm:grid-cols-2">
-          {pillars.map((p) => (
-            <div key={p.title}>
-              <h3 className="text-xs tracking-[0.18em] text-ink uppercase">{p.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.copy}</p>
-            </div>
-          ))}
-        </Reveal>
-      </section>
-
-      <Reveal className="shell">
-        {zodiacItems[1] && (
-          <img
-            src={zodiacItems[1].image}
-            alt="Taurus zodiac crystal bracelet on a gold stand"
-            loading="lazy"
-            className="mx-auto aspect-square w-full max-w-3xl rounded-2xl object-cover"
-          />
-        )}
-
-        <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
-          Our pieces are designed for style, symbolism and personal ritual. They are not medical products
-          and are not intended to treat, cure or prevent any condition.
-        </p>
-      </Reveal>
-
-      <Newsletter />
-    </>
+          <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
+            Our spiritual and wellness offerings are intended for personal reflection and complementary self-care. They do not replace medical or mental health care. Individual experiences vary.
+          </p>
+        </section>
+      </div>
+    </div>
   );
 }
