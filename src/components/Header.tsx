@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import logo from '@/assets/logo.jpg';
+import logo from '@/assets/logo.png';
 import { BRAND, formatINR, useProducts } from '@/lib/products';
 import { useStore } from '@/lib/store';
 import { storefrontContent } from '@/lib/storefront-content';

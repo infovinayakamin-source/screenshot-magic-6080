@@ -19,7 +19,7 @@ import {
 } from "@/lib/admin-products.functions";
 import { brandImage, uploadProductFile } from "@/lib/branding";
 import { BRAND } from "@/lib/products";
-import defaultLogo from "@/assets/logo.jpg";
+import defaultLogo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/_authenticated/admin/branding")({
   head: () => ({

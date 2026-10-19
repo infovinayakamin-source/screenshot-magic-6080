@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { getAdminAccess } from "@/lib/admin.functions";
 import { BRAND } from "@/lib/products";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 
 export function AdminNav() {
   const cls = "rounded-full px-3 py-1 text-xs text-navy-foreground/80 hover:text-gold";
