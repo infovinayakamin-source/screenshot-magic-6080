@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import parulPhoto from "@/assets/parul-suthar.jpg.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -46,9 +47,35 @@ function About() {
 
         <section aria-labelledby="practitioner-heading" className="pt-8">
           <h2 id="practitioner-heading" className="text-xl text-foreground">Meet Parul Suthar</h2>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            ShivAmrit Healers is led by Parul Suthar. Through its sessions, learning experiences and self-care offerings, the brand invites you to explore spiritual wellbeing at your own pace.
-          </p>
+          <div className="mt-4 grid gap-6 sm:grid-cols-[minmax(0,220px)_1fr] sm:items-start">
+            <img
+              src={parulPhoto.url}
+              alt="Parul Suthar, founder of ShivAmrit Healers"
+              width={1080}
+              height={1292}
+              loading="lazy"
+              className="w-full max-w-[260px] rounded-md border border-border object-cover"
+            />
+            <div>
+              <p className="text-sm font-semibold text-foreground">Reiki Grandmaster &amp; Holistic Energy Healer</p>
+              <p className="text-xs text-muted-foreground">Founder, ShivAmrit Healers · Sachin, Surat (Gujarat)</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                ShivAmrit Healers is led by Parul Suthar, a Reiki Grandmaster, energy healer and life coach based in Surat with more than 20 years of dedicated spiritual and Reiki practice. Through sessions, learning experiences and self-care offerings, she invites you to explore spiritual wellbeing at your own pace.
+              </p>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                <li>20+ years of spiritual and Reiki practice</li>
+                <li>Specialist in the 7 chakras and aura</li>
+                <li>Has trained 1,000+ learners</li>
+              </ul>
+              <blockquote className="mt-4 border-l-2 border-promotion pl-3 text-sm italic text-foreground">
+                “Every person carries within them the divine energy to heal and calm themselves. Reiki is not just a practice — it is a path to transforming life.”
+              </blockquote>
+              <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                <a className="underline underline-offset-4 hover:text-promotion" href="https://www.instagram.com/shivamrit_healers/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a className="underline underline-offset-4 hover:text-promotion" href="https://www.facebook.com/profile.php?id=61563686020129" target="_blank" rel="noopener noreferrer">Facebook</a>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section aria-labelledby="offerings-heading" className="py-8">
