@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 import { AdminNav } from "@/components/AdminShell";
 
 const STATUS_LABEL: Record<string, string> = {

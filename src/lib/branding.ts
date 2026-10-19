@@ -1,5 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import defaultLogo from "@/assets/logo.jpg";
+import defaultLogo from "@/assets/logo.png";
 import type { BrandingSettings } from "@/lib/admin-products.functions";
 
 /** Logo width as a share of the photo's shorter side. */

@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Instagram, Facebook } from 'lucide-react';
-import logo from '@/assets/logo.jpg';
+import logo from '@/assets/logo.png';
 import { BRAND } from '@/lib/products';
 import { NewsletterForm } from '@/components/NewsletterForm';
 import { storefrontContent } from '@/lib/storefront-content';

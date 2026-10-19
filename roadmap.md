@@ -16,3 +16,4 @@
 - [x] Update only About Us with supplied copy, text-only Parul Suthar section, services and WhatsApp CTA; verify desktop/mobile and existing links.
 
 - [x] Remove screenshot’s old About Us “Our Story / Jewelry with meaning” section and bracelet photo; already replaced by approved About content.
+- [x] Replace logo everywhere with transparent Healing Hands emblem PNG
