@@ -14,3 +14,5 @@
 - [x] Adapt Meeranshu-inspired storefront layout, effects and motion while retaining real products and ShivAmrit branding; verify desktop/mobile/tablet, carousel controls, quick view, add-to-cart and zodiac filtering.
 
 - [x] Update only About Us with supplied copy, text-only Parul Suthar section, services and WhatsApp CTA; verify desktop/mobile and existing links.
+
+- [x] Remove screenshot’s old About Us “Our Story / Jewelry with meaning” section and bracelet photo; already replaced by approved About content.
